@@ -1,0 +1,1142 @@
+/* ==========================================================================
+   sofatrend – Design-System
+   Bildsprache nach Vorbild Westwing (Serifen-Display, Creme-Grund, randlose
+   Bildkacheln, unterstrichene Links) und 3C-Gruppe (Full-Bleed-Hero mit
+   zentriertem Statement, redaktionelle Wechselabschnitte).
+   ========================================================================== */
+
+:root {
+  /* Farben: Creme-Grund, warme Neutraltoene, Ton in Ton mit den Renderings */
+  --ink:      #1d1913;
+  --ink-2:    #48413a;
+  --muted:    #837a6f;
+  --line:     #e6dfd3;
+  --line-2:   #efe9df;
+  --paper:    #faf7f1;   /* Seitengrund: warmes Creme */
+  --card:     #ffffff;   /* Bildkacheln: weiss, nahtlos zu den Freistellern */
+  --sand:     #f1ebe1;   /* abgesetzte Sektionen */
+  --sand-2:   #e7dfd1;
+  --accent:   #9a6f4e;
+  --accent-d: #7d583c;
+
+  /* Typografie */
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+  --serif: "Source Serif 4", "Iowan Old Style", Georgia, "Times New Roman", serif;
+
+  /* Raster */
+  --wrap: 1240px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  /* Wirkung */
+  --shadow: 0 1px 2px rgba(29, 25, 19, .04), 0 12px 32px rgba(29, 25, 19, .06);
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+/* --------------------------------------------------------------- Grundlage */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--ink-2);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2 {
+  font-family: var(--serif);
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  margin: 0 0 .55em;
+}
+
+h1 { font-size: clamp(2.4rem, 5.4vw, 4.2rem); font-weight: 400; }
+h2 { font-size: clamp(1.8rem, 3.6vw, 2.7rem); }
+
+h3, h4 {
+  color: var(--ink);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  margin: 0 0 .6em;
+}
+h3 { font-size: clamp(1.1rem, 1.7vw, 1.3rem); }
+h4 { font-size: 1rem; }
+
+p { margin: 0 0 1.1em; }
+p:last-child { margin-bottom: 0; }
+
+/* Lange deutsche Komposita duerfen nie aus ihren Boxen laufen */
+h1, h2, h3, h4, p, li, th, td, figcaption, dt, dd {
+  overflow-wrap: break-word;
+}
+
+a { color: inherit; text-decoration-color: var(--line); text-underline-offset: 3px; }
+a:hover { text-decoration-color: currentColor; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--ink);
+  color: #fff;
+  padding: .75rem 1.25rem;
+}
+.skip-link:focus { left: 0; }
+
+/* ------------------------------------------------------------------ Layout */
+
+.wrap {
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.wrap--narrow { max-width: 780px; }
+
+.section { padding-block: clamp(3.5rem, 8vw, 7rem); }
+.section--tight { padding-block: clamp(2.5rem, 5vw, 4rem); }
+.section--sand { background: var(--sand); }
+.section--ink  { background: var(--ink); color: #cfc6ba; }
+.section--ink h2, .section--ink h3 { color: #fff; }
+
+.lede {
+  font-size: clamp(1.0625rem, 1.6vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+
+.eyebrow {
+  display: block;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.1rem;
+}
+
+.section--ink .eyebrow { color: #b99a7c; }
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 3rem;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: clamp(2rem, 4vw, 3.25rem);
+}
+.section-head > div { max-width: 60ch; }
+.section-head p:last-child { margin-bottom: 0; }
+
+/* ------------------------------------------------------------------ Knoepfe */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .95rem 1.8rem;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--ink);
+  color: #fff;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .25s var(--ease), color .25s var(--ease),
+              border-color .25s var(--ease);
+}
+.btn:hover { background: var(--accent-d); border-color: var(--accent-d); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+}
+.btn--ghost:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.btn--light {
+  background: #fff;
+  border-color: #fff;
+  color: var(--ink);
+}
+.btn--light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .85rem;
+  margin-top: 2rem;
+}
+
+/* Unterstrichener Textlink im Westwing-Stil */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: .3rem;
+  transition: color .25s var(--ease);
+}
+.link-arrow:hover { color: var(--accent-d); }
+.section--ink .link-arrow { color: #fff; }
+.section--ink .link-arrow:hover { color: #d9bd9e; }
+
+/* ------------------------------------------------------------------- Header */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 247, 241, .94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 80px;
+}
+
+.brand { display: inline-flex; align-items: center; text-decoration: none; }
+.brand img { width: 152px; }
+
+.nav { display: flex; align-items: center; gap: 2rem; }
+
+.nav__list {
+  display: flex;
+  gap: 1.9rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav__link {
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  text-decoration: none;
+  padding-block: .45rem;
+  border-bottom: 1px solid transparent;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+  white-space: nowrap;
+}
+.nav__link:hover { color: var(--ink); border-color: var(--line); }
+.nav__link[aria-current="page"] { color: var(--ink); border-color: var(--accent); }
+
+.nav__cta { display: inline-flex; padding: .8rem 1.4rem; }
+
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+.nav-toggle span {
+  display: block;
+  position: relative;
+  width: 18px;
+  height: 1.5px;
+  background: var(--ink);
+}
+.nav-toggle span::before,
+.nav-toggle span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform .25s var(--ease), top .25s var(--ease);
+}
+.nav-toggle span::before { top: -6px; }
+.nav-toggle span::after  { top: 6px; }
+
+.nav-toggle[aria-expanded="true"] span { background: transparent; }
+.nav-toggle[aria-expanded="true"] span::before { top: 0; transform: rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span::after  { top: 0; transform: rotate(-45deg); }
+
+@media (max-width: 1060px) {
+  .nav-toggle { display: inline-flex; }
+
+  .nav {
+    position: fixed;
+    inset: 80px 0 auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 1rem var(--gutter) 2rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    transform: translateY(-8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s var(--ease), transform .2s var(--ease), visibility .2s;
+  }
+  .nav[data-open="true"] { opacity: 1; visibility: visible; transform: none; }
+
+  .nav__list { flex-direction: column; gap: 0; }
+  .nav__link {
+    display: block;
+    padding: .95rem 0;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .nav__link[aria-current="page"] { border-color: var(--accent); }
+  .nav__cta { margin-top: 1.25rem; justify-content: center; }
+}
+
+/* --------------------------------------------------------------------- Hero
+   Startseite: Full-Bleed-Bild, zentriertes Serifen-Statement (3C-Stil).
+   Unterseiten (.hero--page): ruhiger Creme-Kopf, linksbuendig.            */
+
+.hero {
+  position: relative;
+  background: var(--sand-2);
+  min-height: clamp(520px, 82vh, 820px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+.hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+}
+.hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 16, 12, .38) 0%,
+    rgba(20, 16, 12, .30) 45%,
+    rgba(20, 16, 12, .52) 100%
+  );
+}
+
+.hero__inner {
+  position: relative;
+  padding-block: clamp(3rem, 9vw, 6rem);
+  width: 100%;
+}
+
+.hero__text {
+  max-width: 820px;
+  margin-inline: auto;
+  text-align: center;
+  color: #fff;
+}
+.hero__text h1 {
+  color: #fff;
+  font-weight: 300;
+  font-size: clamp(2.6rem, 6.5vw, 5.2rem);
+  line-height: 1.08;
+  margin-bottom: .45em;
+  min-height: 2.2em; /* Platz fuer wechselnde Statements, kein Springen */
+}
+.hero__text p {
+  color: rgba(255, 255, 255, .92);
+  font-size: clamp(1.0625rem, 1.7vw, 1.25rem);
+  line-height: 1.6;
+  max-width: 52ch;
+  margin-inline: auto;
+}
+.hero__text .eyebrow { color: #e2c9a8; }
+.hero__text .btn-row { justify-content: center; }
+
+/* sanftes Ueberblenden der Hero-Statements */
+.hero__text h1.is-fading { opacity: 0; transform: translateY(6px); }
+.hero__text h1 {
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+}
+
+.hero--page {
+  min-height: 0;
+  background: var(--sand);
+  display: block;
+  border-bottom: 1px solid var(--line);
+}
+.hero--page .hero__inner { padding-block: clamp(2.75rem, 6vw, 4.75rem); }
+.hero--page .hero__text {
+  color: inherit;
+  max-width: 58ch;
+  margin-inline: 0;
+  text-align: left;
+}
+.hero--page .hero__text h1 {
+  color: var(--ink);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 4.8vw, 3.6rem);
+  min-height: 0;
+}
+.hero--page .hero__text p { color: var(--ink-2); margin-inline: 0; }
+.hero--page .hero__text .eyebrow { color: var(--accent); }
+
+/* -------------------------------------------------------------- Kennzahlen */
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.fact {
+  background: var(--card);
+  padding: 1.75rem 1.5rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.fact__value {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  font-weight: 400;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: .35rem;
+}
+.fact__label { font-size: .875rem; color: var(--muted); line-height: 1.45; }
+
+/* ------------------------------------------- Modell-Kacheln (Westwing-Stil)
+   Randlos: weisse Bildkachel geht nahtlos in den Freisteller ueber,
+   Text sitzt frei auf dem Seitengrund.                                    */
+
+.model-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.model-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+
+.model-card__media {
+  aspect-ratio: 4 / 3;
+  background: var(--card);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--line-2);
+}
+.model-card__media img {
+  width: 100%;
+  height: 100%;
+  transition: transform .6s var(--ease);
+}
+/* Wohnszene: randlos beschnitten */
+.model-card__media--cover img { object-fit: cover; }
+/* Freisteller: komplett sichtbar auf Weiss */
+.model-card__media--contain { padding: clamp(1.25rem, 2.5vw, 2rem); }
+.model-card__media--contain img { object-fit: contain; }
+.model-card:hover .model-card__media img { transform: scale(1.04); }
+
+.model-card__koll {
+  font-size: .6875rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.model-card__body {
+  padding: 1.15rem .25rem 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: .55rem;
+}
+
+.model-card__name {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink);
+  margin: 0;
+  border-bottom: 1px solid transparent;
+  align-self: flex-start;
+  transition: border-color .25s var(--ease);
+}
+.model-card:hover .model-card__name { border-color: var(--ink); }
+
+.model-card__claim { font-size: .9375rem; color: var(--muted); margin: 0; flex: 1; }
+
+.model-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: .35rem;
+}
+
+.tag {
+  display: inline-block;
+  font-size: .71875rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .22rem .7rem;
+}
+
+/* ------------------------------------------------------------------ Filter */
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  padding-bottom: 2rem;
+}
+.filter-bar__label {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: .5rem;
+}
+
+.chip {
+  font: inherit;
+  font-size: .84375rem;
+  padding: .5rem 1.05rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: background .2s var(--ease), color .2s var(--ease),
+              border-color .2s var(--ease);
+}
+.chip:hover { border-color: var(--muted); }
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.result-note { font-size: .9375rem; color: var(--muted); margin: 1.5rem 0 0; }
+
+/* -------------------------------------------------------- Inhalts-Bausteine */
+
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+.split--top { align-items: start; }
+
+.split__media {
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  padding: clamp(1rem, 3vw, 2rem);
+}
+.split__media img { width: 100%; }
+.split__media figcaption {
+  font-size: .8125rem;
+  color: var(--muted);
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+}
+.card h3 { margin-bottom: .5rem; }
+.card p { font-size: .9375rem; color: var(--muted); }
+.card__num {
+  display: block;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.section--ink .card { background: transparent; border-color: rgba(255, 255, 255, .16); }
+.section--ink .card p { color: #a79c8f; }
+
+/* --------------------------------------------------------------- Datentabelle */
+
+.spec-table {
+  width: 100%;
+  table-layout: fixed;   /* haelt die Tabelle in der Box, lange Woerter brechen um */
+  border-collapse: collapse;
+  font-size: .9375rem;
+}
+.spec-table th,
+.spec-table td {
+  text-align: left;
+  padding: .85rem 1rem .85rem 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.spec-table th {
+  font-weight: 500;
+  color: var(--muted);
+  width: 42%;
+}
+.spec-table td { color: var(--ink); }
+.spec-table tr:last-child th,
+.spec-table tr:last-child td { border-bottom: 0; }
+
+.table-scroll { overflow-x: auto; }
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .875rem;
+  min-width: 620px;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: .8rem 1rem;
+  border-bottom: 1px solid var(--line-2);
+  vertical-align: top;
+}
+.data-table thead th {
+  font-weight: 600;
+  font-size: .75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--sand);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.data-table tbody th { font-weight: 500; color: var(--ink); white-space: nowrap; }
+.data-table td { color: var(--ink-2); }
+
+/* ------------------------------------------------------------- Aufbau-Liste */
+
+.build-list {
+  list-style: none;
+  counter-reset: build;
+  margin: 0;
+  padding: 0;
+}
+/* Bewusst KEIN Flex-Layout: in einem Flex-li wuerde ein <strong> zu einem
+   eigenen Flex-Item "blockifiziert" und der Text liefe aus der Box. */
+.build-list li {
+  counter-increment: build;
+  position: relative;
+  display: block;
+  padding: .8rem 0 .8rem 42px;
+  border-bottom: 1px solid var(--line);
+  font-size: .9375rem;
+}
+.build-list li:last-child { border-bottom: 0; }
+.build-list li::before {
+  content: counter(build);
+  position: absolute;
+  left: 0;
+  top: .95rem;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.plain-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.plain-list li {
+  position: relative;
+  padding: .8rem 0 .8rem 1.6rem;
+  border-bottom: 1px solid var(--line);
+  font-size: .9375rem;
+}
+.plain-list li:last-child { border-bottom: 0; }
+.plain-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.45rem;
+  width: 6px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* ------------------------------------------------------------ Modell-Detail */
+
+.model-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .model-hero { grid-template-columns: 1.15fr .85fr; }
+}
+
+.model-hero__media {
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+}
+/* Wohnszene randlos im Rahmen */
+.model-hero__media--cover { padding: 0; }
+.model-hero__media--cover img { width: 100%; }
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+.gallery figure {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+.gallery figcaption {
+  font-size: .875rem;
+  color: var(--muted);
+  margin-top: .9rem;
+  line-height: 1.5;
+}
+
+.pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------------------------------------------------------------- Video */
+
+.video-block {
+  position: relative;
+  background: #0f0c09;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.video-block video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 78vh;
+  background: #0f0c09;
+}
+
+.video-caption {
+  font-size: .875rem;
+  color: var(--muted);
+  margin-top: 1rem;
+}
+.section--ink .video-caption { color: #8d8378; }
+
+/* --------------------------------------------------------------- Stoff-Seite */
+
+.fabric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+@media (max-width: 460px) {
+  .fabric-grid { grid-template-columns: 1fr; }
+}
+
+.fabric {
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+.fabric__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: 1.25rem;
+}
+.fabric__name {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--ink);
+  margin: 0;
+}
+.badge {
+  font-size: .71875rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .3rem .75rem;
+  border-radius: 999px;
+  background: var(--sand-2);
+  color: var(--ink-2);
+}
+.badge--pg1 { background: #e5ece4; color: #3f5641; }
+.badge--pg2 { background: #eee2d4; color: #6d523a; }
+
+.fabric__colors {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line-2);
+}
+.fabric__colors h4 {
+  font-size: .75rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: .85rem;
+}
+.fabric__colors .tag { text-transform: none; letter-spacing: .02em; font-size: .78125rem; }
+
+.fabric__hersteller {
+  display: block;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: .3rem;
+}
+
+/* Echte Stoffmuster: Foto-Kacheln, verlinkt auf die Grossansicht */
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+  gap: .9rem .7rem;
+}
+.swatch {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.swatch img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 1px solid var(--line-2);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.swatch:hover img {
+  transform: scale(1.05);
+  box-shadow: var(--shadow);
+}
+.swatch__name {
+  display: block;
+  font-size: .6875rem;
+  line-height: 1.3;
+  color: var(--muted);
+  margin-top: .35rem;
+  text-align: center;
+}
+
+/* -------------------------------------------------------------- Formular */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+.field { display: flex; flex-direction: column; gap: .4rem; }
+.field--full { grid-column: 1 / -1; }
+.field label { font-size: .875rem; font-weight: 500; color: var(--ink); }
+.field input,
+.field textarea,
+.field select {
+  font: inherit;
+  font-size: .9375rem;
+  padding: .8rem .9rem;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--ink);
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus { border-color: var(--accent); outline: none; }
+.field textarea { resize: vertical; min-height: 130px; }
+
+.form-note {
+  font-size: .875rem;
+  color: var(--muted);
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+  margin-top: 1.75rem;
+}
+
+/* ------------------------------------------------------------------ Hinweis */
+
+.callout {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  background: var(--card);
+  padding: 1.25rem 1.5rem;
+  font-size: .9375rem;
+}
+.callout strong { color: var(--ink); }
+
+/* ------------------------------------------------------------------- Footer */
+
+.site-footer {
+  background: var(--ink);
+  color: #a79c8f;
+  padding-block: clamp(3rem, 6vw, 4.5rem) 2rem;
+  font-size: .9375rem;
+}
+.site-footer a { color: #d6ccc0; text-decoration: none; }
+.site-footer a:hover { color: #fff; text-decoration: underline; }
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2.5rem 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+.footer-grid h4 {
+  color: #fff;
+  font-size: .75rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+}
+.footer-grid ul { list-style: none; margin: 0; padding: 0; }
+.footer-grid li { margin-bottom: .6rem; }
+
+.footer-brand img {
+  width: 150px;
+  margin-bottom: 1.25rem;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  justify-content: space-between;
+  padding-top: 2rem;
+  font-size: .8125rem;
+  color: #7e746a;
+}
+.footer-bottom ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ------------------------------------------------------------------ Utility */
+
+.stack > * + * { margin-top: 1.5rem; }
+.mt-0 { margin-top: 0; }
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ----------------------------------------------------------------- Lightbox
+   Grossansichten (Stoffmuster, Galerien) als Overlay statt neuem Tab.
+   Ohne JavaScript bleibt der normale Link auf die Bilddatei erhalten.      */
+
+.gallery-zoom { display: block; cursor: zoom-in; text-decoration: none; }
+.swatch { cursor: zoom-in; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 3.5rem);
+  background: rgba(24, 20, 15, .93);
+}
+.lightbox[hidden] { display: none; }
+
+.lightbox__figure {
+  margin: 0;
+  max-width: min(1080px, 100%);
+  text-align: center;
+}
+.lightbox__figure img {
+  max-width: 100%;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  margin-inline: auto;
+  background: var(--card);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .55);
+}
+.lightbox__caption {
+  color: #d6ccc0;
+  font-size: .9375rem;
+  margin-top: 1.1rem;
+}
+.lightbox__count { color: #8d8378; font-size: .8125rem; margin-left: .75rem; }
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 999px;
+  background: rgba(24, 20, 15, .55);
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s var(--ease), border-color .2s var(--ease);
+}
+.lightbox__close:hover,
+.lightbox__nav:hover { background: rgba(255, 255, 255, .14); border-color: #fff; }
+.lightbox__close { top: clamp(.75rem, 2vw, 1.5rem); right: clamp(.75rem, 2vw, 1.5rem); }
+.lightbox__nav--prev { left: clamp(.5rem, 2vw, 1.5rem); top: 50%; transform: translateY(-50%); }
+.lightbox__nav--next { right: clamp(.5rem, 2vw, 1.5rem); top: 50%; transform: translateY(-50%); }
+.lightbox__nav[hidden] { display: none; }
+
+body.lightbox-open { overflow: hidden; }
+
+/* -------------------------------------- Stoffwelt-Teaser auf der Modellseite */
+
+.swatch-grid--teaser {
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+}
+.swatch-grid--teaser .swatch { cursor: pointer; }
+.swatch-grid--teaser .swatch__name {
+  color: var(--ink-2);
+  font-size: .75rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------- Fokus auf dunklen Flaechen sichtbar */
+
+.section--ink :focus-visible,
+.site-footer :focus-visible,
+.hero:not(.hero--page) :focus-visible,
+.lightbox :focus-visible {
+  outline-color: #fff;
+}
+
+/* ------------------------------------------------------------------- Druck
+   Haendler drucken Modell- und Serviceseiten fuer die Flaeche: Navigation,
+   Formulare und Video raus, Farben auf Weiss, Karten mit feiner Linie.     */
+
+@media print {
+  body { background: #fff; color: #000; font-size: 11pt; }
+
+  .site-header, .site-footer, .nav-toggle, .skip-link, .btn, .btn-row,
+  .filter-bar, form, .form-note, .video-block, .video-caption, .lightbox,
+  .link-arrow, .no-print { display: none !important; }
+
+  .section, .section--tight { padding-block: 1.25rem; }
+  .hero, .hero--page { min-height: 0; background: #fff; border: 0; }
+  .hero__media { display: none; }
+  .hero__text { color: #000; text-align: left; margin-inline: 0; }
+  .hero__text h1, .hero__text p { color: #000; margin-inline: 0; min-height: 0; }
+  .section--ink { background: #fff; color: #000; }
+  .section--ink h2, .section--ink h3, .section--ink .card p { color: #000; }
+  .section--sand { background: #fff; }
+
+  .card, .fabric, .split__media, .gallery figure, .callout,
+  .model-hero__media, .model-card__media, .fact {
+    border-color: #ccc;
+    box-shadow: none;
+  }
+  a { text-decoration: none; color: inherit; }
+  img { break-inside: avoid; }
+  .card, .fabric, .gallery figure { break-inside: avoid; }
+}
