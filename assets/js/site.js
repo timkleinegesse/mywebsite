@@ -556,8 +556,7 @@
     var statements = [
       'Polstermöbel sind<br>unser Handwerk.',
       'Qualität ist<br>unser Anspruch.',
-      'Der Aufbau ist<br>unser Argument.',
-      'Ihr Sortiment ist<br>unser Auftrag.'
+      'Der Aufbau ist<br>unser Argument.'
     ];
 
     var reduce = window.matchMedia &&
