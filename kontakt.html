@@ -50,8 +50,8 @@
         <span class="eyebrow">Kontakt</span>
         <h1>Sprechen wir über Ihr Polstersortiment.</h1>
         <p>
-          Ob Preisliste, Musterkarte oder ein Termin in Ihrem Haus – schreiben
-          Sie uns kurz, worum es geht.
+          Schreiben Sie uns kurz, worum es geht – wir melden uns zeitnah
+          bei Ihnen zurück. Für Bestandskunden und Neukunden.
         </p>
       </div>
     </div>
@@ -83,6 +83,9 @@
               Deutschland
             </p>
             <p class="result-note">Besuch nach Terminvereinbarung.</p>
+            <a class="link-arrow"
+               href="https://maps.google.com/?q=Christmann+GmbH,+Rietberger+Str.+9,+33449+Langenberg"
+               target="_blank" rel="noopener" style="margin-top:.75rem">Route planen</a>
           </div>
 
           <table class="spec-table">
@@ -146,14 +149,18 @@
                 <label for="k-tel">Telefon</label>
                 <input id="k-tel" name="telefon" type="tel" autocomplete="tel">
               </div>
-              <div class="field field--full">
-                <label for="k-betreff">Betreff</label>
-                <select id="k-betreff" name="betreff">
-                  <option>Typen- und Preisliste</option>
-                  <option>Stoffmuster</option>
+              <div class="field">
+                <label for="k-kunde">Sie sind *</label>
+                <select id="k-kunde" name="kundenstatus" required>
+                  <option>Neukunde</option>
+                  <option>Bestandskunde</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="k-anliegen">Ihr Anliegen *</label>
+                <select id="k-anliegen" name="anliegen" required>
+                  <option>Kontaktaufnahme</option>
                   <option>Terminvereinbarung</option>
-                  <option>Schulungsunterlagen</option>
-                  <option>Sonstiges</option>
                 </select>
               </div>
               <div class="field field--full">
