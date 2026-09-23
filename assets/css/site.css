@@ -342,7 +342,9 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 
 .hero {
   position: relative;
-  background: var(--sand-2);
+  /* Dunkler Grund als Fallback: die weisse Schrift bleibt lesbar,
+     auch solange das Hero-Foto noch laedt (langsames Mobilnetz) */
+  background: var(--ink-2);
   min-height: clamp(520px, 82vh, 820px);
   display: flex;
   align-items: center;
