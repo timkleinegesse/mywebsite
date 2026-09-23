@@ -1225,15 +1225,6 @@ body.lightbox-open { overflow: hidden; }
   border: 1px solid var(--line-2);
 }
 
-/* --------------- Redaktionelles Modellraster: erste Kachel doppelt breit */
-
-@media (min-width: 700px) {
-  .model-grid--editorial .model-card:first-child { grid-column: span 2; }
-  .model-grid--editorial .model-card:first-child .model-card__media {
-    aspect-ratio: 16 / 8.5;
-  }
-}
-
 /* ------------------------------------------------------------------- Druck
    Haendler drucken Modell- und Serviceseiten fuer die Flaeche: Navigation,
    Formulare und Video raus, Farben auf Weiss, Karten mit feiner Linie.     */
