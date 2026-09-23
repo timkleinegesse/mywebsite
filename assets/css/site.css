@@ -85,9 +85,13 @@ h4 { font-size: 1rem; }
 p { margin: 0 0 1.1em; }
 p:last-child { margin-bottom: 0; }
 
-/* Lange deutsche Komposita duerfen nie aus ihren Boxen laufen */
+/* Lange deutsche Komposita duerfen nie aus ihren Boxen laufen.
+   hyphens: auto trennt mit korrektem Trennstrich (lang="de"),
+   break-word bleibt nur als letzte Rettung. */
 h1, h2, h3, h4, p, li, th, td, figcaption, dt, dd {
   overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 a { color: inherit; text-decoration-color: var(--line); text-underline-offset: 3px; }
@@ -610,6 +614,12 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+/* Raster mit vielen Karten und langen Ueberschriften: maximal drei
+   Spalten, damit die fetten Titel auch bei Vollbild einzeilig bleiben */
+.cards--3 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .card {
