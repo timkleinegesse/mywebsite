@@ -615,6 +615,16 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   border: 1px solid var(--line-2);
   padding: clamp(1.5rem, 2.5vw, 2rem);
 }
+
+/* Kompaktes Kartenraster fuer schmale Spalten (z. B. neben einem Bild):
+   immer zwei Karten nebeneinander, nur auf Handybreite untereinander */
+.cards--halves {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 560px) {
+  .cards--halves { grid-template-columns: 1fr; }
+}
 .card h3 { margin-bottom: .5rem; }
 .card p { font-size: .9375rem; color: var(--muted); }
 .card__num {
