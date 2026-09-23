@@ -38,7 +38,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Deep Free ist die legere Modellreihe im Programm: eine extra tiefe ' +
            'Sitzfläche und ein Tonnentaschenfederkern, der auch bei großzügigen ' +
            'Sitzflächen punktelastisch bleibt. Alle tragenden Teile des Gestells sind aus Massivholz.',
-    tags: ['Tonnentaschenfederkern', 'Longchair', 'Kopfstütze'],
+    tags: ['Tonnentaschenfederkern'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, Tonnentaschenfederkern mit PUR-Schaum ' +
           '(mind. RG 35), abgedeckt mit Textilvlies und Wattevlies.',
@@ -65,7 +65,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Deep Seat ist das tiefste und zugleich niedrigste Modell der ' +
            'Kollektion - ein kubischer Baukasten für große Wohnflächen, ' +
            'bis hin zum Longchair XL.',
-    tags: ['Tonnentaschenfederkern', 'Longchair', 'Kopfstütze', 'XL-Tiefe'],
+    tags: ['Tonnentaschenfederkern'],
     gestell: 'Stabiles Grundgestell aus Massivholz und Holzwerkstoffen.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, Tonnentaschenfederkern mit PUR-Schaum ' +
           '(mind. RG 35), abgedeckt mit Textilvlies und Wattevlies.',
@@ -92,7 +92,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Modena setzt auf eine flache Silhouette und die größte Sitztiefe ' +
            'im Programm. Der optionale Sichtholzrahmen läuft als sichtbare ' +
            'Sockelkante um das Möbel und gibt der Reihe ihr eigenes Gesicht.',
-    tags: ['Tonnentaschenfederkern', 'Longchair', 'Sichtholzrahmen'],
+    tags: ['Tonnentaschenfederkern'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, Tonnentaschenfederkern mit PUR-Schaum ' +
           '(mind. RG 35), abgedeckt mit Textilvlies und Wattevlies.',
@@ -118,7 +118,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Bellagio ist die Funktionsreihe: die Armlehne ist klappbar ausgeführt, ' +
            'die Sitztiefe lässt sich in zwei Stufen verstellen. Dazu ein breites ' +
            'Programm an Anreihelementen, Spitzecken, Hockern und Kissen.',
-    tags: ['Funktion', 'Longchair', 'Anreihelemente'],
+    tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell aus Massivholz und Holzwerkstoffen.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, PUR-Schaum, Inlett mit Füllung.',
     aufbau: ['Gestell', 'Wellenunterfederung', 'PUR Schaum', 'Inlett mit Füllung',
@@ -145,7 +145,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Modular verzichtet auf Armlehnen und arbeitet stattdessen mit runden und ' +
            'geraden Basiselementen, losen Rückenkissen und großzügigen Hockern. ' +
            'Der Sitz besteht durchgehend aus Tonnentaschenfederkern.',
-    tags: ['Tonnentaschenfederkern', 'Frei kombinierbar'],
+    tags: ['Tonnentaschenfederkern'],
     gestell: 'Stabiles Grundgestell aus Massivholz und Holzwerkstoffen.',
     sitz: 'Hochwertiger punktelastischer Tonnentaschenfederkernsitz (TTFK), abgedeckt ' +
           'mit Textilvlies, Schaum (mind. RG 35) und Wattevlies.',
@@ -166,7 +166,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Como ist das komfortorientierte Modell: verstellbare Kopfstützen, ' +
            'Sitzvorzug wahlweise motorisch und eine erweiterbare Gesamttiefe. ' +
            'Alle tragenden Gestellteile aus Massivholz.',
-    tags: ['Funktion', 'Longchair', 'Kopfstütze', 'Motorisch'],
+    tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, weicher Polsteraufbau aus PUR-Schaum.',
     aufbau: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
@@ -191,7 +191,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Pisa ist eines der kompaktesten Modelle der Kollektion: flache ' +
            'Silhouette, klare Blockarmlehne. Die Ottomane lässt sich links oder ' +
            'rechts anstellen - passend für kleinere Grundrisse.',
-    tags: ['Ottomane', 'Kompakt'],
+    tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, PUR-Schaum.',
     aufbau: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
@@ -211,7 +211,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Hamilton kombiniert eine extra tiefe Sitzfläche mit einer kubischen ' +
            'Armlehne und einer Umbauecke. Der Sitz steht auf Tonnentaschenfederkern, ' +
            'das Gestell auf Massivholz, das Möbel selbst auf flachen Kunststoffgleitern.',
-    tags: ['Tonnentaschenfederkern', 'Umbauecke'],
+    tags: ['Tonnentaschenfederkern'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, Tonnentaschenfederkern mit PUR-Schaum, ' +
           'Textilvlies, Schaum (mind. RG 35) und Wattevlies.',
@@ -235,7 +235,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Pure arbeitet wie Modular ohne feste Armlehnen: extra tiefe ' +
            'Basiselemente mit losen Rückenkissen, ergänzt um Armlehnen-Kissen - ' +
            'und ein durchgehender Tonnentaschenfederkernsitz.',
-    tags: ['Tonnentaschenfederkern', 'Frei kombinierbar'],
+    tags: ['Tonnentaschenfederkern'],
     gestell: 'Stabiles Grundgestell aus Massivholz und Holzwerkstoffen.',
     sitz: 'Hochwertiger punktelastischer Tonnentaschenfederkernsitz (TTFK), abgedeckt ' +
           'mit Textilvlies, Schaum (mind. RG 35) und Wattevlies.',
@@ -255,7 +255,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Cubetto ist der Wurfhocker zum Programm: kompaktes, würfelnahes ' +
            'Format, gefüllt mit einem Inlett aus hochwertigen Polystyrolkugeln - ' +
            'in allen Stoffgruppen beziehbar.',
-    tags: ['Hocker', 'Kompakt'],
+    tags: ['Polystyrol-Inlett'],
     gestell: 'Formstabiles Kissenmöbel ohne Rahmengestell.',
     sitz: 'Inlett aus hochwertigen Polystyrolkugeln, Nachlassen der Sitzfestigkeit ' +
           'im Laufe der Nutzung ist materialtypisch.',
@@ -275,7 +275,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Positano bringt verstellbare Rückenteile und eine stufenweise ' +
            'verstellbare Sitztiefe mit - bei bewusst niedriger Sitzhöhe. Die ' +
            'breiten Armteile tragen Nierenkissen und Ablagen.',
-    tags: ['Funktion', 'Longchair'],
+    tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, PUR-Schaum.',
     schichten: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
@@ -296,7 +296,7 @@ window.SOFATREND_MODELLE = [
     claim: 'Niedrige Lehne, extra tiefer Sitz.',
     intro: 'Capri ist die flache Lounge-Neuheit: niedrige Gesamthöhe, eine ' +
            'extra tiefe Sitzfläche und breite 1-Sitzer-Elemente.',
-    tags: ['XL-Tiefe', 'Kompakt'],
+    tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern, abgedeckt mit Textilvlies; PUR-Schaum.',
     schichten: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
@@ -319,7 +319,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Soho steht auf schwarzen Metallkufen und ist in zwei ' +
            'Programmvarianten geplant - mit und ohne Trapezelement. Höhe und ' +
            'Sitztiefe unterscheiden sich je nach Ausführung.',
-    tags: ['Metallkufe', 'Trapezecke'],
+    tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern, abgedeckt mit Textilvlies; PUR-Schaum mit ' +
           'Wattevlies-Abdeckung.',
@@ -339,7 +339,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Malibu polstert als einziges Modell mit einer zusätzlichen ' +
            'Gel-Schaum-Lage und kombiniert das mit einer Umbauecke und schmalen ' +
            'Armteilen über die volle Tiefe.',
-    tags: ['Gel-Schaum', 'Umbauecke'],
+    tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, PUR-Schaum und Gel-Schaum, ' +
           'abgedeckt mit Wattevlies.',
@@ -361,7 +361,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Amalfi baut auf großen, breiten Basiselementen auf, steht auf ' +
            'einer schwarzen Metallkufe und sitzt durchgehend auf ' +
            'punktelastischem Tonnentaschenfederkern.',
-    tags: ['Tonnentaschenfederkern', 'Frei kombinierbar', 'Metallkufe'],
+    tags: ['Tonnentaschenfederkern'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Hochwertiger punktelastischer Tonnentaschenfederkernsitz (TTFK), abgedeckt ' +
           'mit Textilvlies, Schaum (mind. RG 35) und Wattevlies.',
@@ -379,7 +379,7 @@ window.SOFATREND_MODELLE = [
     claim: 'Kompakt mit Umbauecke und Hockerbank.',
     intro: 'Lucca ist die kompakte Neuheit: Umbauecke, Hockerbank und breite ' +
            '1-Sitzer-Elemente auf kleiner Stellfläche.',
-    tags: ['Umbauecke', 'Kompakt'],
+    tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, Schaumstoff.',
     schichten: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
@@ -398,7 +398,7 @@ window.SOFATREND_MODELLE = [
     claim: 'Kompakter Longchair-Klassiker.',
     intro: 'Monza bringt die klassische Longchair-Kombination in kompakter ' +
            'Form - mit klarer Silhouette und schlanken Armteilen.',
-    tags: ['Longchair', 'Kompakt'],
+    tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, PUR-Schaum.',
     schichten: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',

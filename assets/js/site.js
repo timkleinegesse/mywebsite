@@ -133,7 +133,7 @@
       if (note) {
         var parts = [];
         if (activeKoll) parts.push('Kollektion „' + activeKoll + '“');
-        if (activeTag) parts.push('Merkmal „' + activeTag + '“');
+        if (activeTag) parts.push('Modellaufbau „' + activeTag + '“');
         note.textContent = parts.length
           ? shown.length + ' von ' + MODELLE.length + ' Modellen mit ' + parts.join(' und ')
           : MODELLE.length + ' Modelle';
