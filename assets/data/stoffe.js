@@ -65,9 +65,9 @@ window.SOFATREND_STOFFE = [
     ]
   },
   {
-    /* Neu im Programm; Preisgruppe noch nicht festgelegt. */
+    /* Neu im Programm. */
     name: 'CRISP',
-    pg: '',
+    pg: 'PG2',
     hersteller: 'Textaafoam',
     art: 'Chenille-Flachgewebe',
     swatches: true,
@@ -119,9 +119,9 @@ window.SOFATREND_STOFFE = [
     ]
   },
   {
-    /* Neu im Programm; Preisgruppe noch nicht festgelegt. */
+    /* Neu im Programm. */
     name: 'ARLES',
-    pg: '',
+    pg: 'PG2',
     hersteller: 'Globatex',
     swatches: true,
     farben: [
