@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Für Händler – sofatrend</title>
-<meta name="description" content="Typen- und Preislisten, Musterservice, Schulungsunterlagen und Produktpass: was sofatrend dem Möbelhandel als Lieferant mitgibt.">
+<meta name="description" content="Typen- und Preislisten, Muster, Schulungsunterlagen und Produktpass: was sofatrend dem Möbelhandel als Lieferant mitgibt. Kontaktaufnahme und Terminvereinbarung.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="sofatrend">
 <meta property="og:locale" content="de_DE">
 <meta property="og:title" content="Für Händler – sofatrend">
-<meta property="og:description" content="Typen- und Preislisten, Musterservice, Schulungsunterlagen und Produktpass: was sofatrend dem Möbelhandel als Lieferant mitgibt.">
+<meta property="og:description" content="Typen- und Preislisten, Muster, Schulungsunterlagen und Produktpass: was sofatrend dem Möbelhandel als Lieferant mitgibt. Kontaktaufnahme und Terminvereinbarung.">
 <meta property="og:url" content="https://www.sofatrend.eu/haendler.html">
 <meta property="og:image" content="https://www.sofatrend.eu/assets/img/hero.jpg">
 <link rel="stylesheet" href="assets/css/fonts.css?v=7">
@@ -131,7 +131,7 @@
         </article>
         <article class="card">
           <span class="card__num">Muster</span>
-          <h3>Musterservice</h3>
+          <h3>Unser Service für Sie</h3>
           <p>
             Originalmuster aller neun Bezugsqualitäten und ihrer Farbpaletten.
             Da Polsterstoffe changieren und chargenbedingt abweichen, ist das
@@ -225,11 +225,11 @@
     <div class="wrap">
       <div class="split split--top">
         <div>
-          <span class="eyebrow">Anfrage</span>
-          <h2>Unterlagen anfordern.</h2>
+          <span class="eyebrow">Kontakt</span>
+          <h2>Kontaktaufnahme und Terminvereinbarung.</h2>
           <p>
-            Sagen Sie uns, woran Sie interessiert sind – wir melden uns mit
-            Preislisten, Mustern und einem Terminvorschlag zurück.
+            Sagen Sie uns, wer Sie sind und worum es geht – wir melden uns
+            zeitnah bei Ihnen zurück. Für Bestandskunden und Neukunden.
           </p>
           <p class="form-note">
             Diese Website ist derzeit statisch. Das Formular öffnet Ihr
@@ -257,23 +257,28 @@
               <label for="h-tel">Telefon</label>
               <input id="h-tel" name="telefon" type="tel" autocomplete="tel">
             </div>
-            <div class="field field--full">
-              <label for="h-interesse">Interesse</label>
-              <select id="h-interesse" name="interesse">
-                <option>Gesamtkollektion</option>
-                <option>Einzelne Modellreihe</option>
-                <option>Nur Stoffmuster</option>
-                <option>Erstgespräch / Termin</option>
+            <div class="field">
+              <label for="h-kunde">Sie sind *</label>
+              <select id="h-kunde" name="kundenstatus" required>
+                <option>Neukunde</option>
+                <option>Bestandskunde</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="h-anliegen">Ihr Anliegen *</label>
+              <select id="h-anliegen" name="anliegen" required>
+                <option>Kontaktaufnahme</option>
+                <option>Terminvereinbarung</option>
               </select>
             </div>
             <div class="field field--full">
               <label for="h-nachricht">Nachricht</label>
               <textarea id="h-nachricht" name="nachricht"
-                        placeholder="Fläche, Preislagen, gewünschte Modellreihen …"></textarea>
+                        placeholder="Worum geht es? Bei Terminwunsch gern mit Vorschlag …"></textarea>
             </div>
           </div>
           <div class="btn-row">
-            <button class="btn" type="submit">Anfrage senden</button>
+            <button class="btn" type="submit">Nachricht senden</button>
           </div>
         </form>
       </div>
