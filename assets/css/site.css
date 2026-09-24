@@ -798,6 +798,53 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   line-height: 1.5;
 }
 
+/* Ausstellung Langenberg: Rundgang als Bildmosaik (Grossansicht per Lightbox) */
+.expo {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(.5rem, 1.2vw, .875rem);
+  margin-block: clamp(1.5rem, 3vw, 2.5rem);
+}
+.expo__tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--sand-2);
+  aspect-ratio: 4 / 3;
+  cursor: zoom-in;
+}
+.expo__tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .9s var(--ease);
+}
+.expo__tile:hover img { transform: scale(1.035); }
+.expo__tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.expo__tile--lead  { grid-column: span 8; grid-row: span 2; aspect-ratio: auto; }
+.expo__tile--side  { grid-column: span 4; }
+.expo__tile--third { grid-column: span 4; }
+.expo__tile--half  { grid-column: span 6; aspect-ratio: 3 / 2; }
+.expo__chip {
+  position: absolute;
+  left: clamp(.75rem, 2vw, 1.25rem);
+  bottom: clamp(.75rem, 2vw, 1.25rem);
+  padding: .5rem .85rem;
+  background: rgba(29, 25, 19, .72);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+@media (max-width: 899px) {
+  .expo { grid-template-columns: repeat(2, 1fr); }
+  .expo__tile--lead { grid-column: span 2; grid-row: auto; aspect-ratio: 4 / 3; }
+  .expo__tile--side, .expo__tile--third, .expo__tile--half { grid-column: span 1; aspect-ratio: 4 / 3; }
+}
+
 .pill-list {
   display: flex;
   flex-wrap: wrap;
