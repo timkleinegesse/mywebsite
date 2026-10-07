@@ -64,21 +64,16 @@
     // Wohnszenen laufen randlos (cover), Freisteller stehen auf Weiss (contain)
     var media = el('div', 'model-card__media model-card__media--' + (m.bildStil || 'contain'));
     var img = el('img');
-    img.src = IMG + m.bild + '-thumb.jpg';
-    img.alt = m.name + ' - Produktansicht aus der Typen- und Preisliste';
+    img.src = IMG + m.bild + '-thumb.webp';
+    img.alt = m.name + ' in einer Wohnszene';
     img.loading = 'lazy';
     img.width = 760;
     img.height = 500;
     media.appendChild(img);
 
     var body = el('div', 'model-card__body');
-    body.appendChild(el('span', 'model-card__koll', m.kollektion));
     body.appendChild(el('h3', 'model-card__name', m.name));
     body.appendChild(el('p', 'model-card__claim', m.claim));
-
-    var meta = el('div', 'model-card__meta');
-    meta.appendChild(el('span', 'tag', 'Konfigurierbar'));
-    body.appendChild(meta);
 
     a.appendChild(media);
     a.appendChild(body);
@@ -221,19 +216,8 @@
 
     var hero = document.getElementById('m-hero-img');
     if (hero) {
-      hero.src = IMG + m.bild + '.jpg';
-      hero.alt = m.name + ' – Produktansicht aus der Typen- und Preisliste';
-      var frame = hero.closest('.model-hero__media');
-      if (frame) frame.classList.add('model-hero__media--' + (m.bildStil || 'contain'));
-    }
-
-    setText('m-koll', m.kollektion);
-
-    var tagList = document.getElementById('m-tags');
-    if (tagList) {
-      var li = el('li');
-      li.appendChild(el('span', 'tag', 'Konfigurierbar'));
-      tagList.appendChild(li);
+      hero.src = IMG + m.bild + '.webp';
+      hero.alt = m.name + ' in einer Wohnszene';
     }
 
     setText('m-gestell', m.gestell);
@@ -258,11 +242,11 @@
     // sieben dokumentierten Modellreihen; eine Schnittzeichnung aus der
     // Preisliste haben inzwischen fast alle Modelle.
     if (m.hatAufbau) {
-      setImg('m-img-gestell', IMG + m.slug + '-gestell.jpg',
+      setImg('m-img-gestell', IMG + m.slug + '-gestell.webp',
              m.name + ' – Gestell mit Wellenunterfederung');
-      setImg('m-img-aufbau', IMG + m.slug + '-aufbau.jpg',
+      setImg('m-img-aufbau', IMG + m.slug + '-aufbau.webp',
              m.name + ' – Polsteraufbau im Schnitt');
-      setImg('m-img-schnitt', IMG + m.slug + '-schnitt.png',
+      setImg('m-img-schnitt', IMG + m.slug + '-schnitt.webp',
              m.name + ' – Schnittzeichnung mit nummerierten Aufbaupositionen');
     } else {
       var gal = document.getElementById('m-aufbau-galerie');
@@ -325,7 +309,7 @@
         a.href = 'stoffe.html#stoff-' + s.name.toLowerCase();
         a.title = s.name + ' ' + farbe + ' – zur Stoffkollektion';
         var img = el('img');
-        img.src = 'assets/img/stoffe/' + s.name.toLowerCase() + '-' + farbSlug(farbe) + '.jpg';
+        img.src = 'assets/img/stoffe/' + s.name.toLowerCase() + '-' + farbSlug(farbe) + '.webp';
         img.alt = 'Stoffmuster ' + s.name + ' in ' + farbe;
         img.loading = 'lazy';
         img.width = 120;
@@ -403,11 +387,11 @@
         s.farben.forEach(function (f) {
           var base = IMG_STOFFE + s.name.toLowerCase() + '-' + farbSlug(f);
           var a = el('a', 'swatch');
-          a.href = base + '-gross.jpg';
+          a.href = base + '-gross.webp';
           a.title = s.name + ' ' + f + ' – Großansicht öffnen';
           a.setAttribute('data-caption', s.name + ' – ' + f);
           var img = el('img');
-          img.src = base + '.jpg';
+          img.src = base + '.webp';
           img.alt = 'Stoffmuster ' + s.name + ' in ' + f;
           img.loading = 'lazy';
           img.width = 120;
@@ -576,33 +560,86 @@
 
   /* ------------------------------------------------------------ Formulare */
 
-  /* Die Seite ist statisch und hat kein Backend. Bis eines angebunden ist,
-     setzt das Formular die Eingaben in eine vorbereitete E-Mail um. */
+  /* Versand: zuerst an das in data-endpoint hinterlegte Backend (eigenes
+     PHP-Skript beim Hoster, siehe kontakt-send.php, oder ein Formular-Dienst
+     wie Formspree, der mit Accept: application/json antwortet). Antwortet das
+     Backend nicht oder fehlerhaft (z. B. auf einem reinen Static-Host), oeffnet
+     das Formular ersatzweise das E-Mail-Programm mit den ausgefuellten Angaben. */
   function initForms() {
     var forms = document.querySelectorAll('[data-mailto-form]');
 
     Array.prototype.forEach.call(forms, function (form) {
-      form.addEventListener('submit', function (ev) {
-        ev.preventDefault();
+      var status = form.querySelector('.form-status');
+      var button = form.querySelector('button[type="submit"]');
 
-        var to = form.getAttribute('data-mailto-form');
-        var subject = form.getAttribute('data-subject') || 'Anfrage über sofatrend.de';
+      function say(text, isError) {
+        if (!status) return;
+        status.hidden = false;
+        status.textContent = text;
+        status.classList.toggle('is-error', !!isError);
+      }
+
+      function collectLines() {
         var lines = [];
-
         Array.prototype.forEach.call(form.elements, function (f) {
-          if (!f.name || f.type === 'submit') return;
+          if (!f.name || f.type === 'submit' || f.name === 'website') return;
           var label = form.querySelector('label[for="' + f.id + '"]');
-          var name = label ? label.textContent.replace(/\s*\*$/, '') : f.name;
+          var name = label ? label.textContent.replace(/\s+/g, ' ').replace(/\s*\*\s*$/, '').trim() : f.name;
           if (f.type === 'checkbox') {
-            lines.push(name + ': ' + (f.checked ? 'ja' : 'nein'));
+            lines.push('Datenschutz-Einwilligung: ' + (f.checked ? 'ja' : 'nein'));
           } else if (f.value) {
             lines.push(name + ': ' + f.value);
           }
         });
+        return lines;
+      }
 
+      function openMailto() {
+        var to = form.getAttribute('data-mailto-form');
+        var subject = form.getAttribute('data-subject') || 'Anfrage über die sofatrend-Website';
         location.href = 'mailto:' + to +
           '?subject=' + encodeURIComponent(subject) +
-          '&body=' + encodeURIComponent(lines.join('\n'));
+          '&body=' + encodeURIComponent(collectLines().join('\n'));
+        say('Ihr E-Mail-Programm wurde mit den Angaben geöffnet. Bitte senden Sie die E-Mail dort ab.');
+      }
+
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+
+        if (typeof form.reportValidity === 'function' && !form.reportValidity()) return;
+
+        var hp = form.querySelector('[name="website"]');
+        if (hp && hp.value) { say('Vielen Dank, Ihre Anfrage ist eingegangen.'); return; } // Bot
+
+        var endpoint = form.getAttribute('data-endpoint');
+        if (!endpoint || typeof fetch !== 'function') { openMailto(); return; }
+
+        if (button) { button.disabled = true; button.setAttribute('aria-busy', 'true'); }
+        say('Ihre Anfrage wird gesendet …');
+
+        var data = new FormData(form);
+        data.append('_subject', form.getAttribute('data-subject') || 'Anfrage über die sofatrend-Website');
+
+        fetch(endpoint, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        }).then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          // Nur eine echte JSON-Antwort mit ok:true gilt als Erfolg. Ein
+          // Static-Host liefert die .php-Datei als Text aus (Status 200),
+          // das darf nicht als "gesendet" durchgehen.
+          return res.json();
+        }).then(function (json) {
+          if (!json || json.ok !== true) throw new Error('Backend meldet Fehler');
+          form.reset();
+          say('Vielen Dank, Ihre Anfrage ist eingegangen. Wir melden uns in der Regel innerhalb von zwei Werktagen.');
+        }).catch(function () {
+          // Kein Backend erreichbar: auf E-Mail-Programm ausweichen
+          openMailto();
+        }).then(function () {
+          if (button) { button.disabled = false; button.removeAttribute('aria-busy'); }
+        });
       });
     });
   }

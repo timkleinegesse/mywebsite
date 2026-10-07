@@ -34,7 +34,7 @@ Kein Build, keine Abhängigkeiten. Zwei Möglichkeiten:
 | `kollektion.html` | Alle 17 Modelle („Modelle") mit Merkmal-Filter; Maße und Preise auf Anfrage |
 | `modell.html?m=<slug>` | Detailseite je Modell (Aufbau, Konstruktion, Elemente – bewusst ohne Maße) – ein Template, Daten aus `assets/data/modelle.js` |
 | `qualitaet.html` | Gestell/Federung/Schaum/Bezug, Schnittzeichnungen, Polstercharaktere, Toleranzen, Produktpass |
-| `stoffe.html` | 9 Stoffqualitäten mit Prüfwerten und echten Musterfotos je Farbe (Kachel + Großansicht in `assets/img/stoffe/`): Textaafoam (REBEL, RHYTHM, GLORY, CAYENNE, CRISP) und Globatex (FANTASY, LENNON, MIRACLE, ARLES) |
+| `stoffe.html` | 9 Stoffqualitäten mit echten Musterfotos je Farbe (Kachel + Großansicht in `assets/img/stoffe/`): Textaafoam (REBEL, RHYTHM, GLORY, CAYENNE, CRISP PG2) und Globatex (FANTASY, LENNON, MIRACLE, ARLES PG2); Prüfwerte bewusst nur auf Anfrage |
 | `schulung.html` | Schulungswissen für Verkaufsteams in fünf Modulen (Aufbau, Stoffkennwerte, Polstercharaktere, Funktionen, Reklamation) |
 | `produktpass.html` | Der A5-Produktpass online in fünf Kapiteln (Aufstellung, Pflege, Nutzung, Gewährleistung, Entsorgung) + PDF-Download unter `downloads/produktpass.pdf` |
 | `haendler.html` | B2B-Leistungen und Anfrageformular |
@@ -56,7 +56,7 @@ Fließtexten (auch auf Startseite und Schulungsseite). Diese Zahlen
 erhalten Händler erst mit der zugesandten Typen- und Preisliste; an
 ihre Stelle sind „auf Anfrage"-Hinweise mit Kontakt-CTA getreten.
 
-Die Produkt-Präsentationsbilder (`<slug>-szene.jpg`) sind die Renderings von
+Die Produkt-Präsentationsbilder (`<slug>-szene.webp`) sind die Renderings von
 Seite 1 der jeweiligen Typen- und Preisliste, direkt als eingebettete JPEGs
 aus den PDFs extrahiert. Nur die sieben ursprünglichen Modellreihen haben
 zusätzlich Schnittzeichnung und Aufbau-Renderings (`hatAufbau: true`).
@@ -75,7 +75,7 @@ Alle Produktangaben stammen aus den mitgelieferten Unterlagen:
   Nachhaltigkeitstext
 - **`../Sofatrend Informationen/sofah.mp4`**: Unternehmensfilm – mit ffmpeg
   auf 1280p/9,6 MB komprimiert unter `assets/video/sofatrend-film.mp4`
-  (Original 66 MB), Posterbild `assets/img/film-poster.jpg`, lädt erst
+  (Original 66 MB), Posterbild `assets/img/film-poster.webp`, lädt erst
   bei Klick (`preload="none"`)
 - **<https://www.sofatrend.eu>** (bestehende Website): Kontaktdaten, Firmensitz,
   Gründungsjahr 2001, Fertigungstiefe (eigene CNC-Holzverarbeitung, Polsterei,
@@ -94,10 +94,33 @@ dienten nur zur Schärfung der Positionierung im Text.
 - [ ] `impressum.html` und `datenschutz.html` fertigstellen (als markierte
       Entwürfe vorhanden): Geschäftsführer, Registernummern und Hosting-Angabe
       ergänzen, juristisch prüfen lassen – Impressumspflicht!
-- [ ] Formulare an ein Backend anbinden (derzeit mailto-Fallback an
-      info@sofatrend.sk) und Datenschutz-Einwilligung ergänzen
-- [ ] Preisgruppen für die neuen Qualitäten CRISP und ARLES festlegen
-      (stehen auf der Stoffseite als „Preisgruppe auf Anfrage")
+- [ ] Kontaktformular beim Hoster scharf schalten: `kontakt-send.php`
+      braucht PHP und eine Absenderadresse der eigenen Domain (siehe
+      Abschnitt „Kontaktformular")
+
+## Kontaktformular
+
+`kontakt.html` sendet per `fetch` an das Backend aus dem Attribut
+`data-endpoint` (Standard: `kontakt-send.php`, ein kleines PHP-Skript mit
+Pflichtfeld-Prüfung, Honeypot und JSON-Antwort). Nur eine Antwort
+`{"ok":true}` gilt als Erfolg. Antwortet der Server nicht oder liefert kein
+JSON (reiner Static-Host, GitHub Pages), öffnet das Formular ersatzweise das
+E-Mail-Programm des Besuchers mit allen Angaben (`data-mailto-form`).
+
+Einrichtung beim Hoster:
+
+1. **Mit PHP** (die meisten Shared-Hoster): in `kontakt-send.php` die
+   Konstanten `EMPFAENGER` (Zielpostfach) und `ABSENDER` (Adresse der
+   eigenen Domain, sonst Spam-Verdacht) setzen. SPF-Eintrag der Domain um
+   den Mailserver des Hosters ergänzen.
+2. **Ohne PHP**: bei einem Formular-Dienst (z. B. Formspree) ein Formular
+   anlegen und dessen URL in `kontakt.html` als `data-endpoint` und `action`
+   eintragen. Der Dienst muss auf `Accept: application/json` mit
+   `{"ok":true}` antworten (Formspree tut das).
+
+Das Formular enthält eine Pflicht-Checkbox mit Link auf die
+Datenschutzerklärung; der Text dort muss die Formularverarbeitung
+beschreiben.
 
 ## Technik
 

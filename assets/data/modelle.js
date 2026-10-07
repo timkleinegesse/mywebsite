@@ -2,14 +2,14 @@
    Modelldaten
    Quellen: Typen- und Preislisten in ../Preislisten/ ("Freie Modelle" und
    "MOW 2026") sowie die Aufbau-Praesentation "sofatrend_modellaufbau".
-   Szenenbilder (<slug>-szene.jpg) sind die Seite-1-Renderings der Preislisten.
+   Szenenbilder (<slug>-szene.webp) sind die Seite-1-Renderings der Preislisten.
 
    Bewusst OHNE Masse, Artikel- und Bestellnummern: diese Zahlen erhalten
    Haendler erst mit der zugesandten Typen- und Preisliste.
 
    Felder:
    - kollektion : 'Modelle' (einheitliche Gruppe)
-   - bild       : Basisname des Praesentationsbilds (+ '.jpg' / '-thumb.jpg')
+   - bild       : Basisname des Praesentationsbilds (+ '.webp' / '-thumb.webp')
    - bildStil   : 'cover' (Wohnszene, randlos) | 'contain' (Freisteller)
    - aufbau     : nummerierte Legende, passend zur Schnittzeichnung
                   (nur die sieben Modelle mit hatAufbau: true)
@@ -31,8 +31,9 @@ window.SOFATREND_MODELLE = [
     bildStil: 'cover',
     hatAufbau: true,
     galerie: [
-      { b: 'deep-free-a1.jpg', t: 'Variante mit Longchair in Grau' },
-      { b: 'deep-free-a2.jpg', t: 'Rückansicht' }
+      { b: 'deep-free-k1.webp', t: 'Rückansicht' },
+      { b: 'deep-free-k2.webp', t: 'Ecksofa mit Longchair' },
+      { b: 'deep-free-k3.webp', t: 'Ecklösung, Planungsbeispiel' }
     ],
     claim: 'Tiefes, legeres Sitzen mit losen Kissen.',
     intro: 'Deep Free ist die legere Modellreihe im Programm: eine extra tiefe ' +
@@ -57,9 +58,9 @@ window.SOFATREND_MODELLE = [
     bildStil: 'cover',
     hatAufbau: true,
     galerie: [
-      { b: 'deep-seat-a1.jpg', t: 'Mit Kopfstütze, Bezug in Rosé' },
-      { b: 'deep-seat-a2.jpg', t: 'Eckvariante in Creme' },
-      { b: 'deep-seat-a3.jpg', t: 'Wohnlandschaft in Rosé' }
+      { b: 'deep-seat-k1.webp', t: 'Dreisitzer' },
+      { b: 'deep-seat-k2.webp', t: 'Ecksofa mit Longchair' },
+      { b: 'deep-seat-k3.webp', t: 'Wohnlandschaft in U-Form' }
     ],
     claim: 'Maximale Sitztiefe, niedrige Sitzhöhe.',
     intro: 'Deep Seat ist das tiefste und zugleich niedrigste Modell der ' +
@@ -84,9 +85,9 @@ window.SOFATREND_MODELLE = [
     bildStil: 'cover',
     hatAufbau: true,
     galerie: [
-      { b: 'modena-a1.jpg', t: 'Variante in Creme' },
-      { b: 'modena-a2.jpg', t: '3-Sitzer, flache Linie' },
-      { b: 'modena-a3.jpg', t: 'Ecklösung im Cord-Bezug' }
+      { b: 'modena-k1.webp', t: 'Elementgruppe mit Longchair' },
+      { b: 'modena-k2.webp', t: 'Sofa mit offenem Abschluss' },
+      { b: 'modena-k3.webp', t: 'Dreisitzer' }
     ],
     claim: 'Niedrige Linie, umlaufender Sichtholzrahmen.',
     intro: 'Modena setzt auf eine flache Silhouette und die größte Sitztiefe ' +
@@ -111,8 +112,9 @@ window.SOFATREND_MODELLE = [
     bildStil: 'cover',
     hatAufbau: true,
     galerie: [
-      { b: 'bellagio-a1.jpg', t: 'Rückenteile und Armlehne in Funktion' },
-      { b: 'bellagio-a2.jpg', t: 'Mit Kopfstützen und Kissen' }
+      { b: 'bellagio-k1.webp', t: 'Ecksofa mit Longchair' },
+      { b: 'bellagio-k2.webp', t: 'Ecklösung mit Kopfstützen, Planungsbeispiel' },
+      { b: 'bellagio-k3.webp', t: 'Sofa mit verstellbaren Armlehnen' }
     ],
     claim: 'Funktionsmodell mit klappbarer Armlehne.',
     intro: 'Bellagio ist die Funktionsreihe: die Armlehne ist klappbar ausgeführt, ' +
@@ -138,8 +140,9 @@ window.SOFATREND_MODELLE = [
     bildStil: 'cover',
     hatAufbau: true,
     galerie: [
-      { b: 'modular-a1.jpg', t: 'Elementgruppe mit Hocker' },
-      { b: 'modular-a2.jpg', t: 'Organische Rückansicht' }
+      { b: 'modular-k1.webp', t: 'Elementgruppe mit Hocker' },
+      { b: 'modular-k2.webp', t: 'Organische Rückansicht' },
+      { b: 'modular-k3.webp', t: 'Wohnlandschaft, Planungsbeispiel' }
     ],
     claim: 'Organisch geformte Basiselemente, frei kombinierbar.',
     intro: 'Modular verzichtet auf Armlehnen und arbeitet stattdessen mit runden und ' +
@@ -174,7 +177,12 @@ window.SOFATREND_MODELLE = [
     elemente: ['2-Sitzer mit Armlehne links / rechts',
                '2-Sitzer ohne Armlehne, auch mit Sitzvorzug motorisch',
                'Longchair links / rechts', 'Spitzecke',
-               'Hocker quadratisch']
+               'Hocker quadratisch'],
+    galerie: [
+      { b: 'como-k1.webp', t: 'Ecklösung' },
+      { b: 'como-k2.webp', t: 'Sofa mit Longchair' },
+      { b: 'como-k3.webp', t: 'Ecklösung, Planungsbeispiel' }
+    ]
   },
 
   {
@@ -185,7 +193,9 @@ window.SOFATREND_MODELLE = [
     bildStil: 'cover',
     hatAufbau: true,
     galerie: [
-      { b: 'pisa-a1.jpg', t: 'Freisteller mit Ottomane' }
+      { b: 'pisa-k1.webp', t: 'Sofa mit Longchair' },
+      { b: 'pisa-k2.webp', t: 'Ecklösung, Planungsbeispiel 1' },
+      { b: 'pisa-k3.webp', t: 'Ecklösung, Planungsbeispiel 2' }
     ],
     claim: 'Kompakte Grundform mit Ottomane.',
     intro: 'Pisa ist eines der kompaktesten Modelle der Kollektion: flache ' +
@@ -206,7 +216,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'hamilton-szene',
     bildStil: 'cover',
-    schnittBild: 'hamilton-schnitt.jpg',
+    schnittBild: 'hamilton-schnitt.webp',
     claim: 'Kubische Armlehne, Umbauecke, Nierenkissen.',
     intro: 'Hamilton kombiniert eine extra tiefe Sitzfläche mit einer kubischen ' +
            'Armlehne und einer Umbauecke. Der Sitz steht auf Tonnentaschenfederkern, ' +
@@ -217,7 +227,12 @@ window.SOFATREND_MODELLE = [
           'Textilvlies, Schaum (mind. RG 35) und Wattevlies.',
     schichten: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
                 'Tonnentaschenfederkern mit PUR Schaum', 'Bezugsmaterial', 'Fuß / Gleiter'],
-    elemente: ['2-Sitzer links', 'Umbauecke rechts', 'Nierenkissen']
+    elemente: ['2-Sitzer links', 'Umbauecke rechts', 'Nierenkissen'],
+    galerie: [
+      { b: 'hamilton-k1.webp', t: 'Ecklösung mit Longchair' },
+      { b: 'hamilton-k2.webp', t: 'Sofa mit Longchair' },
+      { b: 'hamilton-k3.webp', t: 'Dreisitzer' }
+    ]
   },
 
   {
@@ -226,10 +241,11 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'pure-szene',
     bildStil: 'cover',
-    schnittBild: 'pure-schnitt.jpg',
+    schnittBild: 'pure-schnitt.webp',
     galerie: [
-      { b: 'pure-a1.jpg', t: 'Freisteller mit Armlehnen-Kissen' },
-      { b: 'pure-a2.jpg', t: 'Rückansicht mit losen Rückenkissen' }
+      { b: 'pure-k1.webp', t: 'Elementgruppe mit Longchair' },
+      { b: 'pure-k2.webp', t: 'Rückansicht mit losen Rückenkissen' },
+      { b: 'pure-k3.webp', t: 'Sofa mit Longchair, Planungsbeispiel' }
     ],
     claim: 'Armloses Basisprogramm auf Tonnentaschenfederkern.',
     intro: 'Pure arbeitet wie Modular ohne feste Armlehnen: extra tiefe ' +
@@ -260,7 +276,10 @@ window.SOFATREND_MODELLE = [
     sitz: 'Inlett aus hochwertigen Polystyrolkugeln, Nachlassen der Sitzfestigkeit ' +
           'im Laufe der Nutzung ist materialtypisch.',
     schichten: ['Inlett aus hochwertigen Polystyrolkugeln', 'Bezugsmaterial'],
-    elemente: ['Wurfhocker']
+    elemente: ['Wurfhocker'],
+    galerie: [
+      { b: 'cubetto-k1.webp', t: 'Würfelhocker' }
+    ]
   },
 
 
@@ -270,7 +289,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'positano-szene',
     bildStil: 'cover',
-    schnittBild: 'positano-schnitt.jpg',
+    schnittBild: 'positano-schnitt.webp',
     claim: 'Sitztiefe stufenweise verstellbar.',
     intro: 'Positano bringt verstellbare Rückenteile und eine stufenweise ' +
            'verstellbare Sitztiefe mit - bei bewusst niedriger Sitzhöhe. Die ' +
@@ -281,7 +300,12 @@ window.SOFATREND_MODELLE = [
     schichten: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
                 'PUR Schaum', 'Bezugsmaterial', 'Gleiter'],
     elemente: ['Longchair links / rechts mit Rückenteilverstellung',
-               '1-Sitzer mit Rückenteilverstellung', 'Nierenkissen', 'Armteil']
+               '1-Sitzer mit Rückenteilverstellung', 'Nierenkissen', 'Armteil'],
+    galerie: [
+      { b: 'positano-k1.webp', t: 'Ecklösung mit Longchair' },
+      { b: 'positano-k2.webp', t: 'Sofa mit Longchair' },
+      { b: 'positano-k3.webp', t: 'Dreisitzer mit Kissen' }
+    ]
   },
 
 
@@ -292,7 +316,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'capri-szene',
     bildStil: 'cover',
-    schnittBild: 'capri-schnitt.jpg',
+    schnittBild: 'capri-schnitt.webp',
     claim: 'Niedrige Lehne, extra tiefer Sitz.',
     intro: 'Capri ist die flache Lounge-Neuheit: niedrige Gesamthöhe, eine ' +
            'extra tiefe Sitzfläche und breite 1-Sitzer-Elemente.',
@@ -302,7 +326,12 @@ window.SOFATREND_MODELLE = [
     schichten: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
                 'PUR Schaum', 'Bezugsmaterial', 'Gleiter'],
     elemente: ['1-Sitzer mit Armlehne links / rechts (extra breit)',
-               '1-Sitzer mit Abschluss rechts']
+               '1-Sitzer mit Abschluss rechts'],
+    galerie: [
+      { b: 'capri-k1.webp', t: 'Ecklösung' },
+      { b: 'capri-k2.webp', t: 'Sofa mit Longchair' },
+      { b: 'capri-k3.webp', t: 'Dreisitzer' }
+    ]
   },
 
   {
@@ -311,9 +340,9 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'soho-szene',
     bildStil: 'cover',
-    schnittBild: 'soho-schnitt.jpg',
+    schnittBild: 'soho-schnitt.webp',
     galerie: [
-      { b: 'soho-a1.jpg', t: 'Metallkufe in Schwarz' }
+      { b: 'soho-k1.webp', t: 'Ecklösung mit Longchair' }
     ],
     claim: 'Auf Metallkufen, wahlweise mit Trapezelement.',
     intro: 'Soho steht auf schwarzen Metallkufen und ist in zwei ' +
@@ -334,7 +363,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'malibu-szene',
     bildStil: 'cover',
-    schnittBild: 'malibu-schnitt.jpg',
+    schnittBild: 'malibu-schnitt.webp',
     claim: 'Gel-Schaum-Polsterung, Umbauecke.',
     intro: 'Malibu polstert als einziges Modell mit einer zusätzlichen ' +
            'Gel-Schaum-Lage und kombiniert das mit einer Umbauecke und schmalen ' +
@@ -346,7 +375,10 @@ window.SOFATREND_MODELLE = [
     schichten: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
                 'PUR Schaum', 'Gel-Schaum', 'Bezugsmaterial'],
     elemente: ['Umbauecke links / rechts', '2-Sitzer mit Armteil',
-               'Kissen mit Boden']
+               'Kissen mit Boden'],
+    galerie: [
+      { b: 'malibu-k1.webp', t: 'Ecklösung mit Longchair' }
+    ]
   },
 
 
@@ -356,7 +388,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'amalfi-szene',
     bildStil: 'cover',
-    schnittBild: 'amalfi-schnitt.jpg',
+    schnittBild: 'amalfi-schnitt.webp',
     claim: 'Basiselemente auf Kufe, Tonnentaschenfederkern.',
     intro: 'Amalfi baut auf großen, breiten Basiselementen auf, steht auf ' +
            'einer schwarzen Metallkufe und sitzt durchgehend auf ' +
@@ -366,7 +398,11 @@ window.SOFATREND_MODELLE = [
     sitz: 'Hochwertiger punktelastischer Tonnentaschenfederkernsitz (TTFK), abgedeckt ' +
           'mit Textilvlies, Schaum (mind. RG 35) und Wattevlies.',
     schichten: ['Gestell', 'Tonnentaschenfederkern', 'PUR Schaum', 'Bezugsmaterial'],
-    elemente: ['Basiselement in zwei Breiten']
+    elemente: ['Basiselement in zwei Breiten'],
+    galerie: [
+      { b: 'amalfi-k1.webp', t: 'Ecklösung' },
+      { b: 'amalfi-k2.webp', t: 'Ecklösung mit offenem Abschluss' }
+    ]
   },
 
   {
@@ -375,7 +411,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'lucca-szene',
     bildStil: 'cover',
-    schnittBild: 'lucca-schnitt.jpg',
+    schnittBild: 'lucca-schnitt.webp',
     claim: 'Kompakt mit Umbauecke und Hockerbank.',
     intro: 'Lucca ist die kompakte Neuheit: Umbauecke, Hockerbank und breite ' +
            '1-Sitzer-Elemente auf kleiner Stellfläche.',
@@ -385,7 +421,10 @@ window.SOFATREND_MODELLE = [
     schichten: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
                 'Schaumstoff', 'Bezugsmaterial'],
     elemente: ['1-Sitzer mit Armteil links / rechts (extra breit)', 'Umbauecke',
-               'Hockerbank', 'Kissen']
+               'Hockerbank', 'Kissen'],
+    galerie: [
+      { b: 'lucca-k1.webp', t: 'Ecklösung mit Longchair' }
+    ]
   },
 
   {
@@ -394,7 +433,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'monza-szene',
     bildStil: 'cover',
-    schnittBild: 'monza-schnitt.jpg',
+    schnittBild: 'monza-schnitt.webp',
     claim: 'Kompakter Longchair-Klassiker.',
     intro: 'Monza bringt die klassische Longchair-Kombination in kompakter ' +
            'Form - mit klarer Silhouette und schlanken Armteilen.',
@@ -404,6 +443,9 @@ window.SOFATREND_MODELLE = [
     schichten: ['Gestell', 'Wellenunterfederung', 'Abdeckung der Wellenfederung',
                 'PUR Schaum', 'Bezugsmaterial', 'Fuß / Gleiter'],
     elemente: ['2-Sitzer mit Armlehne links / rechts',
-               'Longchair links / rechts']
+               'Longchair links / rechts'],
+    galerie: [
+      { b: 'monza-k1.webp', t: 'Ecklösung mit Longchair' }
+    ]
   }
 ];

@@ -13,11 +13,11 @@
 <meta property="og:description" content="Kontakt zu sofatrend: Preislisten, Stoffmuster und Termine für den Möbelhandel anfragen.">
 <meta property="og:url" content="https://www.sofatrend.eu/kontakt.html">
 <meta property="og:image" content="https://www.sofatrend.eu/assets/img/hero.jpg">
-<link rel="stylesheet" href="assets/css/fonts.css?v=9">
+<link rel="stylesheet" href="assets/css/fonts.css?v=10">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <meta name="theme-color" content="#faf7f1">
-<link rel="stylesheet" href="assets/css/site.css?v=9">
+<link rel="stylesheet" href="assets/css/site.css?v=10">
 </head>
 <body>
 
@@ -133,7 +133,9 @@
           <h2>Anfrage senden</h2>
 
           <form data-mailto-form="info@sofatrend.sk"
-                data-subject="Anfrage über sofatrend.de">
+                data-endpoint="kontakt-send.php"
+                data-subject="Anfrage über die sofatrend-Website"
+                method="post" action="kontakt-send.php" novalidate>
             <div class="form-grid">
               <div class="field">
                 <label for="k-firma">Firma *</label>
@@ -169,15 +171,27 @@
                 <label for="k-nachricht">Nachricht *</label>
                 <textarea id="k-nachricht" name="nachricht" required></textarea>
               </div>
+              <!-- Honeypot gegen Spam-Bots: fuer Menschen unsichtbar, bleibt leer -->
+              <div class="field field--hp" aria-hidden="true">
+                <label for="k-website">Website</label>
+                <input id="k-website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+              <div class="field field--full field--check">
+                <input id="k-datenschutz" name="datenschutz" type="checkbox" required>
+                <label for="k-datenschutz">
+                  Ich habe die <a href="datenschutz.html">Datenschutzerklärung</a>
+                  gelesen und bin einverstanden, dass meine Angaben zur Bearbeitung
+                  der Anfrage gespeichert und verarbeitet werden. *
+                </label>
+              </div>
             </div>
             <div class="btn-row">
               <button class="btn" type="submit">Anfrage senden</button>
             </div>
+            <p class="form-status" role="status" aria-live="polite" hidden></p>
             <p class="form-note">
-              Das Formular öffnet Ihr E-Mail-Programm mit den ausgefüllten
-              Angaben, solange kein Formular-Backend angebunden ist. Vor dem
-              Livegang ist hier außerdem ein Datenschutzhinweis mit Einwilligung
-              zu ergänzen.
+              Pflichtfelder sind mit * markiert. Wir melden uns in der Regel
+              innerhalb von zwei Werktagen.
             </p>
           </form>
         </div>
@@ -234,7 +248,7 @@
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=9"></script>
+<script src="assets/js/site.js?v=10"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
