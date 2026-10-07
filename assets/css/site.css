@@ -410,7 +410,6 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   font-size: clamp(2.6rem, 6.5vw, 5.2rem);
   line-height: 1.08;
   margin-bottom: .45em;
-  min-height: 2.2em; /* Platz fuer wechselnde Statements, kein Springen */
 }
 .hero__text p {
   color: rgba(255, 255, 255, .92);
@@ -1605,3 +1604,54 @@ body.lightbox-open { overflow: hidden; }
 }
 .merkliste__remove:hover { color: var(--ink); }
 #merkliste-aktionen { margin-top: 1rem; }
+
+/* Stoffe: Reiter je Qualitaet, nur eine Farbpalette sichtbar */
+.fabric-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 clamp(1.25rem, 2.5vw, 2.25rem);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.fabric-tab {
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: .6rem 0 .9rem;
+  font: inherit;
+  text-align: left;
+  color: var(--muted);
+  cursor: pointer;
+  display: grid;
+  gap: .15rem;
+}
+.fabric-tab__name { font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: .8125rem; }
+.fabric-tab__meta { font-size: .75rem; }
+.fabric-tab:hover { color: var(--ink); }
+.fabric-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.fabric-grid { display: block; }
+.fabric { border: 0; background: transparent; padding: 0; }
+.fabric-pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.fabric-pager__btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.fabric-pager__btn:hover { color: var(--ink); }
+.fabric-pager__pos { font-size: .8125rem; color: var(--muted); }

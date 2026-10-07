@@ -436,6 +436,66 @@
 
       root.appendChild(box);
     });
+
+    /* Eine Qualitaet auf einmal: Reiter oben, Pfeile unten, Deep-Link per #stoff-name */
+    var boxes = Array.prototype.slice.call(root.querySelectorAll('.fabric'));
+    if (boxes.length > 1) {
+      var tabs = el('div', 'fabric-tabs');
+      tabs.setAttribute('role', 'tablist');
+      tabs.setAttribute('aria-label', 'Stoffqualität wählen');
+      var pager = el('div', 'fabric-pager');
+      var prev = el('button', 'fabric-pager__btn', '← Vorherige Qualität');
+      var next = el('button', 'fabric-pager__btn', 'Nächste Qualität →');
+      prev.type = next.type = 'button';
+      var pos = el('span', 'fabric-pager__pos');
+      pager.appendChild(prev); pager.appendChild(pos); pager.appendChild(next);
+
+      var active = 0;
+      var tabBtns = boxes.map(function (b, i) {
+        var s = STOFFE[i];
+        var t = el('button', 'fabric-tab');
+        t.type = 'button';
+        t.setAttribute('role', 'tab');
+        t.id = 'tab-' + b.id;
+        t.setAttribute('aria-controls', b.id);
+        t.appendChild(el('span', 'fabric-tab__name', s.name));
+        t.appendChild(el('span', 'fabric-tab__meta', (s.pg ? s.pg.replace('PG', 'PG ') : '') + (s.art ? ' · ' + s.art : '')));
+        t.addEventListener('click', function () { select(i, true); });
+        tabs.appendChild(t);
+        b.setAttribute('role', 'tabpanel');
+        b.setAttribute('aria-labelledby', t.id);
+        return t;
+      });
+
+      function select(i, push) {
+        active = (i + boxes.length) % boxes.length;
+        boxes.forEach(function (b, k) { b.hidden = k !== active; });
+        tabBtns.forEach(function (t, k) {
+          t.setAttribute('aria-selected', String(k === active));
+          t.tabIndex = k === active ? 0 : -1;
+        });
+        pos.textContent = (active + 1) + ' / ' + boxes.length;
+        if (push && history.replaceState) history.replaceState(null, '', '#' + boxes[active].id);
+        if (push) tabs.scrollIntoView({ block: 'nearest' });
+      }
+      function fromHash() {
+        var h = location.hash.replace('#', '');
+        var idx = boxes.map(function (b) { return b.id; }).indexOf(h);
+        select(idx >= 0 ? idx : 0, false);
+      }
+
+      prev.addEventListener('click', function () { select(active - 1, true); });
+      next.addEventListener('click', function () { select(active + 1, true); });
+      tabs.addEventListener('keydown', function (ev) {
+        if (ev.key === 'ArrowRight') { select(active + 1, true); tabBtns[active].focus(); }
+        if (ev.key === 'ArrowLeft') { select(active - 1, true); tabBtns[active].focus(); }
+      });
+      window.addEventListener('hashchange', fromHash);
+
+      root.parentNode.insertBefore(tabs, root);
+      root.appendChild(pager);
+      fromHash();
+    }
   }
 
   /* -------------------------------------------------------------- Lightbox */
@@ -824,6 +884,13 @@
       }
     }
 
+    // Termin-Link von der Ausstellungsseite: Anliegen vorbelegen
+    var anl = document.getElementById('k-anliegen');
+    if (anl && params.get('anliegen') === 'termin') {
+      anl.value = 'Terminvereinbarung';
+      if (!params.has('merkliste')) anl.closest('form').scrollIntoView({ block: 'start' });
+    }
+
     merkRefresh();
     // Aenderungen in anderen Tabs uebernehmen
     window.addEventListener('storage', function (ev) { if (ev.key === MERK_KEY) merkRefresh(); });
@@ -833,7 +900,6 @@
 
   function init() {
     initNav();
-    initHeroStatements();
     initForms();
     initModelGrid();
     initFilter();
