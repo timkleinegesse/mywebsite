@@ -263,6 +263,7 @@ window.SOFATREND_MODELLE = [
 
   {
     slug: 'cubetto',
+    fokus: 'center 44%',
     name: 'Cubetto',
     kollektion: 'Modelle',
     bild: 'cubetto-szene',

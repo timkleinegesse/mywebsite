@@ -13,11 +13,25 @@
 <meta property="og:description" content="Polsteraufbau und Elementübersicht einer sofatrend Modellreihe – Maße und Preise auf Anfrage.">
 <meta property="og:url" content="https://www.sofatrend.eu/modell.html">
 <meta property="og:image" content="https://www.sofatrend.eu/assets/img/hero.jpg">
-<link rel="stylesheet" href="assets/css/fonts.css?v=20">
+<script>
+/* Buehnenbild der Modellseite sofort vorladen, bevor CSS und Skripte geladen sind */
+(function () {
+  var m = new URLSearchParams(location.search).get('m');
+  if (!m || !/^[a-z-]+$/.test(m)) return;
+  var b = 'assets/img/modelle/' + m + '-szene';
+  var l = document.createElement('link');
+  l.rel = 'preload'; l.as = 'image'; l.href = b + '-1600.webp';
+  l.setAttribute('imagesrcset', b + '-900.webp 900w, ' + b + '-1600.webp 1600w, ' + b + '.webp 2400w');
+  l.setAttribute('imagesizes', '100vw');
+  l.setAttribute('fetchpriority', 'high');
+  document.head.appendChild(l);
+})();
+</script>
+<link rel="stylesheet" href="assets/css/fonts.css?v=21">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <meta name="theme-color" content="#faf7f1">
-<link rel="stylesheet" href="assets/css/site.css?v=20">
+<link rel="stylesheet" href="assets/css/site.css?v=21">
 </head>
 <body>
 
@@ -241,9 +255,9 @@
   </div>
 </footer>
 
-<script src="assets/data/modelle.js?v=20"></script>
-<script src="assets/data/stoffe.js?v=20"></script>
-<script src="assets/js/site.js?v=20"></script>
+<script src="assets/data/modelle.js?v=21"></script>
+<script src="assets/data/stoffe.js?v=21"></script>
+<script src="assets/js/site.js?v=21"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

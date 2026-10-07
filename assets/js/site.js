@@ -224,6 +224,11 @@
       hero.srcset = IMG + m.bild + '-900.webp 900w, ' + IMG + m.bild + '-1600.webp 1600w, ' + IMG + m.bild + '.webp 2400w';
       hero.sizes = '100vw';
       hero.alt = m.name + ' in einer Wohnszene';
+      hero.decoding = 'async';
+      if (m.fokus) hero.style.objectPosition = m.fokus;
+      var reveal = function () { hero.classList.add('is-loaded'); };
+      if (hero.complete && hero.naturalWidth) reveal(); else hero.addEventListener('load', reveal, { once: true });
+      hero.addEventListener('error', reveal, { once: true });
     }
 
     setText('m-gestell', m.gestell);

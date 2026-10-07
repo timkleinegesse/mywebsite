@@ -811,6 +811,11 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   object-fit: cover;
   object-position: center 55%;
 }
+/* Modellseite: Bild wird per Skript gesetzt und blendet nach dem Laden weich ein */
+.model-stage { background: #8d8275; }
+.model-stage img { opacity: 0; transition: opacity .45s var(--ease); }
+.model-stage img.is-loaded { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .model-stage img { transition: none; } }
 .model-stage::after,
 .page-stage::after {
   content: "";
