@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Modelle – sofatrend</title>
-<meta name="description" content="Siebzehn Polstermöbel-Modelle von sofatrend im Überblick: Sitzaufbau und Ausstattung – von Deep Free über Bellagio bis Monza, jedes Modell konfigurierbar. Maße und Preise auf Anfrage.">
+<title>Merkliste – sofatrend</title>
+<meta name="description" content="Ihre Merkliste: gemerkte Modelle und Stoffe als eine Anfrage an sofatrend senden.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="sofatrend">
 <meta property="og:locale" content="de_DE">
-<meta property="og:title" content="Modelle – sofatrend">
-<meta property="og:description" content="Siebzehn Polstermöbel-Modelle von sofatrend im Überblick: Sitzaufbau und Ausstattung – von Deep Free über Bellagio bis Monza, jedes Modell konfigurierbar. Maße und Preise auf Anfrage.">
-<meta property="og:url" content="https://www.sofatrend.eu/kollektion.html">
+<meta property="og:title" content="Merkliste – sofatrend">
+<meta property="og:description" content="Gemerkte Modelle und Stoffe als eine Anfrage senden.">
+<meta property="og:url" content="https://www.sofatrend.eu/merkliste.html">
 <meta property="og:image" content="https://www.sofatrend.eu/assets/img/hero.jpg">
 <link rel="stylesheet" href="assets/css/fonts.css?v=19">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
@@ -48,15 +48,41 @@
 
   <section class="section section--tight">
     <div class="wrap">
-      <div class="section-head" style="margin-bottom:clamp(1.5rem,3vw,2.5rem)">
-        <h1 class="page-title">Modelle</h1>
+      <div class="page-head">
+        <div>
+          <span class="eyebrow">Merkliste</span>
+          <h1 class="page-title">Ihre Auswahl, eine Anfrage.</h1>
+        </div>
+        <p class="lede">
+          Merken Sie sich Modelle, Stoffqualitäten und einzelne Farben, während
+          Sie durch die Kollektion gehen. Hier sehen Sie alles auf einen Blick
+          und senden die Liste mit einem Klick als Anfrage an uns.
+        </p>
       </div>
-      <div class="filter-bar" id="filter-bar" role="group" aria-label="Nach Modellaufbau filtern">
-        <span class="filter-bar__label">Modellaufbau</span>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="wrap wrap--narrow">
+      <div id="merkliste" aria-live="polite"></div>
+
+      <div id="merkliste-leer">
+        <p class="lede">Ihre Merkliste ist noch leer.</p>
+        <p>
+          Auf jeder Modellseite finden Sie „Modell merken“, in der
+          Stoffkollektion „Qualität merken“ und in der Großansicht eines
+          Musters „Farbe merken“. Die Liste bleibt in diesem Browser gespeichert.
+        </p>
+        <div class="btn-row">
+          <a class="btn" href="kollektion.html">Zu den Modellen</a>
+          <a class="btn btn--ghost" href="stoffe.html">Zur Stoffkollektion</a>
+        </div>
       </div>
 
-      <div class="model-grid" id="model-grid"></div>
-      <p class="result-note" id="filter-note"></p>
+      <div id="merkliste-aktionen" class="btn-row" hidden>
+        <a class="btn" href="kontakt.html?merkliste=1">Als Anfrage senden</a>
+        <button class="btn btn--ghost" type="button" id="merkliste-leeren">Liste leeren</button>
+      </div>
     </div>
   </section>
 
@@ -109,7 +135,6 @@
   </div>
 </footer>
 
-<script src="assets/data/modelle.js?v=19"></script>
 <script src="assets/js/site.js?v=19"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>

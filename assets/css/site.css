@@ -1495,3 +1495,113 @@ body.lightbox-open { overflow: hidden; }
 @media (max-width: 699px) {
   .photo-band__img { height: 60svh; min-height: 360px; }
 }
+
+/* ------------------------------------------------------------ Merkliste */
+
+.nav__merk {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  text-decoration: none;
+  margin-right: 1.25rem;
+  padding-bottom: .15rem;
+  border-bottom: 1px solid transparent;
+}
+.nav__merk:hover, .nav__merk[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
+.nav__merk-count {
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 .35rem;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: .6875rem;
+  letter-spacing: 0;
+}
+@media (max-width: 960px) {
+  .nav__merk { margin: .5rem 0 1rem; }
+}
+
+/* Merk-Button: dezente Textform mit Kreis-Icon; als .merk-btn--btn im Stil
+   des Ghost-Buttons; als .merk-btn--light weiss fuer die Lightbox */
+.merk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.merk-btn:hover { color: var(--ink); }
+.merk-btn__icon {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  transition: background .2s var(--ease);
+}
+.merk-btn__icon::before { content: "+"; font-size: .75rem; line-height: 1; }
+.merk-btn.is-on .merk-btn__icon { background: var(--accent); border-color: var(--accent); color: #fff; }
+.merk-btn.is-on .merk-btn__icon::before { content: "\2713"; }
+.merk-btn.is-on { color: var(--accent-d); }
+
+.merk-btn--btn {
+  padding: .95rem 1.8rem;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  letter-spacing: .14em;
+}
+.merk-btn--btn:hover { background: var(--ink); color: #fff; }
+.merk-btn--btn.is-on { border-color: var(--accent); color: var(--accent-d); }
+.merk-btn--btn.is-on:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.merk-btn--light { color: rgba(255, 255, 255, .9); margin-left: 1rem; }
+.merk-btn--light:hover { color: #fff; }
+.merk-btn--light.is-on { color: #e2c9a8; }
+
+.fabric__actions { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+
+.merkliste__group { font-size: 1.35rem; margin: 0 0 .75rem; }
+.merkliste__group + .merkliste__list { margin-bottom: 2.25rem; }
+.merkliste__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.merkliste__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: .9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.merkliste__item a { text-decoration: none; color: var(--ink); font-weight: 500; }
+.merkliste__item a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.merkliste__remove {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+}
+.merkliste__remove:hover { color: var(--ink); }
+#merkliste-aktionen { margin-top: 1rem; }

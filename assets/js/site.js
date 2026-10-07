@@ -227,6 +227,15 @@
     }
 
     setText('m-gestell', m.gestell);
+
+    var merk = document.getElementById('m-merken');
+    if (merk) {
+      merk.setAttribute('data-merk-key', 'modell:' + m.slug);
+      merk.setAttribute('data-merk-label', 'Modell ' + m.name);
+      merk.setAttribute('data-merk-href', 'modell.html?m=' + m.slug);
+      merk.setAttribute('data-merk-off', 'Modell merken');
+      merk.setAttribute('data-merk-on', 'Gemerkt');
+    }
     setText('m-sitz', m.sitz);
 
     // Aufbau: nummerierte Legende (mit Schnittzeichnung) oder belegte
@@ -378,8 +387,13 @@
       var pgLabel = s.pg === 'PG1' ? 'Preisgruppe 1'
                   : s.pg === 'PG2' ? 'Preisgruppe 2'
                   : 'Preisgruppe auf Anfrage';
-      head.appendChild(el('span',
+      var headRight = el('div', 'fabric__actions');
+      headRight.appendChild(el('span',
         'badge' + (s.pg ? ' badge--' + s.pg.toLowerCase() : ''), pgLabel));
+      var mb = merkButton('stoff:' + s.name, 'Stoff ' + s.name, 'stoffe.html#stoff-' + s.name.toLowerCase());
+      mb.setAttribute('data-merk-off', 'Qualität merken');
+      headRight.appendChild(mb);
+      head.appendChild(headRight);
       box.appendChild(head);
 
       var colors = el('div', 'fabric__colors');
@@ -396,6 +410,8 @@
           a.href = base + '-gross.webp';
           a.title = s.name + ' ' + f + ' – Großansicht öffnen';
           a.setAttribute('data-caption', s.name + ' – ' + f);
+          a.setAttribute('data-farbe-key', 'stoff:' + s.name + ':' + f);
+          a.setAttribute('data-farbe-label', 'Stoff ' + s.name + ' ' + f);
           var img = el('img');
           img.src = base + '.webp';
           img.alt = 'Stoffmuster ' + s.name + ' in ' + f;
@@ -458,7 +474,11 @@
     var cap = el('figcaption', 'lightbox__caption');
     var capText = el('span');
     var count = el('span', 'lightbox__count');
+    var capMerk = merkButton('', '', '', 'merk-btn--light');
+    capMerk.removeAttribute('data-merk-key');
+    capMerk.hidden = true;
     cap.appendChild(capText);
+    cap.appendChild(capMerk);
     cap.appendChild(count);
     fig.appendChild(img);
     fig.appendChild(cap);
@@ -494,6 +514,16 @@
       img.alt = captionFor(a);
       capText.textContent = captionFor(a);
       count.textContent = items.length > 1 ? (current + 1) + ' / ' + items.length : '';
+      var mk = a.getAttribute('data-farbe-key');
+      capMerk.hidden = !mk;
+      if (!mk) capMerk.removeAttribute('data-merk-key');
+      if (mk) {
+        capMerk.setAttribute('data-merk-key', mk);
+        capMerk.setAttribute('data-merk-label', a.getAttribute('data-farbe-label') || captionFor(a));
+        capMerk.setAttribute('data-merk-href', 'stoffe.html#' + (a.closest('.fabric') ? a.closest('.fabric').id : ''));
+        capMerk.setAttribute('data-merk-off', 'Farbe merken');
+        merkRefresh();
+      }
       btnPrev.hidden = btnNext.hidden = items.length < 2;
     }
 
@@ -516,6 +546,7 @@
 
     document.addEventListener('click', function (ev) {
       var t = ev.target;
+      if (t && t.closest && t.closest('[data-merk-key]')) return;
       var a = t && t.closest ? t.closest('[data-lightbox] a[href]') : null;
       if (!a) return;
       var group = a.closest('[data-lightbox]');
@@ -650,6 +681,154 @@
     });
   }
 
+
+  /* ------------------------------------------------------------ Merkliste */
+
+  /* Haendler sammeln Modelle, Stoffqualitaeten und Farben und senden die
+     Liste als eine Anfrage. Gespeichert wird lokal im Browser (localStorage),
+     es gibt keinen Server-Zustand. */
+  var MERK_KEY = 'sofatrend_merkliste';
+
+  function merkLoad() {
+    try { return JSON.parse(localStorage.getItem(MERK_KEY)) || []; } catch (e) { return []; }
+  }
+  function merkSave(list) {
+    try { localStorage.setItem(MERK_KEY, JSON.stringify(list)); } catch (e) { /* privat/voll */ }
+    merkRefresh();
+  }
+  function merkHas(k) {
+    return merkLoad().some(function (x) { return x.k === k; });
+  }
+  function merkToggle(item) {
+    var list = merkLoad();
+    var i = -1;
+    list.forEach(function (x, idx) { if (x.k === item.k) i = idx; });
+    if (i >= 0) list.splice(i, 1); else list.push(item);
+    merkSave(list);
+    return i < 0;
+  }
+  function merkRemove(k) {
+    merkSave(merkLoad().filter(function (x) { return x.k !== k; }));
+  }
+
+  /* Zustand aller Merk-Buttons und des Zaehlers in der Navigation angleichen */
+  function merkRefresh() {
+    var n = merkLoad().length;
+    Array.prototype.forEach.call(document.querySelectorAll('.nav__merk-count'), function (c) {
+      c.textContent = n;
+      c.hidden = n === 0;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-merk-key]'), function (b) {
+      var on = merkHas(b.getAttribute('data-merk-key'));
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-pressed', String(on));
+      var label = b.querySelector('.merk-btn__label') || b;
+      label.textContent = on ? (b.getAttribute('data-merk-on') || 'Gemerkt')
+                             : (b.getAttribute('data-merk-off') || 'Merken');
+    });
+    renderMerkliste();
+  }
+
+  function merkButton(key, label, href, cls) {
+    var b = el('button', 'merk-btn' + (cls ? ' ' + cls : ''));
+    b.type = 'button';
+    b.setAttribute('data-merk-key', key);
+    b.setAttribute('data-merk-label', label);
+    b.setAttribute('data-merk-href', href);
+    b.setAttribute('data-merk-off', 'Merken');
+    b.setAttribute('data-merk-on', 'Gemerkt');
+    b.appendChild(el('span', 'merk-btn__icon', ''));
+    b.appendChild(el('span', 'merk-btn__label', 'Merken'));
+    return b;
+  }
+
+  /* Seite merkliste.html */
+  function renderMerkliste() {
+    var root = document.getElementById('merkliste');
+    if (!root) return;
+    var list = merkLoad();
+    root.innerHTML = '';
+    var empty = document.getElementById('merkliste-leer');
+    var actions = document.getElementById('merkliste-aktionen');
+    if (empty) empty.hidden = list.length > 0;
+    if (actions) actions.hidden = list.length === 0;
+    if (!list.length) return;
+
+    var groups = [['modell', 'Modelle'], ['stoff', 'Stoffe']];
+    groups.forEach(function (g) {
+      var items = list.filter(function (x) { return x.k.indexOf(g[0] + ':') === 0; });
+      if (!items.length) return;
+      var h = el('h2', 'merkliste__group', g[1]);
+      root.appendChild(h);
+      var ul = el('ul', 'merkliste__list');
+      items.forEach(function (x) {
+        var li = el('li', 'merkliste__item');
+        var a = el('a', null, x.t);
+        a.href = x.h;
+        li.appendChild(a);
+        var rm = el('button', 'merkliste__remove', 'Entfernen');
+        rm.type = 'button';
+        rm.setAttribute('aria-label', x.t + ' entfernen');
+        rm.addEventListener('click', function () { merkRemove(x.k); });
+        li.appendChild(rm);
+        ul.appendChild(li);
+      });
+      root.appendChild(ul);
+    });
+  }
+
+  function initMerkliste() {
+    // Link mit Zaehler in der Navigation, vor dem Kontakt-Button
+    var cta = document.querySelector('.nav__cta');
+    if (cta && !document.querySelector('.nav__merk')) {
+      var link = el('a', 'nav__merk');
+      link.href = 'merkliste.html';
+      link.appendChild(el('span', null, 'Merkliste'));
+      var count = el('span', 'nav__merk-count', '0');
+      count.hidden = true;
+      link.appendChild(count);
+      cta.parentNode.insertBefore(link, cta);
+      if ((location.pathname.split('/').pop() || '') === 'merkliste.html') {
+        link.setAttribute('aria-current', 'page');
+      }
+    }
+
+    // Klick auf einen Merk-Button (auch spaeter eingefuegte)
+    document.addEventListener('click', function (ev) {
+      var b = ev.target && ev.target.closest ? ev.target.closest('[data-merk-key]') : null;
+      if (!b || !b.getAttribute('data-merk-key')) return;
+      ev.preventDefault();
+      merkToggle({ k: b.getAttribute('data-merk-key'),
+                   t: b.getAttribute('data-merk-label'),
+                   h: b.getAttribute('data-merk-href') });
+    });
+
+    // Liste leeren
+    var clear = document.getElementById('merkliste-leeren');
+    if (clear) clear.addEventListener('click', function () { merkSave([]); });
+
+    // Kontaktformular: Merkliste in die Nachricht uebernehmen
+    var params = new URLSearchParams(location.search);
+    var msg = document.getElementById('k-nachricht');
+    if (msg && params.has('merkliste')) {
+      var list = merkLoad();
+      if (list.length) {
+        var lines = ['Bitte senden Sie mir Unterlagen zu meiner Merkliste:', ''];
+        list.forEach(function (x) { lines.push('- ' + x.t); });
+        lines.push('');
+        msg.value = lines.join('\n') + (msg.value ? '\n' + msg.value : '');
+        var note = document.getElementById('k-merk-hinweis');
+        if (note) note.hidden = false;
+        var form = msg.closest('form');
+        if (form) form.scrollIntoView({ block: 'start' });
+      }
+    }
+
+    merkRefresh();
+    // Aenderungen in anderen Tabs uebernehmen
+    window.addEventListener('storage', function (ev) { if (ev.key === MERK_KEY) merkRefresh(); });
+  }
+
   /* ---------------------------------------------------------------- Start */
 
   function init() {
@@ -661,6 +840,7 @@
     fillModelPage();
     initFabrics();
     initLightbox(); // nach fillModelPage/initFabrics: braucht deren Galerien
+    initMerkliste(); // zuletzt: braucht die Merk-Buttons der Seite
   }
 
   if (document.readyState === 'loading') {
