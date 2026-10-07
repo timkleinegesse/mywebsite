@@ -878,6 +878,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 .page-head .page-title { max-width: 16ch; }
 .page-head .lede { margin: 0; }
+.page-head .btn-row { margin-top: 1.5rem; }
 
 /* Ruhige Variante der Karten: keine Kaesten, nur eine Haarlinie oben */
 .cards--plain { gap: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem); }
