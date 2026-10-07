@@ -857,6 +857,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 
 .model-intro,
 .page-intro { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.page-title { font-weight: 300; font-size: clamp(2.2rem, 4.5vw, 3.6rem); margin: 0; }
 .page-intro .wrap--narrow { text-align: center; }
 .page-intro__text {
   margin: 0 auto;
