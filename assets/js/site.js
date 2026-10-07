@@ -219,7 +219,10 @@
 
     var hero = document.getElementById('m-hero-img');
     if (hero) {
-      hero.src = IMG + m.bild + '.webp';
+      // drei Groessen: Handy, Laptop, grosse Monitore
+      hero.src = IMG + m.bild + '-1600.webp';
+      hero.srcset = IMG + m.bild + '-900.webp 900w, ' + IMG + m.bild + '-1600.webp 1600w, ' + IMG + m.bild + '.webp 2400w';
+      hero.sizes = '100vw';
       hero.alt = m.name + ' in einer Wohnszene';
     }
 

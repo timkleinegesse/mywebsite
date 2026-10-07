@@ -790,36 +790,40 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 /* Buehnen und Bildbaender zeigen das Foto im natuerlichen Seitenverhaeltnis
    ueber die volle Breite - kein Beschnitt, solange es in die Bildschirmhoehe
    passt; nur hoehere Bilder werden auf die Viewport-Hoehe gedeckelt. */
+/* Buehnen im Format der Startseite: Bildschirmhoehe abzueglich Kopfzeile,
+   Foto randlos gefuellt */
 .model-stage,
 .page-stage {
   position: relative;
   background: var(--ink-2);
   overflow: hidden;
-  min-height: 360px;
+  height: max(520px, calc(100vh - 80px));
+  height: max(520px, calc(100svh - 80px));
+  display: flex;
+  align-items: flex-end;
 }
 .model-stage img,
 .page-stage img {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
-  object-position: center 60%;
+  object-position: center 55%;
 }
 .model-stage::after,
 .page-stage::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom,
-    rgba(20, 16, 12, .60), rgba(20, 16, 12, .22) 38%, rgba(20, 16, 12, 0) 60%);
+  background: linear-gradient(to top,
+    rgba(20, 16, 12, .58), rgba(20, 16, 12, .10) 55%, rgba(20, 16, 12, .18));
 }
 .model-stage__text,
 .page-stage__text {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
+  position: relative;
   z-index: 1;
+  width: 100%;
   padding-block: clamp(2rem, 5vw, 4rem);
   color: #fff;
 }
@@ -846,6 +850,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   letter-spacing: .01em;
 }
 
+.page-stage { align-items: center; text-align: center; }
 .page-stage .eyebrow { color: #e2c9a8; margin-bottom: clamp(.75rem, 1.5vw, 1.25rem); }
 .page-stage h1 {
   margin: 0;
@@ -854,6 +859,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   font-size: clamp(2.4rem, 5.2vw, 4.6rem);
   line-height: 1.05;
   max-width: 18ch;
+  margin-inline: auto;
 }
 
 .model-intro,
@@ -1459,7 +1465,5 @@ body.lightbox-open { overflow: hidden; }
 /* Schmale Bildschirme: Querformate waeren zu flach fuer den Text, hier
    wird auf 60 % der Bildschirmhoehe beschnitten */
 @media (max-width: 699px) {
-  .model-stage img,
-  .page-stage img,
   .photo-band__img { height: 60svh; min-height: 360px; }
 }
