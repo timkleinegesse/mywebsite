@@ -502,7 +502,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 
 .model-card__media {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   background: var(--card);
   display: grid;
   place-items: center;
@@ -551,7 +551,6 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 .model-card:hover .model-card__name { border-color: var(--ink); }
 
-.model-card__claim { font-size: .9375rem; color: var(--muted); margin: 0; flex: 1; }
 
 .model-card__meta {
   display: flex;

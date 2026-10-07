@@ -63,17 +63,20 @@
 
     // Wohnszenen laufen randlos (cover), Freisteller stehen auf Weiss (contain)
     var media = el('div', 'model-card__media model-card__media--' + (m.bildStil || 'contain'));
+    // Einheitlicher 3:2-Zuschnitt in zwei Groessen (600/1200 px), damit die
+    // Kacheln buendig sind und auf Retina-Displays scharf bleiben
     var img = el('img');
-    img.src = IMG + m.bild + '-thumb.webp';
+    img.src = IMG + m.slug + '-card-600.webp';
+    img.srcset = IMG + m.slug + '-card-600.webp 600w, ' + IMG + m.slug + '-card-1200.webp 1200w';
+    img.sizes = '(min-width: 1000px) 33vw, (min-width: 640px) 50vw, 100vw';
     img.alt = m.name + ' in einer Wohnszene';
     img.loading = 'lazy';
-    img.width = 760;
-    img.height = 500;
+    img.width = 1200;
+    img.height = 800;
     media.appendChild(img);
 
     var body = el('div', 'model-card__body');
     body.appendChild(el('h3', 'model-card__name', m.name));
-    body.appendChild(el('p', 'model-card__claim', m.claim));
 
     a.appendChild(media);
     a.appendChild(body);
