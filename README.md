@@ -13,9 +13,40 @@ Gestaltung nach den beiden Referenzen des Auftraggebers:
   Statement („Polstermöbel sind unser Handwerk." …), redaktionelle
   Wechselabschnitte
 
+## Seiten erzeugen (tools/build.py)
+
+Die Website ist rein statisch, der Hoster braucht keinen Build. Gemeinsame
+Teile werden aber lokal mit einem kleinen Python-Skript (Python 3, keine
+Zusatzpakete) erzeugt:
+
+```
+python3 ../tools/build.py      (Windows: py ..\tools\build.py)
+```
+
+Es setzt Kopf- und Fußzeile aus `../tools/partials/` in alle Seiten ein,
+erzeugt je Modell `modell-<slug>.html` aus `../tools/templates/modell.html`
+und `assets/data/modelle.js`, befüllt die Modellübersicht in
+`kollektion.html`, setzt Canonical-Links und Schrift-Preloads, gleicht
+Anzahl-Angaben („17 Modelle“, „neun Qualitäten“) an die Daten an,
+prüft, ob alle Modell- und Stoffbilder vorhanden sind, und schreibt
+`sitemap.xml` neu. Ein zweiter Lauf ohne Änderungen ändert nichts.
+
+**Kopf-/Fußzeile ändern:** `../tools/partials/header.html` bzw.
+`footer.html` bearbeiten, Skript ausführen. Nicht in den einzelnen Seiten.
+
+**Neues Modell:** Eintrag in `assets/data/modelle.js`, Bilder nach
+Konvention in `assets/img/modelle/` (`<slug>-card-600.webp`,
+`<slug>-card-1200.webp`, `<bild>.webp`, `<bild>-900.webp`,
+`<bild>-1600.webp`, Galerie- und ggf. Schnittbilder), Skript ausführen.
+Fehlt ein Bild, bricht das Skript mit einer Liste ab.
+
+**Neue Stoffqualität oder Farbe:** Eintrag in `assets/data/stoffe.js`,
+je Farbe `<name>-<farbe>.webp` und `-gross.webp` in `assets/img/stoffe/`
+(Dateiname wie `farbSlug()`: klein, Sonderzeichen zu `-`), Skript ausführen.
+
 ## Ansehen
 
-Kein Build, keine Abhängigkeiten. Zwei Möglichkeiten:
+Zwei Möglichkeiten:
 
 1. **Mit lokalem Server (empfohlen, nötig für das Video):**
    Im Ordner darüber liegt `serve.ps1`:
@@ -31,13 +62,16 @@ Kein Build, keine Abhängigkeiten. Zwei Möglichkeiten:
 | Datei | Inhalt |
 | --- | --- |
 | `index.html` | Startseite: Hero, Kennzahlen, Kollektion, Unternehmensfilm, Aufbau, Stoffe, Händler-CTA |
-| `kollektion.html` | Alle 17 Modelle („Modelle") mit Merkmal-Filter; Maße und Preise auf Anfrage |
-| `modell.html?m=<slug>` | Detailseite je Modell (Aufbau, Konstruktion, Elemente – bewusst ohne Maße) – ein Template, Daten aus `assets/data/modelle.js` |
+| `kollektion.html` | Alle 17 Modelle („Modelle") mit Filter nach Modellaufbau; Karten statisch erzeugt |
+| `modell-<slug>.html` | Detailseite je Modell (Aufbau, Konstruktion, Funktion, Elemente – bewusst ohne Maße), erzeugt von `tools/build.py` aus `assets/data/modelle.js` |
+| `modell.html` | Nur noch Weiterleitung alter Links `modell.html?m=<slug>` auf `modell-<slug>.html` |
+| `stoff-im-raum.html` | Alle Stoffe und Farben auf einem Sofa im Raum (SVG, `assets/js/stoffraum.js`), mit Zierkissen, Wand und Boden; teilbare Links per `#rebel/onyx-169` |
+| `merkliste.html` | Gemerkte Modelle, Stoffe und Farben (nur im Browser gespeichert), Übernahme ins Kontaktformular |
 | `qualitaet.html` | Gestell/Federung/Schaum/Bezug, Schnittzeichnungen, Polstercharaktere, Toleranzen, Produktpass |
-| `stoffe.html` | 9 Stoffqualitäten mit echten Musterfotos je Farbe (Kachel + Großansicht in `assets/img/stoffe/`): Textaafoam (REBEL, RHYTHM, GLORY, CAYENNE, CRISP PG2) und Globatex (FANTASY, LENNON, MIRACLE, ARLES PG2); Prüfwerte bewusst nur auf Anfrage |
+| `stoffe.html` | 9 Stoffqualitäten mit echten Musterfotos je Farbe (Kachel + Großansicht in `assets/img/stoffe/`): REBEL, RHYTHM, GLORY, CAYENNE, CRISP, FANTASY, LENNON, MIRACLE, ARLES – bewusst ohne Lieferanten und Preisgruppen; Prüfwerte bewusst nur auf Anfrage |
 | `schulung.html` | Schulungswissen für Verkaufsteams in fünf Modulen (Aufbau, Stoffkennwerte, Polstercharaktere, Funktionen, Reklamation) |
 | `produktpass.html` | Der A5-Produktpass online in fünf Kapiteln (Aufstellung, Pflege, Nutzung, Gewährleistung, Entsorgung) + PDF-Download unter `downloads/produktpass.pdf` |
-| `haendler.html` | B2B-Leistungen und Anfrageformular |
+| `haendler.html` | B2B-Leistungen, Excalibur, Ablauf, FAQ für Einkäufer (keine Preise) |
 | `unternehmen.html` | Unternehmensseite (enthält markierte Platzhalter) + Film |
 | `kontakt.html` | Kontaktdaten (Platzhalter) und Formular |
 | `404.html` | Gestaltete Fehlerseite (beim Hoster als Error-Page eintragen) |

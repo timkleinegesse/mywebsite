@@ -9,14 +9,15 @@
   /* Farben: Creme-Grund, warme Neutraltoene, Ton in Ton mit den Renderings */
   --ink:      #1d1913;
   --ink-2:    #48413a;
-  --muted:    #837a6f;
+  --muted:    #6b6359;   /* Kontrast >= 4.5:1 auf paper und sand */
   --line:     #e6dfd3;
+  --line-strong: #9b9082; /* Formularrahmen: >= 3:1 auf Weiss */
   --line-2:   #efe9df;
   --paper:    #faf7f1;   /* Seitengrund: warmes Creme */
   --card:     #ffffff;   /* Bildkacheln: weiss, nahtlos zu den Freistellern */
   --sand:     #f1ebe1;   /* abgesetzte Sektionen */
   --sand-2:   #e7dfd1;
-  --accent:   #9a6f4e;
+  --accent:   #8a6244;   /* auch als kleine Schrift >= 4.5:1 */
   --accent-d: #7d583c;
 
   /* Typografie */
@@ -36,6 +37,10 @@
 /* --------------------------------------------------------------- Grundlage */
 
 *, *::before, *::after { box-sizing: border-box; }
+
+/* hidden-Attribut gewinnt immer, auch gegen display-Regeln einzelner
+   Komponenten (Merklisten-Zaehler, Aktionsleisten, Lightbox) */
+[hidden] { display: none !important; }
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -420,12 +425,6 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 .hero__text .eyebrow { color: #e2c9a8; }
 .hero__text .btn-row { justify-content: center; }
-
-/* sanftes Ueberblenden der Hero-Statements */
-.hero__text h1.is-fading { opacity: 0; transform: translateY(6px); }
-.hero__text h1 {
-  transition: opacity .6s var(--ease), transform .6s var(--ease);
-}
 
 .hero--page {
   min-height: 0;
@@ -813,10 +812,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 /* Modellseite: Bild wird per Skript gesetzt und blendet nach dem Laden weich ein */
 .model-stage { background: #8d8275; }
-.model-stage img { opacity: 0; transition: opacity .45s var(--ease); }
-.model-stage img.is-loaded { opacity: 1; }
+.js .model-stage img { opacity: 0; transition: opacity .45s var(--ease); }
+.js .model-stage img.is-loaded { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .model-stage img { transition: none; } }
-.model-stage::after,
+.model-stage__frame::after,
 .page-stage::after {
   content: "";
   position: absolute;
@@ -1077,8 +1076,6 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   background: var(--sand-2);
   color: var(--ink-2);
 }
-.badge--pg1 { background: #e5ece4; color: #3f5641; }
-.badge--pg2 { background: #eee2d4; color: #6d523a; }
 
 .fabric__colors {
   margin-top: 1.5rem;
@@ -1095,7 +1092,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 .fabric__colors .tag { text-transform: none; letter-spacing: .02em; font-size: .78125rem; }
 
-.fabric__hersteller {
+.fabric__art {
   display: block;
   font-size: .75rem;
   font-weight: 600;
@@ -1152,14 +1149,14 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   font: inherit;
   font-size: .9375rem;
   padding: .8rem .9rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 0;
   background: var(--card);
   color: var(--ink);
 }
 .field input:focus,
 .field textarea:focus,
-.field select:focus { border-color: var(--accent); outline: none; }
+.field select:focus { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
 .field textarea { resize: vertical; min-height: 130px; }
 
 .form-note {
@@ -1199,12 +1196,18 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   padding-bottom: 3rem;
   border-bottom: 1px solid rgba(255, 255, 255, .1);
 }
-.footer-grid h4 {
+/* Spaltentitel sind h2 (korrekte Ueberschriftenfolge), sehen aber aus
+   wie kleine Versal-Labels */
+.footer-grid h4,
+.footer-grid .footer-title {
+  font-family: var(--font);
   color: #fff;
   font-size: .75rem;
+  font-weight: 600;
+  line-height: 1.25;
   letter-spacing: .18em;
   text-transform: uppercase;
-  margin-bottom: 1.1rem;
+  margin: 0 0 1.1rem;
 }
 .footer-grid ul { list-style: none; margin: 0; padding: 0; }
 .footer-grid li { margin-bottom: .6rem; }
@@ -1529,7 +1532,7 @@ body.lightbox-open { overflow: hidden; }
   font-size: .6875rem;
   letter-spacing: 0;
 }
-@media (max-width: 960px) {
+@media (max-width: 1060px) {
   .nav__merk { margin: .5rem 0 1rem; }
 }
 
@@ -1632,7 +1635,6 @@ body.lightbox-open { overflow: hidden; }
   gap: .15rem;
 }
 .fabric-tab__name { font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: .8125rem; }
-.fabric-tab__meta { font-size: .75rem; }
 .fabric-tab:hover { color: var(--ink); }
 .fabric-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
 .fabric-grid { display: block; }
@@ -1660,3 +1662,109 @@ body.lightbox-open { overflow: hidden; }
 }
 .fabric-pager__btn:hover { color: var(--ink); }
 .fabric-pager__pos { font-size: .8125rem; color: var(--muted); }
+
+/* ------------------------------------------------- Ergaenzungen Okt. 2026 */
+
+/* Handy: Bildkoepfe der Unterseiten nicht bildschirmfuellend, damit der
+   Inhalt ohne eine volle Bildschirmhoehe Scrollen beginnt */
+@media (max-width: 640px) {
+  .model-stage,
+  .page-stage {
+    height: max(360px, 62vh);
+    height: max(360px, 62svh);
+  }
+}
+
+/* Mehrere Pfeil-Links nebeneinander (Abschnittskopf) */
+.link-row { display: flex; flex-wrap: wrap; gap: .75rem 2rem; }
+
+/* Abschnitt direkt unter dem Seitenkopf ohne doppelten Abstand */
+.section--flush-top { padding-top: 0; }
+
+/* Haendler-FAQ: aufklappbare Fragen mit Haarlinien */
+.faq { border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.15rem 0;
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  color: var(--ink);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  font-family: var(--font);
+  color: var(--accent-d);
+  flex: 0 0 auto;
+}
+.faq details[open] summary::after { content: "\2212"; }
+.faq summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.faq details > div { padding: 0 0 1.35rem; max-width: 68ch; }
+
+/* Startseite: drei Fakten fuer Einkaeufer unter dem Hero */
+.facts-band { background: var(--paper); border-bottom: 1px solid var(--line); }
+.facts-band__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem clamp(1.5rem, 4vw, 3.5rem);
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+.facts-band h2 {
+  font-family: var(--font);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent-d);
+  margin: 0 0 .5rem;
+}
+.facts-band p { margin: 0; font-size: 1rem; }
+
+/* Ausstellung: Rundgang-Video im Hochformat neben dem Text */
+.expo-video__media video {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  background: var(--sand-2);
+}
+@media (min-width: 900px) {
+  .expo-video { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); align-items: center; }
+}
+
+/* Modellseite: Bildkopf hoechstens 1,3-fach so gross wie das Originalbild
+   (--qb/--qh = Originalbreite/-hoehe aus modelle.js, gesetzt von
+   tools/build.py). Grosse Originale bleiben randlos; kleine stehen ab der
+   Grenze zentriert auf dem Seitengrund, statt unscharf aufgeblasen zu werden. */
+.model-stage {
+  height: auto;
+  display: block;
+  overflow: visible;
+  background: var(--paper);
+  /* Abstand zur Kopfzeile waechst mit dem freien Rand neben dem Bild */
+  padding-top: clamp(0px, calc((100vw - var(--qb) * 1.3) / 2), 3rem);
+}
+.model-stage__frame {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  margin-inline: auto;
+  background: #8d8275;
+  width: min(100%, calc(var(--qb) * 1.3));
+  height: min(max(520px, calc(100vh - 80px)), calc(var(--qh) * 1.3));
+  height: min(max(520px, calc(100svh - 80px)), calc(var(--qh) * 1.3));
+}
+@media (max-width: 640px) {
+  .model-stage { height: auto; }
+  .model-stage__frame {
+    height: min(max(360px, 62vh), calc(var(--qh) * 1.3));
+    height: min(max(360px, 62svh), calc(var(--qh) * 1.3));
+  }
+}

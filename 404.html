@@ -6,11 +6,13 @@
 <title>Seite nicht gefunden – sofatrend</title>
 <meta name="description" content="Diese Seite gibt es nicht (mehr). Weiter zur Kollektion, zur Stoffwelt oder zum Kontakt.">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="assets/css/fonts.css?v=22">
-<link rel="icon" type="image/png" href="assets/img/favicon.png">
-<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preload" href="/mywebsite/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/mywebsite/assets/fonts/sourceserif4-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mywebsite/assets/css/fonts.css">
+<link rel="icon" type="image/png" href="/mywebsite/assets/img/favicon.png">
+<link rel="apple-touch-icon" href="/mywebsite/assets/img/apple-touch-icon.png">
 <meta name="theme-color" content="#faf7f1">
-<link rel="stylesheet" href="assets/css/site.css?v=22">
+<link rel="stylesheet" href="/mywebsite/assets/css/site.css">
 </head>
 <body>
 
@@ -18,21 +20,21 @@
 
 <header class="site-header">
   <div class="wrap site-header__bar">
-    <a class="brand" href="index.html">
-      <img src="assets/img/logo.png" alt="sofatrend" width="379" height="99">
+    <a class="brand" href="/mywebsite/index.html">
+      <img src="/mywebsite/assets/img/logo.png" alt="sofatrend" width="379" height="99">
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false"
             aria-controls="primary-nav" aria-label="Menü öffnen"><span></span></button>
     <nav class="nav" id="primary-nav" data-open="false" aria-label="Hauptnavigation">
       <ul class="nav__list">
-        <li><a class="nav__link" href="index.html">Startseite</a></li>
-        <li><a class="nav__link" href="kollektion.html">Modelle</a></li>
-        <li><a class="nav__link" href="qualitaet.html">Qualität</a></li>
-        <li><a class="nav__link" href="stoffe.html">Stoffe</a></li>
-        <li><a class="nav__link" href="haendler.html">Für Händler</a></li>
-        <li><a class="nav__link" href="unternehmen.html">Unternehmen</a></li>
+        <li><a class="nav__link" href="/mywebsite/index.html">Startseite</a></li>
+        <li><a class="nav__link" href="/mywebsite/kollektion.html">Modelle</a></li>
+        <li><a class="nav__link" href="/mywebsite/qualitaet.html">Qualität</a></li>
+        <li><a class="nav__link" href="/mywebsite/stoffe.html">Stoffe</a></li>
+        <li><a class="nav__link" href="/mywebsite/haendler.html">Für Händler</a></li>
+        <li><a class="nav__link" href="/mywebsite/unternehmen.html">Unternehmen</a></li>
       </ul>
-      <a class="btn nav__cta" href="kontakt.html">Kontakt</a>
+      <a class="btn nav__cta" href="/mywebsite/kontakt.html">Kontakt</a>
     </nav>
   </div>
 </header>
@@ -50,9 +52,9 @@
           Sie von hier aus wieder.
         </p>
         <div class="btn-row">
-          <a class="btn" href="index.html">Zur Startseite</a>
-          <a class="btn btn--ghost" href="kollektion.html">Zu den Modellen</a>
-          <a class="btn btn--ghost" href="kontakt.html">Kontakt</a>
+          <a class="btn" href="/mywebsite/index.html">Zur Startseite</a>
+          <a class="btn btn--ghost" href="/mywebsite/kollektion.html">Zu den Modellen</a>
+          <a class="btn btn--ghost" href="/mywebsite/kontakt.html">Kontakt</a>
         </div>
       </div>
     </div>
@@ -62,17 +64,58 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <div class="footer-bottom" style="border:0;padding-top:0">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/mywebsite/assets/img/logo-white.png" alt="sofatrend" width="379" height="99">
+        <p>Polstermöbel für den Möbelhandel.<br>Made in EU.</p>
+      </div>
+      <div>
+        <h2 class="footer-title">Modelle</h2>
+        <ul>
+          <li><a href="/mywebsite/modell-amalfi.html">Amalfi</a></li>
+          <li><a href="/mywebsite/modell-positano.html">Positano</a></li>
+          <li><a href="/mywebsite/modell-lucca.html">Lucca</a></li>
+          <li><a href="/mywebsite/modell-malibu.html">Malibu</a></li>
+          <li><a href="/mywebsite/modell-monza.html">Monza</a></li>
+          <li><a href="/mywebsite/kollektion.html">Alle 17 Modelle</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-title">Service</h2>
+        <ul>
+          <li><a href="/mywebsite/qualitaet.html">Qualität &amp; Aufbau</a></li>
+          <li><a href="/mywebsite/stoffe.html">Stoffkollektion</a></li>
+          <li><a href="/mywebsite/stoff-im-raum.html">Stoff im Raum</a></li>
+          <li><a href="/mywebsite/schulung.html">Schulungswissen</a></li>
+          <li><a href="/mywebsite/produktpass.html">Produktpass &amp; Pflege</a></li>
+          <li><a href="/mywebsite/haendler.html">Für Händler</a></li>
+          <li><a href="/mywebsite/ausstellung.html">Ausstellung Langenberg</a></li>
+          <li><a href="/mywebsite/unternehmen.html">Unternehmen</a></li>
+          <li><a href="/mywebsite/kontakt.html">Kontakt</a></li>
+          <li><a href="/mywebsite/merkliste.html">Merkliste</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-title">Kontakt</h2>
+        <ul>
+          <li>SOFA TREND s.r.o.</li>
+          <li>Pivovarnícka 3509/20</li>
+          <li>955 01 Topoľčany, Slowakei</li>
+          <li><a href="tel:+421385320721">+421 385 320 721</a></li>
+          <li><a href="mailto:info@sofatrend.sk">info@sofatrend.sk</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
       <span>© <span id="year">2026</span> sofatrend</span>
       <ul>
-        <li><a href="impressum.html">Impressum</a></li>
-        <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><a href="/mywebsite/impressum.html">Impressum</a></li>
+        <li><a href="/mywebsite/datenschutz.html">Datenschutz</a></li>
       </ul>
     </div>
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=22"></script>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="/mywebsite/assets/js/site.js"></script>
 </body>
 </html>

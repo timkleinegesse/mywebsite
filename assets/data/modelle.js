@@ -9,12 +9,18 @@
 
    Felder:
    - kollektion : 'Modelle' (einheitliche Gruppe)
-   - bild       : Basisname des Praesentationsbilds (+ '.webp' / '-thumb.webp')
+   - bild       : Basisname des Szenenbilds (+ '.webp', '-900.webp', '-1600.webp')
    - bildStil   : 'cover' (Wohnszene, randlos) | 'contain' (Freisteller)
+   - quelle     : [Breite, Hoehe] des Originalbilds in Pixeln, bevor es
+                  hochgerechnet wurde (Renderings aus den Preislisten). Der
+                  Bildkopf der Modellseite wird hoechstens 1,3-fach so gross
+                  gezeigt, damit kleine Originale nicht unscharf wirken.
+                  Bei einem besseren Original hier die neuen Masse eintragen.
    - aufbau     : nummerierte Legende, passend zur Schnittzeichnung
                   (nur die sieben Modelle mit hatAufbau: true)
    - schichten  : belegte Aufbau-Ebenen ohne Nummerierung (neue Modelle,
                   bewusst unvollstaendig statt geraten)
+   - funktion   : Kurzbeschreibung der Verstellfunktionen (Angabe auf der Modellseite)
 
    Als globale Variable statt JSON, damit die Seiten auch per file:// laufen.
    ========================================================================== */
@@ -29,6 +35,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'deep-free-szene',
     bildStil: 'cover',
+    quelle: [1178, 902],
     hatAufbau: true,
     galerie: [
       { b: 'deep-free-k1.webp', t: 'Rückansicht' },
@@ -56,6 +63,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'deep-seat-szene',
     bildStil: 'cover',
+    quelle: [898, 686],
     hatAufbau: true,
     galerie: [
       { b: 'deep-seat-k1.webp', t: 'Dreisitzer' },
@@ -83,6 +91,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'modena-szene',
     bildStil: 'cover',
+    quelle: [1400, 889],
     hatAufbau: true,
     galerie: [
       { b: 'modena-k1.webp', t: 'Elementgruppe mit Longchair' },
@@ -110,6 +119,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'bellagio-szene',
     bildStil: 'cover',
+    quelle: [783, 655],
     hatAufbau: true,
     galerie: [
       { b: 'bellagio-k1.webp', t: 'Ecksofa mit Longchair' },
@@ -120,6 +130,7 @@ window.SOFATREND_MODELLE = [
     intro: 'Bellagio ist die Funktionsreihe: die Armlehne ist klappbar ausgeführt, ' +
            'die Sitztiefe lässt sich in zwei Stufen verstellen. Dazu ein breites ' +
            'Programm an Anreihelementen, Spitzecken, Hockern und Kissen.',
+    funktion: 'Klappbare Armlehne, Sitztiefe in zwei Stufen verstellbar',
     tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell aus Massivholz und Holzwerkstoffen.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, PUR-Schaum, Inlett mit Füllung.',
@@ -138,6 +149,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'modular-szene',
     bildStil: 'cover',
+    quelle: [1301, 968],
     hatAufbau: true,
     galerie: [
       { b: 'modular-k1.webp', t: 'Elementgruppe mit Hocker' },
@@ -164,11 +176,13 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'como-szene',
     bildStil: 'cover',
+    quelle: [2048, 1575],
     hatAufbau: true,
     claim: 'Verstellbare Kopfstützen, Sitzvorzug motorisch.',
     intro: 'Como ist das komfortorientierte Modell: verstellbare Kopfstützen, ' +
            'Sitzvorzug wahlweise motorisch und eine erweiterbare Gesamttiefe. ' +
            'Alle tragenden Gestellteile aus Massivholz.',
+    funktion: 'Verstellbare Kopfstützen, motorischer Sitzvorzug',
     tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, weicher Polsteraufbau aus PUR-Schaum.',
@@ -191,6 +205,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'pisa-szene',
     bildStil: 'cover',
+    quelle: [1192, 907],
     hatAufbau: true,
     galerie: [
       { b: 'pisa-k1.webp', t: 'Sofa mit Longchair' },
@@ -216,6 +231,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'hamilton-szene',
     bildStil: 'cover',
+    quelle: [1041, 698],
     schnittBild: 'hamilton-schnitt.webp',
     claim: 'Kubische Armlehne, Umbauecke, Nierenkissen.',
     intro: 'Hamilton kombiniert eine extra tiefe Sitzfläche mit einer kubischen ' +
@@ -241,6 +257,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'pure-szene',
     bildStil: 'cover',
+    quelle: [1039, 693],
     schnittBild: 'pure-schnitt.webp',
     galerie: [
       { b: 'pure-k1.webp', t: 'Elementgruppe mit Longchair' },
@@ -268,6 +285,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'cubetto-szene',
     bildStil: 'cover',
+    quelle: [606, 500],
     claim: 'Wurfhocker mit Polystyrol-Inlett.',
     intro: 'Cubetto ist der Wurfhocker zum Programm: kompaktes, würfelnahes ' +
            'Format, gefüllt mit einem Inlett aus hochwertigen Polystyrolkugeln - ' +
@@ -290,11 +308,13 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'positano-szene',
     bildStil: 'cover',
+    quelle: [1376, 768],
     schnittBild: 'positano-schnitt.webp',
     claim: 'Sitztiefe stufenweise verstellbar.',
     intro: 'Positano bringt verstellbare Rückenteile und eine stufenweise ' +
            'verstellbare Sitztiefe mit - bei bewusst niedriger Sitzhöhe. Die ' +
            'breiten Armteile tragen Nierenkissen und Ablagen.',
+    funktion: 'Rückenteilverstellung, Sitztiefe stufenweise verstellbar',
     tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern mit Abdeckung, PUR-Schaum.',
@@ -317,6 +337,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'capri-szene',
     bildStil: 'cover',
+    quelle: [752, 570],
     schnittBild: 'capri-schnitt.webp',
     claim: 'Niedrige Lehne, extra tiefer Sitz.',
     intro: 'Capri ist die flache Lounge-Neuheit: niedrige Gesamthöhe, eine ' +
@@ -341,6 +362,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'soho-szene',
     bildStil: 'cover',
+    quelle: [822, 570],
     schnittBild: 'soho-schnitt.webp',
     galerie: [
       { b: 'soho-k1.webp', t: 'Ecklösung mit Longchair' }
@@ -348,14 +370,17 @@ window.SOFATREND_MODELLE = [
     claim: 'Auf Metallkufen, wahlweise mit Trapezelement.',
     intro: 'Soho steht auf schwarzen Metallkufen und ist in zwei ' +
            'Programmvarianten geplant - mit und ohne Trapezelement. Höhe und ' +
-           'Sitztiefe unterscheiden sich je nach Ausführung.',
+           'Sitztiefe unterscheiden sich je nach Ausführung; das Armteil-Element ' +
+           'gibt es mit Rückentiefenverstellung.',
+    funktion: 'Armteil mit Rückentiefenverstellung',
     tags: ['Schaumaufbau'],
     gestell: 'Stabiles Grundgestell, alle tragenden Teile aus Massivholz.',
     sitz: 'Stahl-Wellenfedern, abgedeckt mit Textilvlies; PUR-Schaum mit ' +
           'Wattevlies-Abdeckung.',
     schichten: ['Gestell', 'Wellenunterfederung', 'PUR Schaum', 'Bezugsmaterial', 'Gleiter'],
     elemente: ['Programmvariante mit Trapezelement (eigene Typenliste)',
-               'Programmvariante ohne Trapezelement (eigene Typenliste)']
+               'Programmvariante ohne Trapezelement (eigene Typenliste)',
+               'Armteil-Element mit Rückentiefenverstellung']
   },
 
   {
@@ -364,6 +389,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'malibu-szene',
     bildStil: 'cover',
+    quelle: [1200, 896],
     schnittBild: 'malibu-schnitt.webp',
     claim: 'Gel-Schaum-Polsterung, Umbauecke.',
     intro: 'Malibu polstert als einziges Modell mit einer zusätzlichen ' +
@@ -389,6 +415,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'amalfi-szene',
     bildStil: 'cover',
+    quelle: [1376, 768],
     schnittBild: 'amalfi-schnitt.webp',
     claim: 'Basiselemente auf Kufe, Tonnentaschenfederkern.',
     intro: 'Amalfi baut auf großen, breiten Basiselementen auf, steht auf ' +
@@ -412,6 +439,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'lucca-szene',
     bildStil: 'cover',
+    quelle: [1197, 896],
     schnittBild: 'lucca-schnitt.webp',
     claim: 'Kompakt mit Umbauecke und Hockerbank.',
     intro: 'Lucca ist die kompakte Neuheit: Umbauecke, Hockerbank und breite ' +
@@ -434,6 +462,7 @@ window.SOFATREND_MODELLE = [
     kollektion: 'Modelle',
     bild: 'monza-szene',
     bildStil: 'cover',
+    quelle: [2352, 1760],
     schnittBild: 'monza-schnitt.webp',
     claim: 'Kompakter Longchair-Klassiker.',
     intro: 'Monza bringt die klassische Longchair-Kombination in kompakter ' +

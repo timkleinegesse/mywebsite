@@ -1,0 +1,318 @@
+/* ==========================================================================
+   sofatrend - Modul "Stoff im Raum"
+   Baut auf den Variablen aus site.css auf (--paper, --sand, --ink, --accent,
+   --font, --serif). Alle Klassen mit Praefix sr-.
+   Raumfarben setzt stoffraum.js als --sr-wand, --sr-boden usw. auf .sr.
+   ========================================================================== */
+
+.sr {
+  --sr-wand: #ddd4c7;
+  --sr-wand-d: #c7bcac;
+  --sr-boden: #d3b994;
+  --sr-boden-d: #b99c74;
+  --sr-teppich: #ece5da;
+  --sr-teppich-d: #ddd3c4;
+  --sr-sticky-top: 6.5rem;   /* Abstand unter der festen Kopfzeile */
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.75rem, 4vw, 3rem);
+  color: var(--ink-2);
+  font-family: var(--font);
+}
+
+@media (min-width: 900px) {
+  .sr {
+    grid-template-columns: minmax(0, 1.65fr) minmax(300px, 1fr);
+    align-items: start;
+  }
+  .sr-stage {
+    position: sticky;
+    top: var(--sr-sticky-top);
+  }
+}
+
+/* ------------------------------------------------------------------ Raum */
+
+.sr-stage { min-width: 0; }
+
+.sr-room { margin: 0; }
+
+.sr-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--sr-wand);
+}
+
+.sr-wand    { fill: var(--sr-wand); }
+.sr-wand-d  { fill: var(--sr-wand-d); }
+.sr-sockel  { fill: var(--sr-wand-d); }
+.sr-sprossen { stroke: var(--sr-wand-d); }
+.sr-boden   { fill: var(--sr-boden); }
+.sr-dielen  { stroke: var(--sr-boden-d); }
+.sr-teppich   { fill: var(--sr-teppich); }
+.sr-teppich-d { fill: var(--sr-teppich-d); }
+
+.sr-wand, .sr-wand-d, .sr-sockel, .sr-boden, .sr-teppich, .sr-teppich-d {
+  transition: fill .45s var(--ease);
+}
+.sr-sprossen, .sr-dielen { transition: stroke .45s var(--ease); }
+
+/* Polsterkanten und Lichtkanten */
+.sr-kante {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .28;
+  stroke-width: 1.2;
+}
+.sr-glanz {
+  fill: none;
+  stroke: #fff;
+  stroke-opacity: .22;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.sr-keder-d {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .30;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+.sr-keder-h {
+  fill: none;
+  stroke: #fff;
+  stroke-opacity: .20;
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+.sr-falte {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .18;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.sr-hint {
+  margin-top: .85rem;
+  font-size: .8125rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+/* --------------------------------------------------------------- Angaben */
+
+.sr-info {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.sr-info__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .35rem 1.5rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.sr-info__row[hidden] { display: none; }
+.sr-info__label {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent-d);
+}
+.sr-info__name {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  line-height: 1.3;
+  color: var(--ink);
+}
+.sr-info__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .6rem 1.5rem;
+}
+.sr-link {
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+.sr-link:hover { text-decoration-color: currentColor; }
+
+@media (max-width: 599px) {
+  .sr-info__row { grid-template-columns: minmax(0, 1fr); }
+  .sr-info__actions { justify-content: flex-start; }
+}
+
+/* ---------------------------------------------------------------- Auswahl */
+
+.sr-panel {
+  min-width: 0;
+  background: var(--sand);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.sr-group + .sr-group {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--sand-2);
+}
+.sr-group__title {
+  margin: 0 0 .8rem;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+/* Segment: Bezug / Zierkissen */
+.sr-seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--ink);
+}
+.sr-seg__btn {
+  background: transparent;
+  border: 0;
+  padding: .7rem .5rem;
+  font: inherit;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.sr-seg__btn + .sr-seg__btn { border-left: 1px solid var(--ink); }
+.sr-seg__btn:hover { background: rgba(29, 25, 19, .06); }
+.sr-seg__btn[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+/* Qualitaeten */
+.sr-quals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .4rem;
+}
+.sr-qual {
+  background: var(--paper);
+  border: 1px solid var(--sand-2);
+  padding: .65rem .35rem;
+  font: inherit;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  transition: border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+}
+.sr-qual:hover { border-color: var(--ink-2); color: var(--ink); }
+.sr-qual[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+/* Farbkacheln mit Musterfotos */
+.sr-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: .5rem;
+}
+.sr-swatch {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: var(--sand-2);
+  cursor: pointer;
+  border-radius: 0;
+}
+.sr-swatch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sr-swatch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px rgba(29, 25, 19, .12);
+  pointer-events: none;
+}
+.sr-swatch:hover::after { box-shadow: inset 0 0 0 1px rgba(29, 25, 19, .5); }
+.sr-swatch[aria-pressed="true"] {
+  box-shadow: 0 0 0 2px var(--sand), 0 0 0 4px var(--ink);
+}
+.sr-swatch:focus-visible { outline-offset: 6px; }
+
+.sr-wie-bezug { margin-bottom: .8rem; }
+.sr-wie-bezug[hidden] { display: none; }
+
+/* Chips: Wand, Boden, "Wie Bezug" */
+.sr-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+.sr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: var(--paper);
+  border: 1px solid var(--sand-2);
+  padding: .45rem .8rem .45rem .55rem;
+  font: inherit;
+  font-size: .875rem;
+  line-height: 1.3;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: border-color .2s var(--ease), color .2s var(--ease);
+}
+.sr-chip:hover { border-color: var(--ink-2); color: var(--ink); }
+.sr-chip[aria-pressed="true"] {
+  border-color: var(--ink);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+.sr-chip__dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(29, 25, 19, .25);
+  flex: 0 0 auto;
+}
+.sr-wie-bezug { padding-left: .8rem; }
+
+/* Sichtbarer Fokus auch auf dunklem Grund */
+.sr-seg__btn:focus-visible,
+.sr-qual:focus-visible {
+  outline: 2px solid var(--accent-d);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-wand, .sr-wand-d, .sr-sockel, .sr-boden, .sr-teppich, .sr-teppich-d,
+  .sr-sprossen, .sr-dielen,
+  .sr-seg__btn, .sr-qual, .sr-chip { transition: none; }
+}

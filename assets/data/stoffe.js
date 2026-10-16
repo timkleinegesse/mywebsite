@@ -5,6 +5,7 @@
 
    Bewusst OHNE Pruefwerte (Zusammensetzung, Gewicht, Martindale, Echtheiten):
    diese Zahlen erhalten Haendler auf Anfrage mit dem Stoff-Stammdatenblatt.
+   Ebenfalls bewusst ohne Lieferanten und Preisgruppen.
    ========================================================================== */
 
 window.SOFATREND_PFLEGE =
@@ -13,8 +14,6 @@ window.SOFATREND_PFLEGE =
 window.SOFATREND_STOFFE = [
   {
     name: 'REBEL',
-    pg: 'PG1',
-    hersteller: 'Textaafoam',
     art: 'Ribcord (Cordstoff)',
     swatches: true,
     farben: [
@@ -27,9 +26,7 @@ window.SOFATREND_STOFFE = [
   },
   {
     name: 'RHYTHM',
-    pg: 'PG2',
-    hersteller: 'Textaafoam',
-    art: 'Flachgewebe',
+    art: 'Bouclé',
     swatches: true,
     farben: [
       'Liver 10', 'Beige 05', 'Natural 01', 'Ecru 102', 'Ivory 101', 'Clay 84',
@@ -40,9 +37,7 @@ window.SOFATREND_STOFFE = [
   },
   {
     name: 'GLORY',
-    pg: 'PG2',
-    hersteller: 'Textaafoam',
-    art: 'Flachgewebe',
+    art: 'Feinbouclé',
     swatches: true,
     farben: [
       'Natural 01', 'Lightgrey 60', 'Shell 196', 'Ivory 101', 'Ecru 102',
@@ -54,8 +49,6 @@ window.SOFATREND_STOFFE = [
   },
   {
     name: 'CAYENNE',
-    pg: 'PG2',
-    hersteller: 'Textaafoam',
     art: 'Flachgewebe',
     swatches: true,
     farben: [
@@ -67,8 +60,6 @@ window.SOFATREND_STOFFE = [
   {
     /* Neu im Programm. */
     name: 'CRISP',
-    pg: 'PG2',
-    hersteller: 'Textaafoam',
     art: 'Chenille-Flachgewebe',
     swatches: true,
     farben: [
@@ -78,12 +69,9 @@ window.SOFATREND_STOFFE = [
     ]
   },
 
-  /* == Globatex (Loehne, DE) ============================================ */
 
   {
     name: 'FANTASY',
-    pg: 'PG1',
-    hersteller: 'Globatex',
     swatches: true,
     farben: [
       'Jet Black 8201', 'Beluga 8202', 'Grey Pinstripe 8208', 'Frost Grey 8217',
@@ -96,8 +84,6 @@ window.SOFATREND_STOFFE = [
   },
   {
     name: 'LENNON',
-    pg: 'PG1',
-    hersteller: 'Globatex',
     swatches: true,
     farben: [
       'Jet Black 5522', 'Beluga 5520', 'Grey Pinstripe 5502', 'Antarctica 8205',
@@ -108,8 +94,6 @@ window.SOFATREND_STOFFE = [
   },
   {
     name: 'MIRACLE',
-    pg: 'PG2',
-    hersteller: 'Globatex',
     swatches: true,
     farben: [
       'Raven 2901', 'Smoked pearl 2902', 'Porpoise 2903', 'Snow white 2904',
@@ -121,8 +105,6 @@ window.SOFATREND_STOFFE = [
   {
     /* Neu im Programm. */
     name: 'ARLES',
-    pg: 'PG2',
-    hersteller: 'Globatex',
     swatches: true,
     farben: [
       'Burnt Russet 7206', 'Cannoli Cream 7213', 'Cathay Spice 7207',

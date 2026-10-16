@@ -7,10 +7,7 @@
 (function () {
   'use strict';
 
-  var MODELLE = window.SOFATREND_MODELLE || [];
-  var STOFFE  = window.SOFATREND_STOFFE  || [];
-
-  var IMG = 'assets/img/modelle/';
+  var STOFFE = window.SOFATREND_STOFFE || [];
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -19,30 +16,32 @@
     return n;
   }
 
-  function bySlug(slug) {
-    for (var i = 0; i < MODELLE.length; i++) {
-      if (MODELLE[i].slug === slug) return MODELLE[i];
-    }
-    return null;
-  }
-
   /* ----------------------------------------------------------- Navigation */
 
   function initNav() {
     var toggle = document.querySelector('.nav-toggle');
     var nav = document.getElementById('primary-nav');
     if (toggle && nav) {
+      var setOpen = function (open) {
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+        nav.setAttribute('data-open', String(open));
+      };
       toggle.addEventListener('click', function () {
-        var open = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!open));
-        nav.setAttribute('data-open', String(!open));
+        setOpen(toggle.getAttribute('aria-expanded') !== 'true');
       });
-      // Bei Wechsel auf Desktop-Breite den mobilen Zustand zuruecksetzen
-      window.addEventListener('resize', function () {
-        if (window.innerWidth > 960) {
-          toggle.setAttribute('aria-expanded', 'false');
-          nav.setAttribute('data-open', 'false');
+      // Escape schliesst das mobile Menue und gibt den Fokus zurueck
+      document.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+          setOpen(false);
+          toggle.focus();
         }
+      });
+      // Bei Wechsel auf Desktop-Breite den mobilen Zustand zuruecksetzen.
+      // Grenze wie im CSS (max-width: 1060px), sonst schliesst jedes
+      // resize-Event (z. B. einklappende URL-Leiste) das offene Menue.
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 1060) setOpen(false);
       });
     }
 
@@ -55,314 +54,63 @@
     }
   }
 
-  /* -------------------------------------------------------- Modell-Kachel */
-
-  function modelCard(m) {
-    var a = el('a', 'model-card');
-    a.href = 'modell.html?m=' + m.slug;
-
-    // Wohnszenen laufen randlos (cover), Freisteller stehen auf Weiss (contain)
-    var media = el('div', 'model-card__media model-card__media--' + (m.bildStil || 'contain'));
-    // Einheitlicher 3:2-Zuschnitt in zwei Groessen (600/1200 px), damit die
-    // Kacheln buendig sind und auf Retina-Displays scharf bleiben
-    var img = el('img');
-    img.src = IMG + m.slug + '-card-600.webp';
-    img.srcset = IMG + m.slug + '-card-600.webp 600w, ' + IMG + m.slug + '-card-1200.webp 1200w';
-    img.sizes = '(min-width: 1000px) 33vw, (min-width: 640px) 50vw, 100vw';
-    img.alt = m.name + ' in einer Wohnszene';
-    img.loading = 'lazy';
-    img.width = 1200;
-    img.height = 800;
-    media.appendChild(img);
-
-    var body = el('div', 'model-card__body');
-    body.appendChild(el('h3', 'model-card__name', m.name));
-
-    a.appendChild(media);
-    a.appendChild(body);
-    return a;
-  }
-
-  function initModelGrid() {
-    // Auf der Kollektionsseite befuellt der Filter das Hauptraster
-    var filtered = document.getElementById('filter-bar');
-
-    var grids = document.querySelectorAll('.model-grid[data-limit], .model-grid[data-collection]');
-    Array.prototype.forEach.call(grids, function (grid) {
-      if (filtered && grid.id === 'model-grid') return;
-
-      var list = MODELLE;
-      var koll = grid.getAttribute('data-collection');
-      if (koll) list = list.filter(function (m) { return m.kollektion === koll; });
-
-      var limit = parseInt(grid.getAttribute('data-limit'), 10);
-      if (!isNaN(limit)) list = list.slice(0, limit);
-
-      list.forEach(function (m) { grid.appendChild(modelCard(m)); });
-    });
-  }
-
   /* ------------------------------------------------------ Kollektionsfilter */
 
+  /* Die Modellkarten stehen statisch in kollektion.html (tools/build.py);
+     der Filter blendet sie nur ein und aus. Merkmale stehen als
+     data-tags="A|B" an jeder Karte. */
   function initFilter() {
     var bar = document.getElementById('filter-bar');
-    var kollBar = document.getElementById('filter-koll');
     var grid = document.getElementById('model-grid');
     var note = document.getElementById('filter-note');
     if (!bar || !grid) return;
 
-    // Alle vorkommenden Tags einsammeln, Reihenfolge stabil halten
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.model-card'));
     var tags = [];
-    MODELLE.forEach(function (m) {
-      m.tags.forEach(function (t) { if (tags.indexOf(t) === -1) tags.push(t); });
+    cards.forEach(function (c) {
+      (c.getAttribute('data-tags') || '').split('|').forEach(function (t) {
+        if (t && tags.indexOf(t) === -1) tags.push(t);
+      });
     });
 
     var activeTag = null;
-    var activeKoll = null;
 
     function render() {
-      grid.innerHTML = '';
-      var shown = MODELLE.filter(function (m) {
-        return (!activeTag || m.tags.indexOf(activeTag) !== -1) &&
-               (!activeKoll || m.kollektion === activeKoll);
+      var shown = 0;
+      cards.forEach(function (c) {
+        var ok = !activeTag || ('|' + c.getAttribute('data-tags') + '|').indexOf('|' + activeTag + '|') !== -1;
+        c.hidden = !ok;
+        if (ok) shown++;
       });
-      shown.forEach(function (m) { grid.appendChild(modelCard(m)); });
-
       if (note) {
-        var parts = [];
-        if (activeKoll) parts.push('Kollektion „' + activeKoll + '“');
-        if (activeTag) parts.push('Modellaufbau „' + activeTag + '“');
-        note.textContent = parts.length
-          ? shown.length + ' von ' + MODELLE.length + ' Modellen mit ' + parts.join(' und ')
-          : MODELLE.length + ' Modelle';
+        note.textContent = activeTag
+          ? shown + ' von ' + cards.length + ' Modellen mit Modellaufbau „' + activeTag + '“'
+          : cards.length + ' Modelle';
       }
     }
 
-    function syncChips(container, active) {
-      var chips = container.querySelectorAll('.chip');
-      for (var i = 0; i < chips.length; i++) {
-        chips[i].setAttribute('aria-pressed',
-          String(chips[i].getAttribute('data-value') === (active === null ? 'null' : active)));
-      }
-    }
-
-    function makeChip(container, label, value, get, set) {
-      var b = el('button', 'chip', label);
-      b.type = 'button';
-      b.setAttribute('data-value', value === null ? 'null' : value);
-      b.setAttribute('aria-pressed', String(get() === value));
-      b.addEventListener('click', function () {
-        set(get() === value ? null : value);
-        syncChips(container, get());
-        render();
-      });
-      container.appendChild(b);
-      return b;
-    }
-
-    // Kollektions-Chips
-    if (kollBar) {
-      makeChip(kollBar, 'Alle', null,
-        function () { return activeKoll; }, function (v) { activeKoll = v; })
-        .setAttribute('aria-pressed', 'true');
-      ['Freie Modelle', 'MOW 2026'].forEach(function (k) {
-        makeChip(kollBar, k, k,
-          function () { return activeKoll; }, function (v) { activeKoll = v; });
-      });
-    }
-
-    // Merkmal-Chips
-    makeChip(bar, 'Alle', null,
-      function () { return activeTag; }, function (v) { activeTag = v; })
-      .setAttribute('aria-pressed', 'true');
-    tags.forEach(function (t) {
-      makeChip(bar, t, t,
-        function () { return activeTag; }, function (v) { activeTag = v; });
-    });
-
-    render();
-  }
-
-  /* ---------------------------------------------------------- Modellseite */
-
-  function fillModelPage() {
-    var root = document.getElementById('model-detail');
-    if (!root) return;
-
-    var params = new URLSearchParams(location.search);
-    var m = bySlug(params.get('m'));
-
-    if (!m) {
-      root.innerHTML = '';
-      var box = el('div', 'wrap wrap--narrow section');
-      box.appendChild(el('h1', null, 'Modell nicht gefunden'));
-      box.appendChild(el('p', 'lede',
-        'Diese Modellreihe gibt es nicht (mehr). Die vollständige Kollektion ' +
-        'finden Sie in der Übersicht.'));
-      var back = el('a', 'btn', 'Zur Kollektion');
-      back.href = 'kollektion.html';
-      var row = el('div', 'btn-row');
-      row.appendChild(back);
-      box.appendChild(row);
-      root.appendChild(box);
-      return;
-    }
-
-    document.title = m.name + ' – sofatrend';
-    var desc = document.querySelector('meta[name="description"]');
-    if (desc) desc.setAttribute('content', m.claim + ' ' + m.intro.slice(0, 110) + '…');
-
-    // Kopfbereich
-    setText('m-name', m.name);
-    setText('m-claim', m.claim);
-    setText('m-intro', m.intro);
-
-    var hero = document.getElementById('m-hero-img');
-    if (hero) {
-      // drei Groessen: Handy, Laptop, grosse Monitore
-      hero.src = IMG + m.bild + '-1600.webp';
-      hero.srcset = IMG + m.bild + '-900.webp 900w, ' + IMG + m.bild + '-1600.webp 1600w, ' + IMG + m.bild + '.webp 2400w';
-      hero.sizes = '100vw';
-      hero.alt = m.name + ' in einer Wohnszene';
-      hero.decoding = 'async';
-      if (m.fokus) hero.style.objectPosition = m.fokus;
-      var reveal = function () { hero.classList.add('is-loaded'); };
-      if (hero.complete && hero.naturalWidth) reveal(); else hero.addEventListener('load', reveal, { once: true });
-      hero.addEventListener('error', reveal, { once: true });
-    }
-
-    setText('m-gestell', m.gestell);
-
-    var merk = document.getElementById('m-merken');
-    if (merk) {
-      merk.setAttribute('data-merk-key', 'modell:' + m.slug);
-      merk.setAttribute('data-merk-label', 'Modell ' + m.name);
-      merk.setAttribute('data-merk-href', 'modell.html?m=' + m.slug);
-      merk.setAttribute('data-merk-off', 'Modell merken');
-      merk.setAttribute('data-merk-on', 'Gemerkt');
-    }
-    setText('m-sitz', m.sitz);
-
-    // Aufbau: nummerierte Legende (mit Schnittzeichnung) oder belegte
-    // Schichtenliste ohne Nummern, wenn keine Zeichnung vorliegt
-    var build = document.getElementById('m-aufbau');
-    if (build) {
-      var steps = m.aufbau || m.schichten || [];
-      if (!m.aufbau) build.className = 'plain-list';
-      steps.forEach(function (step) { build.appendChild(el('li', null, step)); });
-    }
-
-    // Elementuebersicht
-    var elems = document.getElementById('m-elemente');
-    if (elems) {
-      m.elemente.forEach(function (e) { elems.appendChild(el('li', null, e)); });
-    }
-
-    // Aufbau-Renderings (freigelegtes Gestell etc.) gibt es nur fuer die
-    // sieben dokumentierten Modellreihen; eine Schnittzeichnung aus der
-    // Preisliste haben inzwischen fast alle Modelle.
-    if (m.hatAufbau) {
-      setImg('m-img-gestell', IMG + m.slug + '-gestell.webp',
-             m.name + ' – Gestell mit Wellenunterfederung');
-      setImg('m-img-aufbau', IMG + m.slug + '-aufbau.webp',
-             m.name + ' – Polsteraufbau im Schnitt');
-      setImg('m-img-schnitt', IMG + m.slug + '-schnitt.webp',
-             m.name + ' – Schnittzeichnung mit nummerierten Aufbaupositionen');
-    } else {
-      var gal = document.getElementById('m-aufbau-galerie');
-      if (gal) gal.remove();
-
-      if (m.schnittBild) {
-        setImg('m-img-schnitt', IMG + m.schnittBild,
-               m.name + ' – Schnittzeichnung aus der Typen- und Preisliste');
-        setText('m-aufbau-lede',
-          'Die Schnittzeichnung aus der Typen- und Preisliste; daneben die ' +
-          'dokumentierten Aufbau-Ebenen dieser Reihe.');
-      } else {
-        var schnitt = document.getElementById('m-img-schnitt');
-        if (schnitt && schnitt.closest('figure')) schnitt.closest('figure').remove();
-        setText('m-aufbau-lede',
-          'Die dokumentierten Aufbau-Ebenen dieser Reihe. Schnittzeichnung und ' +
-          'weitere Details enthält die Typen- und Preisliste.');
-      }
-    }
-
-    // Weitere Ansichten aus der Typenliste
-    var galSection = document.getElementById('m-galerie');
-    var galGrid = document.getElementById('m-galerie-grid');
-    if (galSection && galGrid) {
-      if (m.galerie && m.galerie.length) {
-        m.galerie.forEach(function (g) {
-          var fig = document.createElement('figure');
-          var img = el('img');
-          img.src = IMG + g.b;
-          img.alt = m.name + ' – ' + g.t;
-          img.loading = 'lazy';
-          fig.appendChild(img);
-          var cap = document.createElement('figcaption');
-          cap.textContent = g.t;
-          fig.appendChild(cap);
-          galGrid.appendChild(fig);
+    function chipRow(container, items, get, set) {
+      var all = [['Alle', null]].concat(items);
+      var btns = all.map(function (it) {
+        var b = el('button', 'chip', it[0]);
+        b.type = 'button';
+        b.addEventListener('click', function () {
+          set(get() === it[1] ? null : it[1]);
+          sync();
+          render();
         });
-      } else {
-        galSection.remove();
-      }
-    }
-
-    // Nachbarmodelle
-    var more = document.getElementById('m-more');
-    if (more) {
-      MODELLE.filter(function (x) { return x.slug !== m.slug; })
-             .slice(0, 3)
-             .forEach(function (x) { more.appendChild(modelCard(x)); });
-    }
-
-    // Stoffwelt-Teaser: ein Muster je Qualitaet; welche Farbe gezeigt wird,
-    // variiert deterministisch mit dem Modell (Index statt Zufall)
-    var fabTeaser = document.getElementById('m-stoffe');
-    if (fabTeaser && STOFFE.length) {
-      var mIdx = MODELLE.indexOf(m);
-      STOFFE.forEach(function (s) {
-        if (!s.swatches) return;
-        var farbe = s.farben[mIdx % s.farben.length];
-        var a = el('a', 'swatch');
-        a.href = 'stoffe.html#stoff-' + s.name.toLowerCase();
-        a.title = s.name + ' ' + farbe + ' – zur Stoffkollektion';
-        var img = el('img');
-        img.src = 'assets/img/stoffe/' + s.name.toLowerCase() + '-' + farbSlug(farbe) + '.webp';
-        img.alt = 'Stoffmuster ' + s.name + ' in ' + farbe;
-        img.loading = 'lazy';
-        img.width = 120;
-        img.height = 120;
-        a.appendChild(img);
-        a.appendChild(el('span', 'swatch__name', s.name));
-        fabTeaser.appendChild(a);
+        container.appendChild(b);
+        return b;
       });
+      function sync() {
+        btns.forEach(function (b, i) { b.setAttribute('aria-pressed', String(all[i][1] === get())); });
+      }
+      sync();
     }
-  }
 
-  function specRow(label, value) {
-    var tr = document.createElement('tr');
-    var th = document.createElement('th');
-    th.scope = 'row';
-    th.textContent = label;
-    var td = document.createElement('td');
-    td.textContent = value;
-    tr.appendChild(th);
-    tr.appendChild(td);
-    return tr;
-  }
-
-  function setText(id, text) {
-    var n = document.getElementById(id);
-    if (n) n.textContent = text;
-  }
-
-  function setImg(id, src, alt) {
-    var n = document.getElementById(id);
-    if (!n) return;
-    n.src = src;
-    n.alt = alt;
+    chipRow(bar, tags.map(function (t) { return [t, t]; }),
+      function () { return activeTag; }, function (v) { activeTag = v; });
+    render();
   }
 
   /* ------------------------------------------------------------ Stoffseite */
@@ -384,17 +132,9 @@
       var head = el('div', 'fabric__head');
       var nameWrap = el('div');
       nameWrap.appendChild(el('h3', 'fabric__name', s.name));
-      if (s.hersteller) {
-        nameWrap.appendChild(el('span', 'fabric__hersteller',
-          s.hersteller + (s.art ? ' · ' + s.art : '')));
-      }
+      if (s.art) nameWrap.appendChild(el('span', 'fabric__art', s.art));
       head.appendChild(nameWrap);
-      var pgLabel = s.pg === 'PG1' ? 'Preisgruppe 1'
-                  : s.pg === 'PG2' ? 'Preisgruppe 2'
-                  : 'Preisgruppe auf Anfrage';
       var headRight = el('div', 'fabric__actions');
-      headRight.appendChild(el('span',
-        'badge' + (s.pg ? ' badge--' + s.pg.toLowerCase() : ''), pgLabel));
       var mb = merkButton('stoff:' + s.name, 'Stoff ' + s.name, 'stoffe.html#stoff-' + s.name.toLowerCase());
       mb.setAttribute('data-merk-off', 'Qualität merken');
       headRight.appendChild(mb);
@@ -464,7 +204,6 @@
         t.id = 'tab-' + b.id;
         t.setAttribute('aria-controls', b.id);
         t.appendChild(el('span', 'fabric-tab__name', s.name));
-        t.appendChild(el('span', 'fabric-tab__meta', (s.pg ? s.pg.replace('PG', 'PG ') : '') + (s.art ? ' · ' + s.art : '')));
         t.addEventListener('click', function () { select(i, true); });
         tabs.appendChild(t);
         b.setAttribute('role', 'tabpanel');
@@ -492,8 +231,15 @@
       prev.addEventListener('click', function () { select(active - 1, true); });
       next.addEventListener('click', function () { select(active + 1, true); });
       tabs.addEventListener('keydown', function (ev) {
-        if (ev.key === 'ArrowRight') { select(active + 1, true); tabBtns[active].focus(); }
-        if (ev.key === 'ArrowLeft') { select(active - 1, true); tabBtns[active].focus(); }
+        var to = ev.key === 'ArrowRight' ? active + 1
+               : ev.key === 'ArrowLeft' ? active - 1
+               : ev.key === 'Home' ? 0
+               : ev.key === 'End' ? boxes.length - 1
+               : null;
+        if (to === null) return;
+        ev.preventDefault();
+        select(to, true);
+        tabBtns[active].focus();
       });
       window.addEventListener('hashchange', fromHash);
 
@@ -630,34 +376,19 @@
       if (ev.key === 'Escape') close();
       else if (ev.key === 'ArrowLeft') show(current - 1);
       else if (ev.key === 'ArrowRight') show(current + 1);
+      else if (ev.key === 'Tab') {
+        // Fokus im Dialog halten (aria-modal)
+        var f = Array.prototype.filter.call(box.querySelectorAll('button'),
+          function (b) { return !b.hidden; });
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (ev.shiftKey && (document.activeElement === first || !box.contains(document.activeElement))) {
+          ev.preventDefault(); last.focus();
+        } else if (!ev.shiftKey && (document.activeElement === last || !box.contains(document.activeElement))) {
+          ev.preventDefault(); first.focus();
+        }
+      }
     });
-  }
-
-  /* ------------------------------------------- Hero-Statements (3C-Stil) */
-
-  function initHeroStatements() {
-    var h1 = document.getElementById('hero-statement');
-    if (!h1) return;
-
-    var statements = [
-      'Polstermöbel sind<br>unser Handwerk.',
-      'Qualität ist<br>unser Anspruch.',
-      'Der Aufbau ist<br>unser Argument.'
-    ];
-
-    var reduce = window.matchMedia &&
-                 window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
-
-    var i = 0;
-    setInterval(function () {
-      h1.classList.add('is-fading');
-      setTimeout(function () {
-        i = (i + 1) % statements.length;
-        h1.innerHTML = statements[i];
-        h1.classList.remove('is-fading');
-      }, 620);
-    }, 4600);
   }
 
   /* ------------------------------------------------------------ Formulare */
@@ -673,6 +404,7 @@
     Array.prototype.forEach.call(forms, function (form) {
       var status = form.querySelector('.form-status');
       var button = form.querySelector('button[type="submit"]');
+      var loadedAt = Date.now(); // Mindest-Ausfuelldauer, prueft kontakt-send.php
 
       function say(text, isError) {
         if (!status) return;
@@ -705,6 +437,13 @@
         say('Ihr E-Mail-Programm wurde mit den Angaben geöffnet. Bitte senden Sie die E-Mail dort ab.');
       }
 
+      var back = new URLSearchParams(location.search);
+      if (back.has('gesendet')) {
+        say('Vielen Dank, Ihre Anfrage ist eingegangen. Wir melden uns in der Regel innerhalb von zwei Werktagen.');
+      } else if (back.has('fehler')) {
+        say('Die Anfrage konnte nicht gesendet werden. Bitte prüfen Sie die Pflichtfelder oder schreiben Sie uns direkt per E-Mail.', true);
+      }
+
       form.addEventListener('submit', function (ev) {
         ev.preventDefault();
 
@@ -720,6 +459,7 @@
         say('Ihre Anfrage wird gesendet …');
 
         var data = new FormData(form);
+        data.append('_t', String(loadedAt));
         data.append('_subject', form.getAttribute('data-subject') || 'Anfrage über die sofatrend-Website');
 
         fetch(endpoint, {
@@ -727,15 +467,23 @@
           body: data,
           headers: { 'Accept': 'application/json' }
         }).then(function (res) {
-          if (!res.ok) throw new Error('HTTP ' + res.status);
-          // Nur eine echte JSON-Antwort mit ok:true gilt als Erfolg. Ein
-          // Static-Host liefert die .php-Datei als Text aus (Status 200),
-          // das darf nicht als "gesendet" durchgehen.
-          return res.json();
-        }).then(function (json) {
-          if (!json || json.ok !== true) throw new Error('Backend meldet Fehler');
-          form.reset();
-          say('Vielen Dank, Ihre Anfrage ist eingegangen. Wir melden uns in der Regel innerhalb von zwei Werktagen.');
+          // Nur eine echte JSON-Antwort gilt. Ein Static-Host liefert die
+          // .php-Datei als Text aus (Status 200) – das darf weder als
+          // "gesendet" noch als Serverfehler durchgehen (-> E-Mail-Programm).
+          return res.json().then(function (json) {
+            return { status: res.status, json: json };
+          }, function () {
+            throw new Error('Kein JSON');
+          });
+        }).then(function (r) {
+          if (r.json && r.json.ok === true) {
+            form.reset();
+            say('Vielen Dank, Ihre Anfrage ist eingegangen. Wir melden uns in der Regel innerhalb von zwei Werktagen.');
+            return;
+          }
+          // Der Server hat geantwortet, aber abgelehnt (Pflichtfeld, Limit …):
+          // Meldung zeigen statt doppelt per E-Mail-Programm zu senden
+          say((r.json && r.json.error) || 'Die Anfrage konnte nicht gesendet werden.', true);
         }).catch(function () {
           // Kein Backend erreichbar: auf E-Mail-Programm ausweichen
           openMailto();
@@ -882,6 +630,8 @@
         list.forEach(function (x) { lines.push('- ' + x.t); });
         lines.push('');
         msg.value = lines.join('\n') + (msg.value ? '\n' + msg.value : '');
+        var anlM = document.getElementById('k-anliegen');
+        if (anlM) anlM.value = 'Unterlagen und Muster';
         var note = document.getElementById('k-merk-hinweis');
         if (note) note.hidden = false;
         var form = msg.closest('form');
@@ -904,13 +654,13 @@
   /* ---------------------------------------------------------------- Start */
 
   function init() {
+    var year = document.getElementById('year');
+    if (year) year.textContent = new Date().getFullYear();
     initNav();
     initForms();
-    initModelGrid();
     initFilter();
-    fillModelPage();
     initFabrics();
-    initLightbox(); // nach fillModelPage/initFabrics: braucht deren Galerien
+    initLightbox(); // nach initFabrics: braucht deren Musterkacheln
     initMerkliste(); // zuletzt: braucht die Merk-Buttons der Seite
   }
 
