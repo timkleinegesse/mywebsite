@@ -182,70 +182,18 @@
       root.appendChild(box);
     });
 
-    /* Eine Qualitaet auf einmal: Reiter oben, Pfeile unten, Deep-Link per #stoff-name */
+    /* Alle Qualitaeten stehen untereinander; oben eine Sprungleiste mit
+       Ankern (#stoff-name), damit man direkt zu einer Qualitaet kommt */
     var boxes = Array.prototype.slice.call(root.querySelectorAll('.fabric'));
     if (boxes.length > 1) {
-      var tabs = el('div', 'fabric-tabs');
-      tabs.setAttribute('role', 'tablist');
-      tabs.setAttribute('aria-label', 'Stoffqualität wählen');
-      var pager = el('div', 'fabric-pager');
-      var prev = el('button', 'fabric-pager__btn', '← Vorherige Qualität');
-      var next = el('button', 'fabric-pager__btn', 'Nächste Qualität →');
-      prev.type = next.type = 'button';
-      var pos = el('span', 'fabric-pager__pos');
-      pager.appendChild(prev); pager.appendChild(pos); pager.appendChild(next);
-
-      var active = 0;
-      var tabBtns = boxes.map(function (b, i) {
-        var s = STOFFE[i];
-        var t = el('button', 'fabric-tab');
-        t.type = 'button';
-        t.setAttribute('role', 'tab');
-        t.id = 'tab-' + b.id;
-        t.setAttribute('aria-controls', b.id);
-        t.appendChild(el('span', 'fabric-tab__name', s.name));
-        t.addEventListener('click', function () { select(i, true); });
-        tabs.appendChild(t);
-        b.setAttribute('role', 'tabpanel');
-        b.setAttribute('aria-labelledby', t.id);
-        return t;
+      var jump = el('nav', 'fabric-jump');
+      jump.setAttribute('aria-label', 'Zu einer Stoffqualität springen');
+      boxes.forEach(function (b, i) {
+        var a = el('a', 'fabric-jump__link', STOFFE[i].name);
+        a.href = '#' + b.id;
+        jump.appendChild(a);
       });
-
-      function select(i, push) {
-        active = (i + boxes.length) % boxes.length;
-        boxes.forEach(function (b, k) { b.hidden = k !== active; });
-        tabBtns.forEach(function (t, k) {
-          t.setAttribute('aria-selected', String(k === active));
-          t.tabIndex = k === active ? 0 : -1;
-        });
-        pos.textContent = (active + 1) + ' / ' + boxes.length;
-        if (push && history.replaceState) history.replaceState(null, '', '#' + boxes[active].id);
-        if (push) tabs.scrollIntoView({ block: 'nearest' });
-      }
-      function fromHash() {
-        var h = location.hash.replace('#', '');
-        var idx = boxes.map(function (b) { return b.id; }).indexOf(h);
-        select(idx >= 0 ? idx : 0, false);
-      }
-
-      prev.addEventListener('click', function () { select(active - 1, true); });
-      next.addEventListener('click', function () { select(active + 1, true); });
-      tabs.addEventListener('keydown', function (ev) {
-        var to = ev.key === 'ArrowRight' ? active + 1
-               : ev.key === 'ArrowLeft' ? active - 1
-               : ev.key === 'Home' ? 0
-               : ev.key === 'End' ? boxes.length - 1
-               : null;
-        if (to === null) return;
-        ev.preventDefault();
-        select(to, true);
-        tabBtns[active].focus();
-      });
-      window.addEventListener('hashchange', fromHash);
-
-      root.parentNode.insertBefore(tabs, root);
-      root.appendChild(pager);
-      fromHash();
+      root.parentNode.insertBefore(jump, root);
     }
   }
 

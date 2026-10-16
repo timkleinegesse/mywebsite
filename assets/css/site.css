@@ -1614,54 +1614,32 @@ body.lightbox-open { overflow: hidden; }
 #merkliste-aktionen { margin-top: 1rem; }
 
 /* Stoffe: Reiter je Qualitaet, nur eine Farbpalette sichtbar */
-.fabric-tabs {
+/* Stoffseite: alle Qualitaeten untereinander, oben eine Sprungleiste */
+.fabric-jump {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 clamp(1.25rem, 2.5vw, 2.25rem);
-  border-bottom: 1px solid var(--line);
+  gap: .5rem .75rem;
   margin-bottom: clamp(2rem, 4vw, 3rem);
 }
-.fabric-tab {
-  background: none;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  padding: .6rem 0 .9rem;
-  font: inherit;
-  text-align: left;
-  color: var(--muted);
-  cursor: pointer;
-  display: grid;
-  gap: .15rem;
-}
-.fabric-tab__name { font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: .8125rem; }
-.fabric-tab:hover { color: var(--ink); }
-.fabric-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
-.fabric-grid { display: block; }
-.fabric { border: 0; background: transparent; padding: 0; }
-.fabric-pager {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-top: clamp(2rem, 4vw, 3rem);
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
-}
-.fabric-pager__btn {
-  background: none;
-  border: 0;
-  padding: 0;
-  font: inherit;
+.fabric-jump__link {
   font-size: .8125rem;
   font-weight: 600;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--ink-2);
-  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: .4rem .9rem;
 }
-.fabric-pager__btn:hover { color: var(--ink); }
-.fabric-pager__pos { font-size: .8125rem; color: var(--muted); }
+.fabric-jump__link:hover { color: var(--ink); border-color: var(--ink); }
+.fabric-grid { display: block; }
+.fabric { border: 0; background: transparent; padding: 0; scroll-margin-top: 96px; }
+.fabric + .fabric {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--line);
+}
 
 /* ------------------------------------------------- Ergaenzungen Okt. 2026 */
 
