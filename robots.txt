@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.sofatrend.eu/sitemap.xml
+Sitemap: https://timkleinegesse.github.io/mywebsite/sitemap.xml
