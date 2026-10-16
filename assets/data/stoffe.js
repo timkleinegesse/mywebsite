@@ -5,7 +5,8 @@
 
    Bewusst OHNE Pruefwerte (Zusammensetzung, Gewicht, Martindale, Echtheiten):
    diese Zahlen erhalten Haendler auf Anfrage mit dem Stoff-Stammdatenblatt.
-   Ebenfalls bewusst ohne Lieferanten und Preisgruppen.
+   Ebenfalls bewusst ohne Lieferanten und Preisgruppen; 'art' dient nur der
+   internen Dokumentation und wird nicht angezeigt.
    ========================================================================== */
 
 window.SOFATREND_PFLEGE =

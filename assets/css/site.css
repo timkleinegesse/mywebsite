@@ -1092,16 +1092,6 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 .fabric__colors .tag { text-transform: none; letter-spacing: .02em; font-size: .78125rem; }
 
-.fabric__art {
-  display: block;
-  font-size: .75rem;
-  font-weight: 600;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: .3rem;
-}
-
 /* Echte Stoffmuster: Foto-Kacheln, verlinkt auf die Grossansicht */
 .swatch-grid {
   display: grid;

@@ -132,7 +132,6 @@
       var head = el('div', 'fabric__head');
       var nameWrap = el('div');
       nameWrap.appendChild(el('h3', 'fabric__name', s.name));
-      if (s.art) nameWrap.appendChild(el('span', 'fabric__art', s.art));
       head.appendChild(nameWrap);
       var headRight = el('div', 'fabric__actions');
       var mb = merkButton('stoff:' + s.name, 'Stoff ' + s.name, 'stoffe.html#stoff-' + s.name.toLowerCase());

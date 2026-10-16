@@ -81,7 +81,7 @@
 
   /* "Ribcord (Cordstoff)" -> "Ribcord" */
   function artKurz(s) {
-    return s.art ? s.art.replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim() : '';
+    return ''; // Stoffart wird bewusst nicht angezeigt (nur Name und Farbe)
   }
 
   /* Anzeige bewusst ohne Lieferant und Preisgruppe, nur Name, Farbe, Stoffart */
