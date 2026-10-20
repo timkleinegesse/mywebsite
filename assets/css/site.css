@@ -832,7 +832,9 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 
 .model-intro,
-.page-intro { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.page-intro { padding-block: clamp(2.5rem, 5vw, 4rem); }
+/* Der Abschnitt nach der Einleitung rueckt direkt an sie heran */
+.page-intro + .section { padding-top: 0; }
 /* Seitenkopf ohne Foto: Titel links, Einleitung rechts, oben buendig */
 /* Seitenkopf der Unterseiten: Titel links, Einleitung rechts unten buendig
    mit der Titel-Grundlinie, damit kein Leerraum unter dem Text entsteht */
