@@ -1655,3 +1655,10 @@ body.lightbox-open { overflow: hidden; }
 }
 .nav__lang:hover { color: var(--ink); border-color: var(--ink); }
 @media (max-width: 1060px) { .nav__lang { margin: .5rem 0 1rem; align-self: flex-start; } }
+
+/* Kopfzeile: Menue mittig zwischen Logo und Kontakt, damit Deutsch und
+   Englisch trotz unterschiedlich langer Begriffe gleich ausgerichtet sind */
+@media (min-width: 1061px) {
+  .nav { flex: 1; }
+  .nav__list { flex: 1; justify-content: center; gap: clamp(1.1rem, 2vw, 1.9rem); }
+}
