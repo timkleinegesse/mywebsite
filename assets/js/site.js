@@ -90,7 +90,6 @@
           var base = IMG_STOFFE + s.name.toLowerCase() + '-' + farbSlug(f);
           var a = el('a', 'swatch');
           a.href = base + '-gross.webp';
-          a.title = s.name + ' ' + f + ' – Großansicht öffnen';
           a.setAttribute('data-caption', s.name + ' – ' + f);
           a.setAttribute('data-farbe-key', 'stoff:' + s.name + ':' + f);
           a.setAttribute('data-farbe-label', 'Stoff ' + s.name + ' ' + f);
