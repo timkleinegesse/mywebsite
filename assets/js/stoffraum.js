@@ -22,7 +22,6 @@
   if (!STOFFE.length) return;
 
   var IMG_STOFFE = 'assets/img/stoffe/';
-  var MERK_KEY = 'sofatrend_merkliste';   // nur lesend, Logik liegt in site.js
   var SVGNS = 'http://www.w3.org/2000/svg';
   var XLINK = 'http://www.w3.org/1999/xlink';
 
@@ -345,15 +344,6 @@
     return g;
   }
 
-  function merkButton() {
-    var b = button('merk-btn sr-merk');
-    b.setAttribute('data-merk-off', 'Farbe merken');
-    b.setAttribute('data-merk-on', 'Gemerkt');
-    b.appendChild(el('span', 'merk-btn__icon', ''));
-    b.appendChild(el('span', 'merk-btn__label', 'Farbe merken'));
-    return b;
-  }
-
   function infoZeile(label) {
     var z = el('div', 'sr-info__row');
     z.appendChild(el('p', 'sr-info__label', label));
@@ -361,11 +351,9 @@
     z.appendChild(name);
     var akt = el('div', 'sr-info__actions');
     var link = el('a', 'sr-link', 'Zur Stoffkollektion');
-    var merk = merkButton();
     akt.appendChild(link);
-    akt.appendChild(merk);
     z.appendChild(akt);
-    return { row: z, name: name, link: link, merk: merk };
+    return { row: z, name: name, link: link };
   }
 
   function aufbauen() {
@@ -566,26 +554,6 @@
     pre.src = url;
   }
 
-  /* -------------------------------------------------------- Merk-Button */
-
-  function merkListe() {
-    try { return JSON.parse(localStorage.getItem(MERK_KEY)) || []; } catch (e) { return []; }
-  }
-
-  /* data-Attribute setzen; die Anzeige (is-on, Beschriftung) wird nur
-     lesend an die Merkliste angeglichen - Umschalten erledigt site.js. */
-  function merkSetzen(b, s, farbe) {
-    var key = 'stoff:' + s.name + ':' + farbe;
-    b.setAttribute('data-merk-key', key);
-    b.setAttribute('data-merk-label', 'Stoff ' + s.name + ' ' + farbe);
-    b.setAttribute('data-merk-href', kollektionHref(s));
-    var on = merkListe().some(function (x) { return x && x.k === key; });
-    b.classList.toggle('is-on', on);
-    b.setAttribute('aria-pressed', String(on));
-    b.querySelector('.merk-btn__label').textContent =
-      on ? b.getAttribute('data-merk-on') : b.getAttribute('data-merk-off');
-  }
-
   /* ------------------------------------------------------------ Hash */
 
   var hashSchreiben = false;
@@ -682,16 +650,11 @@
     // Angaben unter dem Raum
     ui.bezug.name.textContent = stoffText(s, farbe);
     ui.bezug.link.href = kollektionHref(s);
-    merkSetzen(ui.bezug.merk, s, farbe);
 
     ui.kissen.row.hidden = !kissen;
     if (kissen) {
       ui.kissen.name.textContent = stoffText(ks, kf);
       ui.kissen.link.href = kollektionHref(ks);
-      merkSetzen(ui.kissen.merk, ks, kf);
-    } else {
-      // ohne Schluessel ignoriert site.js den Button
-      ui.kissen.merk.removeAttribute('data-merk-key');
     }
 
     if (nachAuswahl) hashSpiegeln();

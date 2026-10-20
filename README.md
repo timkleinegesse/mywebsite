@@ -66,7 +66,6 @@ Zwei Möglichkeiten:
 | `modell-<slug>.html` | Detailseite je Modell (Aufbau, Konstruktion, Funktion, Elemente – bewusst ohne Maße), erzeugt von `tools/build.py` aus `assets/data/modelle.js` |
 | `modell.html` | Nur noch Weiterleitung alter Links `modell.html?m=<slug>` auf `modell-<slug>.html` |
 | `stoff-im-raum.html` | Alle Stoffe und Farben auf einem Sofa im Raum (SVG, `assets/js/stoffraum.js`), mit Zierkissen, Wand und Boden; teilbare Links per `#rebel/onyx-169` |
-| `merkliste.html` | Gemerkte Modelle, Stoffe und Farben (nur im Browser gespeichert), Übernahme ins Kontaktformular |
 | `qualitaet.html` | Gestell/Federung/Schaum/Bezug, Schnittzeichnungen, Polstercharaktere, Toleranzen, Produktpass |
 | `stoffe.html` | 9 Stoffqualitäten mit echten Musterfotos je Farbe (Kachel + Großansicht in `assets/img/stoffe/`): REBEL, RHYTHM, GLORY, CAYENNE, CRISP, FANTASY, LENNON, MIRACLE, ARLES – bewusst ohne Lieferanten und Preisgruppen; Prüfwerte bewusst nur auf Anfrage |
 | `schulung.html` | Schulungswissen für Verkaufsteams in fünf Modulen (Aufbau, Stoffkennwerte, Polstercharaktere, Funktionen, Reklamation) |
