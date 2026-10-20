@@ -26,7 +26,7 @@ const MIN_DAUER      = 3;    // Sekunden zwischen Seitenaufruf und Absenden
 
 // Erlaubte Werte der Auswahlfelder (wie in kontakt.html)
 const KUNDENSTATUS = ['Neukunde', 'Bestandskunde'];
-const ANLIEGEN     = ['Kontaktaufnahme', 'Terminvereinbarung', 'Unterlagen und Muster'];
+const ANLIEGEN     = ['Kontaktaufnahme', 'Terminvereinbarung'];
 
 $willJson = strpos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false;
 
