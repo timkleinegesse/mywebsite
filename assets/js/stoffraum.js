@@ -13,6 +13,29 @@
 (function () {
   'use strict';
 
+  /* Oberflaechentexte: Deutsch im Code, Englisch ueber diese Tabelle
+     (aktiv wenn <html lang="en">) */
+  var EN = {
+    'Weiß': 'White', 'Greige': 'Greige', 'Salbei': 'Sage', 'Taupe': 'Taupe',
+    'Taubenblau': 'Dove blue', 'Anthrazit': 'Anthracite', 'Hell': 'Light', 'Dunkel': 'Dark',
+    'Zur Stoffkollektion': 'To the fabric collection',
+    'Darstellung zur Orientierung. Polsterstoffe changieren und weichen chargenbedingt ab – verbindlich ist das Originalmuster.':
+      'For orientation only. Upholstery fabrics shimmer and vary between batches – the original sample is binding.',
+    'Bezug': 'Cover', 'Zierkissen': 'Scatter cushions', 'Stoff wählen für': 'Choose fabric for',
+    'Sofa-Bezug': 'Sofa cover', 'Qualität': 'Quality', 'Farbe': 'Colour', 'Wie Bezug': 'Same as cover',
+    'Wand': 'Wall', 'Boden': 'Floor', 'Wohnzimmer mit Sofa in ': 'Living room with sofa in ',
+    'Farbe ': 'Colour ', ', Wand ': ', wall ', ', Boden ': ', floor ', ' Farben': ' colours'
+  };
+  function T(str) {
+    return (document.documentElement.lang === 'en' && EN[str]) || str;
+  }
+  /* Bildpfade relativ zur Seite: unter /en/ liegen die Assets eine Ebene
+     hoeher - abgeleitet vom Pfad des Stylesheets */
+  var ASSETS = (function () {
+    var l = document.querySelector('link[rel="stylesheet"][href*="site.css"]');
+    return l ? l.getAttribute('href').split('assets/')[0] : '';
+  })();
+
   var root = document.getElementById('stoffraum');
   if (!root) return;
 
@@ -21,7 +44,7 @@
   });
   if (!STOFFE.length) return;
 
-  var IMG_STOFFE = 'assets/img/stoffe/';
+  var IMG_STOFFE = ASSETS + 'assets/img/stoffe/';
   var SVGNS = 'http://www.w3.org/2000/svg';
   var XLINK = 'http://www.w3.org/1999/xlink';
 
@@ -32,17 +55,17 @@
 
   /* Feste, ruhige Wandtoene: Wand, dunklere Variante (Fensterrahmen, Sockel) */
   var WAENDE = [
-    { name: 'Weiß',       wand: '#f2efe9', dunkel: '#dcd6cc' },
-    { name: 'Greige',     wand: '#ddd4c7', dunkel: '#c7bcac' },
-    { name: 'Salbei',     wand: '#bcc4b1', dunkel: '#a5ae99' },
-    { name: 'Taupe',      wand: '#b8aa99', dunkel: '#a19281' },
-    { name: 'Taubenblau', wand: '#b4bec4', dunkel: '#9ca8af' },
-    { name: 'Anthrazit',  wand: '#4b4945', dunkel: '#5d5a55' }
+    { name: T('Weiß'),       wand: '#f2efe9', dunkel: '#dcd6cc' },
+    { name: T('Greige'),     wand: '#ddd4c7', dunkel: '#c7bcac' },
+    { name: T('Salbei'),     wand: '#bcc4b1', dunkel: '#a5ae99' },
+    { name: T('Taupe'),      wand: '#b8aa99', dunkel: '#a19281' },
+    { name: T('Taubenblau'), wand: '#b4bec4', dunkel: '#9ca8af' },
+    { name: T('Anthrazit'),  wand: '#4b4945', dunkel: '#5d5a55' }
   ];
 
   var BOEDEN = [
-    { name: 'Hell',   boden: '#d3b994', dunkel: '#b99c74', teppich: '#ece5da', teppichD: '#ddd3c4' },
-    { name: 'Dunkel', boden: '#6e5039', dunkel: '#553d2b', teppich: '#e4dccf', teppichD: '#d2c7b6' }
+    { name: T('Hell'),   boden: '#d3b994', dunkel: '#b99c74', teppich: '#ece5da', teppichD: '#ddd3c4' },
+    { name: T('Dunkel'), boden: '#6e5039', dunkel: '#553d2b', teppich: '#e4dccf', teppichD: '#d2c7b6' }
   ];
 
   var state = {
@@ -350,7 +373,7 @@
     var name = el('p', 'sr-info__name');
     z.appendChild(name);
     var akt = el('div', 'sr-info__actions');
-    var link = el('a', 'sr-link', 'Zur Stoffkollektion');
+    var link = el('a', 'sr-link', T('Zur Stoffkollektion'));
     akt.appendChild(link);
     z.appendChild(akt);
     return { row: z, name: name, link: link };
@@ -364,14 +387,14 @@
     var fig = el('figure', 'sr-room');
     fig.innerHTML = szeneSvg();
     var cap = el('figcaption', 'sr-hint',
-      'Darstellung zur Orientierung. Polsterstoffe changieren und weichen chargenbedingt ab – verbindlich ist das Originalmuster.');
+      T('Darstellung zur Orientierung. Polsterstoffe changieren und weichen chargenbedingt ab – verbindlich ist das Originalmuster.'));
     fig.appendChild(cap);
     stage.appendChild(fig);
 
     var info = el('div', 'sr-info');
     info.setAttribute('aria-live', 'polite');
-    ui.bezug = infoZeile('Bezug');
-    ui.kissen = infoZeile('Zierkissen');
+    ui.bezug = infoZeile(T('Bezug'));
+    ui.kissen = infoZeile(T('Zierkissen'));
     info.appendChild(ui.bezug.row);
     info.appendChild(ui.kissen.row);
     stage.appendChild(info);
@@ -379,9 +402,9 @@
     /* Auswahl */
     var panel = el('div', 'sr-panel');
 
-    var gZiel = gruppe('Stoff wählen für', 'sr-t-ziel');
+    var gZiel = gruppe(T('Stoff wählen für'), 'sr-t-ziel');
     var ziele = el('div', 'sr-seg');
-    ui.zielBtns = [['bezug', 'Sofa-Bezug'], ['kissen', 'Zierkissen']].map(function (z) {
+    ui.zielBtns = [['bezug', T('Sofa-Bezug')], ['kissen', T('Zierkissen')]].map(function (z) {
       var b = button('sr-seg__btn', z[1]);
       b.setAttribute('data-ziel', z[0]);
       b.addEventListener('click', function () {
@@ -394,7 +417,7 @@
     gZiel.appendChild(ziele);
     panel.appendChild(gZiel);
 
-    var gQ = gruppe('Qualität', 'sr-t-qual');
+    var gQ = gruppe(T('Qualität'), 'sr-t-qual');
     var qGrid = el('div', 'sr-quals');
     ui.qBtns = STOFFE.map(function (s, i) {
       var b = button('sr-qual', s.name);
@@ -405,9 +428,9 @@
     gQ.appendChild(qGrid);
     panel.appendChild(gQ);
 
-    var gF = gruppe('Farbe', 'sr-t-farbe');
+    var gF = gruppe(T('Farbe'), 'sr-t-farbe');
     ui.farbTitel = gF.querySelector('.sr-group__title');
-    ui.wieBezug = button('sr-chip sr-wie-bezug', 'Wie Bezug');
+    ui.wieBezug = button('sr-chip sr-wie-bezug', T('Wie Bezug'));
     ui.wieBezug.addEventListener('click', function () {
       state.kq = state.kc = null;
       render(true);
@@ -417,7 +440,7 @@
     gF.appendChild(ui.farben);
     panel.appendChild(gF);
 
-    var gW = gruppe('Wand', 'sr-t-wand');
+    var gW = gruppe(T('Wand'), 'sr-t-wand');
     var wChips = el('div', 'sr-chips');
     ui.wandBtns = WAENDE.map(function (w, i) {
       var b = button('sr-chip');
@@ -433,7 +456,7 @@
     gW.appendChild(wChips);
     panel.appendChild(gW);
 
-    var gB = gruppe('Boden', 'sr-t-boden');
+    var gB = gruppe(T('Boden'), 'sr-t-boden');
     var bChips = el('div', 'sr-chips');
     ui.bodenBtns = BOEDEN.map(function (bd, i) {
       var b = button('sr-chip');
@@ -625,9 +648,9 @@
     setzeMuster(['sr-p-sofa', 'sr-p-sofa-sitz'], bildUrl(s, farbe));
     setzeMuster(['sr-p-kissen'], bildUrl(ks, kf));
 
-    ui.svgTitel.textContent = 'Wohnzimmer mit Sofa in ' + s.name + ' ' + farbe +
+    ui.svgTitel.textContent = T('Wohnzimmer mit Sofa in ') + s.name + ' ' + farbe +
       (kissen ? ', Zierkissen in ' + ks.name + ' ' + kf : '') +
-      ', Wand ' + w.name + ', Boden ' + bd.name.toLowerCase();
+      T(', Wand ') + w.name + T(', Boden ') + bd.name.toLowerCase();
 
     // Bedienelemente
     ui.zielBtns.forEach(function (b) { gedrueckt(b, b.getAttribute('data-ziel') === state.ziel); });
@@ -639,8 +662,8 @@
 
     farbKacheln(zeigQ);
     ui.farbBtns.forEach(function (b, i) { gedrueckt(b, i === zeigC); });
-    ui.farbTitel.textContent = 'Farbe ' + (imKissen ? 'Zierkissen' : 'Bezug') +
-      ' · ' + STOFFE[zeigQ].name + ' · ' + STOFFE[zeigQ].farben.length + ' Farben';
+    ui.farbTitel.textContent = T('Farbe ') + (imKissen ? T('Zierkissen') : T('Bezug')) +
+      ' · ' + STOFFE[zeigQ].name + ' · ' + STOFFE[zeigQ].farben.length + T(' Farben');
     ui.wieBezug.hidden = !imKissen;
     gedrueckt(ui.wieBezug, imKissen && !kissen);
 

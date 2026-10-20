@@ -31,6 +31,17 @@ Anzahl-Angaben („17 Modelle“, „neun Qualitäten“) an die Daten an,
 prüft, ob alle Modell- und Stoffbilder vorhanden sind, und schreibt
 `sitemap.xml` neu. Ein zweiter Lauf ohne Änderungen ändert nichts.
 
+**Englische Fassung:** Das Skript erzeugt aus jeder deutschen Seite eine
+englische unter `en/` (gleicher Dateiname, `<html lang="en">`,
+Sprachumschalter DE/EN in der Kopfzeile, `hreflang`-Links, eigene
+Sitemap-Einträge). Die Texte stammen aus `../tools/uebersetzung-en/*.json`
+(deutscher Text → englischer Text, Schlüssel exakt wie auf der deutschen
+Seite). Neuer oder geänderter deutscher Text: Eintrag in der passenden
+JSON-Datei ergänzen, sonst bleibt die Stelle auf der englischen Seite
+deutsch – das Skript listet solche Stellen nach jedem Lauf auf. Texte, die
+JavaScript erzeugt (Stoffseite, Stoff im Raum, Formularmeldungen), stehen
+in `EN`-Tabellen am Anfang von `assets/js/site.js` und `stoffraum.js`.
+
 **Kopf-/Fußzeile ändern:** `../tools/partials/header.html` bzw.
 `footer.html` bearbeiten, Skript ausführen. Nicht in den einzelnen Seiten.
 

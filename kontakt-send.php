@@ -40,7 +40,8 @@ function antwort(bool $ok, string $fehler = '', int $status = 200): void {
         echo json_encode($ok ? ['ok' => true] : ['ok' => false, 'error' => $fehler], JSON_UNESCAPED_UNICODE);
     } else {
         // Ohne JavaScript: zurück zum Formular, dort erscheint die Meldung
-        header('Location: kontakt.html?' . ($ok ? 'gesendet=1' : 'fehler=1') . '#anfrage', true, 303);
+        $en = (($_POST['_lang'] ?? 'de') === 'en');
+        header('Location: ' . ($en ? 'en/' : '') . 'kontakt.html?' . ($ok ? 'gesendet=1' : 'fehler=1') . '#anfrage', true, 303);
     }
     exit;
 }

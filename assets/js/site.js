@@ -9,6 +9,39 @@
 
   var STOFFE = window.SOFATREND_STOFFE || [];
 
+  /* Oberflaechentexte: Deutsch im Code, Englisch ueber diese Tabelle,
+     aktiv wenn <html lang="en"> (Seiten unter /en/, siehe tools/build.py) */
+  var EN = {
+    'Menü schließen': 'Close menu',
+    'Menü öffnen': 'Open menu',
+    'Stoffmuster ': 'Fabric sample ',
+    ' in ': ' in ',
+    ' Farben': ' colours',
+    'Zu einer Stoffqualität springen': 'Jump to a fabric quality',
+    'Großansicht': 'Enlarged view',
+    'Großansicht schließen': 'Close enlarged view',
+    'Vorheriges Bild': 'Previous image',
+    'Nächstes Bild': 'Next image',
+    'Anfrage über die sofatrend-Website': 'Enquiry via the sofatrend website',
+    'Ihr E-Mail-Programm wurde mit den Angaben geöffnet. Bitte senden Sie die E-Mail dort ab.': 'Your e-mail program has been opened with your details. Please send the e-mail from there.',
+    'Vielen Dank, Ihre Anfrage ist eingegangen. Wir melden uns in der Regel innerhalb von zwei Werktagen.': 'Thank you, we have received your enquiry. We usually reply within two working days.',
+    'Die Anfrage konnte nicht gesendet werden. Bitte prüfen Sie die Pflichtfelder oder schreiben Sie uns direkt per E-Mail.': 'The enquiry could not be sent. Please check the required fields or write to us directly by e-mail.',
+    'Vielen Dank, Ihre Anfrage ist eingegangen.': 'Thank you, we have received your enquiry.',
+    'Ihre Anfrage wird gesendet …': 'Your enquiry is being sent …',
+    'Die Anfrage konnte nicht gesendet werden.': 'The enquiry could not be sent.',
+    'Datenschutz-Einwilligung: ': 'Privacy consent: ',
+    'ja': 'yes', 'nein': 'no'
+  };
+  function T(str) {
+    return (document.documentElement.lang === 'en' && EN[str]) || str;
+  }
+  /* Bildpfade relativ zur Seite: unter /en/ liegen die Assets eine Ebene
+     hoeher - abgeleitet vom Pfad des Stylesheets */
+  var ASSETS = (function () {
+    var l = document.querySelector('link[rel="stylesheet"][href*="site.css"]');
+    return l ? l.getAttribute('href').split('assets/')[0] : '';
+  })();
+
   function el(tag, cls, text) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -24,7 +57,7 @@
     if (toggle && nav) {
       var setOpen = function (open) {
         toggle.setAttribute('aria-expanded', String(open));
-        toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+        toggle.setAttribute('aria-label', open ? T('Menü schließen') : T('Menü öffnen'));
         nav.setAttribute('data-open', String(open));
       };
       toggle.addEventListener('click', function () {
@@ -64,7 +97,7 @@
     var root = document.getElementById('fabric-list');
     if (!root) return;
 
-    var IMG_STOFFE = 'assets/img/stoffe/';
+    var IMG_STOFFE = ASSETS + 'assets/img/stoffe/';
 
     STOFFE.forEach(function (s) {
       var box = el('article', 'fabric');
@@ -79,7 +112,7 @@
       box.appendChild(head);
 
       var colors = el('div', 'fabric__colors');
-      colors.appendChild(el('h4', null, s.farben.length + ' Farben'));
+      colors.appendChild(el('h4', null, s.farben.length + T(' Farben')));
 
       if (s.swatches) {
         // Echte Musterfotos: Kachel verlinkt auf die Grossansicht
@@ -95,7 +128,7 @@
           a.setAttribute('data-farbe-label', 'Stoff ' + s.name + ' ' + f);
           var img = el('img');
           img.src = base + '.webp';
-          img.alt = 'Stoffmuster ' + s.name + ' in ' + f;
+          img.alt = T('Stoffmuster ') + s.name + T(' in ') + f;
           img.loading = 'lazy';
           img.width = 120;
           img.height = 120;
@@ -123,7 +156,7 @@
     var boxes = Array.prototype.slice.call(root.querySelectorAll('.fabric'));
     if (boxes.length > 1) {
       var jump = el('nav', 'fabric-jump');
-      jump.setAttribute('aria-label', 'Zu einer Stoffqualität springen');
+      jump.setAttribute('aria-label', T('Zu einer Stoffqualität springen'));
       boxes.forEach(function (b, i) {
         var a = el('a', 'fabric-jump__link', STOFFE[i].name);
         a.href = '#' + b.id;
@@ -160,7 +193,7 @@
     var box = el('div', 'lightbox');
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
-    box.setAttribute('aria-label', 'Großansicht');
+    box.setAttribute('aria-label', T('Großansicht'));
     box.hidden = true;
 
     var fig = el('figure', 'lightbox__figure');
@@ -176,13 +209,13 @@
 
     var btnClose = el('button', 'lightbox__close', '✕');
     btnClose.type = 'button';
-    btnClose.setAttribute('aria-label', 'Großansicht schließen');
+    btnClose.setAttribute('aria-label', T('Großansicht schließen'));
     var btnPrev = el('button', 'lightbox__nav lightbox__nav--prev', '‹');
     btnPrev.type = 'button';
-    btnPrev.setAttribute('aria-label', 'Vorheriges Bild');
+    btnPrev.setAttribute('aria-label', T('Vorheriges Bild'));
     var btnNext = el('button', 'lightbox__nav lightbox__nav--next', '›');
     btnNext.type = 'button';
-    btnNext.setAttribute('aria-label', 'Nächstes Bild');
+    btnNext.setAttribute('aria-label', T('Nächstes Bild'));
 
     box.appendChild(btnClose);
     box.appendChild(btnPrev);
@@ -289,7 +322,7 @@
           var label = form.querySelector('label[for="' + f.id + '"]');
           var name = label ? label.textContent.replace(/\s+/g, ' ').replace(/\s*\*\s*$/, '').trim() : f.name;
           if (f.type === 'checkbox') {
-            lines.push('Datenschutz-Einwilligung: ' + (f.checked ? 'ja' : 'nein'));
+            lines.push(T('Datenschutz-Einwilligung: ') + (f.checked ? T('ja') : T('nein')));
           } else if (f.value) {
             lines.push(name + ': ' + f.value);
           }
@@ -299,18 +332,18 @@
 
       function openMailto() {
         var to = form.getAttribute('data-mailto-form');
-        var subject = form.getAttribute('data-subject') || 'Anfrage über die sofatrend-Website';
+        var subject = form.getAttribute('data-subject') || T('Anfrage über die sofatrend-Website');
         location.href = 'mailto:' + to +
           '?subject=' + encodeURIComponent(subject) +
           '&body=' + encodeURIComponent(collectLines().join('\n'));
-        say('Ihr E-Mail-Programm wurde mit den Angaben geöffnet. Bitte senden Sie die E-Mail dort ab.');
+        say(T('Ihr E-Mail-Programm wurde mit den Angaben geöffnet. Bitte senden Sie die E-Mail dort ab.'));
       }
 
       var back = new URLSearchParams(location.search);
       if (back.has('gesendet')) {
-        say('Vielen Dank, Ihre Anfrage ist eingegangen. Wir melden uns in der Regel innerhalb von zwei Werktagen.');
+        say(T('Vielen Dank, Ihre Anfrage ist eingegangen. Wir melden uns in der Regel innerhalb von zwei Werktagen.'));
       } else if (back.has('fehler')) {
-        say('Die Anfrage konnte nicht gesendet werden. Bitte prüfen Sie die Pflichtfelder oder schreiben Sie uns direkt per E-Mail.', true);
+        say(T('Die Anfrage konnte nicht gesendet werden. Bitte prüfen Sie die Pflichtfelder oder schreiben Sie uns direkt per E-Mail.'), true);
       }
 
       form.addEventListener('submit', function (ev) {
@@ -319,17 +352,17 @@
         if (typeof form.reportValidity === 'function' && !form.reportValidity()) return;
 
         var hp = form.querySelector('[name="website"]');
-        if (hp && hp.value) { say('Vielen Dank, Ihre Anfrage ist eingegangen.'); return; } // Bot
+        if (hp && hp.value) { say(T('Vielen Dank, Ihre Anfrage ist eingegangen.')); return; } // Bot
 
         var endpoint = form.getAttribute('data-endpoint');
         if (!endpoint || typeof fetch !== 'function') { openMailto(); return; }
 
         if (button) { button.disabled = true; button.setAttribute('aria-busy', 'true'); }
-        say('Ihre Anfrage wird gesendet …');
+        say(T('Ihre Anfrage wird gesendet …'));
 
         var data = new FormData(form);
         data.append('_t', String(loadedAt));
-        data.append('_subject', form.getAttribute('data-subject') || 'Anfrage über die sofatrend-Website');
+        data.append('_subject', form.getAttribute('data-subject') || T('Anfrage über die sofatrend-Website'));
 
         fetch(endpoint, {
           method: 'POST',
@@ -347,12 +380,12 @@
         }).then(function (r) {
           if (r.json && r.json.ok === true) {
             form.reset();
-            say('Vielen Dank, Ihre Anfrage ist eingegangen. Wir melden uns in der Regel innerhalb von zwei Werktagen.');
+            say(T('Vielen Dank, Ihre Anfrage ist eingegangen. Wir melden uns in der Regel innerhalb von zwei Werktagen.'));
             return;
           }
           // Der Server hat geantwortet, aber abgelehnt (Pflichtfeld, Limit …):
           // Meldung zeigen statt doppelt per E-Mail-Programm zu senden
-          say((r.json && r.json.error) || 'Die Anfrage konnte nicht gesendet werden.', true);
+          say((r.json && r.json.error) || T('Die Anfrage konnte nicht gesendet werden.'), true);
         }).catch(function () {
           // Kein Backend erreichbar: auf E-Mail-Programm ausweichen
           openMailto();
