@@ -54,65 +54,6 @@
     }
   }
 
-  /* ------------------------------------------------------ Kollektionsfilter */
-
-  /* Die Modellkarten stehen statisch in kollektion.html (tools/build.py);
-     der Filter blendet sie nur ein und aus. Merkmale stehen als
-     data-tags="A|B" an jeder Karte. */
-  function initFilter() {
-    var bar = document.getElementById('filter-bar');
-    var grid = document.getElementById('model-grid');
-    var note = document.getElementById('filter-note');
-    if (!bar || !grid) return;
-
-    var cards = Array.prototype.slice.call(grid.querySelectorAll('.model-card'));
-    var tags = [];
-    cards.forEach(function (c) {
-      (c.getAttribute('data-tags') || '').split('|').forEach(function (t) {
-        if (t && tags.indexOf(t) === -1) tags.push(t);
-      });
-    });
-
-    var activeTag = null;
-
-    function render() {
-      var shown = 0;
-      cards.forEach(function (c) {
-        var ok = !activeTag || ('|' + c.getAttribute('data-tags') + '|').indexOf('|' + activeTag + '|') !== -1;
-        c.hidden = !ok;
-        if (ok) shown++;
-      });
-      if (note) {
-        note.textContent = activeTag
-          ? shown + ' von ' + cards.length + ' Modellen mit Modellaufbau „' + activeTag + '“'
-          : cards.length + ' Modelle';
-      }
-    }
-
-    function chipRow(container, items, get, set) {
-      var all = [['Alle', null]].concat(items);
-      var btns = all.map(function (it) {
-        var b = el('button', 'chip', it[0]);
-        b.type = 'button';
-        b.addEventListener('click', function () {
-          set(get() === it[1] ? null : it[1]);
-          sync();
-          render();
-        });
-        container.appendChild(b);
-        return b;
-      });
-      function sync() {
-        btns.forEach(function (b, i) { b.setAttribute('aria-pressed', String(all[i][1] === get())); });
-      }
-      sync();
-    }
-
-    chipRow(bar, tags.map(function (t) { return [t, t]; }),
-      function () { return activeTag; }, function (v) { activeTag = v; });
-    render();
-  }
-
   /* ------------------------------------------------------------ Stoffseite */
 
   function farbSlug(name) {
@@ -443,7 +384,6 @@
     if (year) year.textContent = new Date().getFullYear();
     initNav();
     initForms();
-    initFilter();
     initFabrics();
     initLightbox(); // nach initFabrics: braucht deren Musterkacheln
     initKontaktParams();
