@@ -22,6 +22,9 @@
                   bewusst unvollstaendig statt geraten)
    - funktion   : Kurzbeschreibung der Verstellfunktionen (Angabe auf der Modellseite)
 
+   Cubetto (Wurfhocker) ist auf Wunsch vorerst nicht im Programm (20.10.2026);
+   Daten und Bilder (assets/img/modelle/cubetto-*) bleiben fuer spaeter erhalten.
+
    Als globale Variable statt JSON, damit die Seiten auch per file:// laufen.
    ========================================================================== */
 
@@ -276,30 +279,6 @@ window.SOFATREND_MODELLE = [
     elemente: ['Basiselemente (armlos)', 'Armlehnen-Kissen']
   },
 
-
-
-  {
-    slug: 'cubetto',
-    fokus: 'center 44%',
-    name: 'Cubetto',
-    kollektion: 'Modelle',
-    bild: 'cubetto-szene',
-    bildStil: 'cover',
-    quelle: [606, 500],
-    claim: 'Wurfhocker mit Polystyrol-Inlett.',
-    intro: 'Cubetto ist der Wurfhocker zum Programm: kompaktes, würfelnahes ' +
-           'Format, gefüllt mit einem Inlett aus hochwertigen Polystyrolkugeln - ' +
-           'in allen Stoffgruppen beziehbar.',
-    tags: ['Polystyrol-Inlett'],
-    gestell: 'Formstabiles Kissenmöbel ohne Rahmengestell.',
-    sitz: 'Inlett aus hochwertigen Polystyrolkugeln, Nachlassen der Sitzfestigkeit ' +
-          'im Laufe der Nutzung ist materialtypisch.',
-    schichten: ['Inlett aus hochwertigen Polystyrolkugeln', 'Bezugsmaterial'],
-    elemente: ['Wurfhocker'],
-    galerie: [
-      { b: 'cubetto-k1.webp', t: 'Würfelhocker' }
-    ]
-  },
 
 
   {

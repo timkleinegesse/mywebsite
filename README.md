@@ -73,7 +73,7 @@ Zwei Möglichkeiten:
 | Datei | Inhalt |
 | --- | --- |
 | `index.html` | Startseite: Hero, Kennzahlen, Kollektion, Unternehmensfilm, Aufbau, Stoffe, Händler-CTA |
-| `kollektion.html` | Alle 17 Modelle („Modelle") mit Filter nach Modellaufbau; Karten statisch erzeugt |
+| `kollektion.html` | Alle 16 Modelle („Modelle") mit Filter nach Modellaufbau; Karten statisch erzeugt |
 | `modell-<slug>.html` | Detailseite je Modell (Aufbau, Konstruktion, Funktion, Elemente – bewusst ohne Maße), erzeugt von `tools/build.py` aus `assets/data/modelle.js` |
 | `modell.html` | Nur noch Weiterleitung alter Links `modell.html?m=<slug>` auf `modell-<slug>.html` |
 | `stoff-im-raum.html` | Alle Stoffe und Farben auf einem Sofa im Raum (SVG, `assets/js/stoffraum.js`), mit Zierkissen, Wand und Boden; teilbare Links per `#rebel/onyx-169` |
@@ -86,11 +86,12 @@ Zwei Möglichkeiten:
 | `kontakt.html` | Kontaktdaten (Platzhalter) und Formular |
 | `404.html` | Gestaltete Fehlerseite (beim Hoster als Error-Page eintragen) |
 
-Eine einheitliche Gruppe „Modelle" (17): `deep-free`, `deep-seat`, `modena`,
-`bellagio`, `modular`, `como`, `pisa`, `hamilton`, `pure`, `cubetto`,
+Eine einheitliche Gruppe „Modelle" (16): `deep-free`, `deep-seat`, `modena`,
+`bellagio`, `modular`, `como`, `pisa`, `hamilton`, `pure`,
 `positano`, `capri`, `soho`, `malibu`, `amalfi`, `lucca`, `monza`.
 Auf Wunsch entfernt (per Git-Historie wiederherstellbar): SFT 26 017,
-SFT 26 021, Bali, Mailand. Die frühere Aufteilung „Freie Modelle" /
+SFT 26 021, Bali, Mailand; seit 20.10.2026 auch Cubetto (Block in
+`../tools/modelle-entfernt-cubetto.js.txt`, Bilder bleiben in `assets/img/modelle/`). Die frühere Aufteilung „Freie Modelle" /
 „MOW 2026" wurde zu „Modelle" zusammengeführt.
 
 Ebenfalls auf Wunsch entfernt (22.09.2026): **alle Maße, Artikel-,
